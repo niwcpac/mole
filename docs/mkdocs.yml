@@ -1,0 +1,58 @@
+site_name: Mole Documentation
+site_description: 'Mole Documentation'
+docs_dir: 'raw'
+site_dir: 'built'
+site_url: ''
+dev_addr: '0.0.0.0:8001'
+nav:
+    - About: index.md
+    - Getting Started: getting_started.md
+    - Configuration: 
+      - Basic Configuration: basic_config.md
+      - Entity States: entity_states.md
+      - Pulsar Functions: pulsar.md
+      - Game Clock: game_clock.md
+      - Scenario Scripts: scenario_scripts.md
+      - Point Styles: point_styles.md
+      - Trigger Setup: trigger_setup.md
+    - API Usage: usage.md
+    - Report Generator: report_generator.md
+    - Maps: maps.md
+    - Utilities:
+      - Event Mocker: utilities_event_mocker.md
+      - Profiler: utilities_profiler.md
+    - Developer:
+      - Debugger: developer_debugger.md
+      - User Interface: developer_angular.md
+      - Angular Testing: developer_angular_testing.md
+      - Migrations: developer_migrations.md
+theme:
+  name: 'material'
+  language: 'en'
+  palette:
+    primary: 'Black'
+    accent: 'Light Blue'
+
+extra_css:
+  - css/prism.css
+extra_javascript:
+  - js/prism.js
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      css_class: code
+      use_pygments: false
+      guess_lang: false
+  - toc:
+      permalink: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
+
+use_directory_urls: false
+
+plugins:
+  - search

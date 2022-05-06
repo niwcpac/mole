@@ -1,0 +1,53 @@
+@use '@angular/material' as mat;
+@import '../../../../../styles/theme';
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card-header {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+mat-card-header .mat-card-title {
+  display: flex;
+  margin-bottom: -0px;
+}
+
+// mat-card-header .selector {
+//   width: 25vw;
+//   // display: flex;
+//   // flex-basis: 2em;
+// }
+
+mat-form-field {
+  width: 25vw;
+  margin-right: 1em;
+}
+
+// .mat-chip-list-wrapper {
+//   margin: 24px 0px 24px 24px;
+// }
+
+mat-chip.edit {
+  @include mat.elevation(10, black, 0.9);
+  border-radius: 10px;
+  // padding: 5px;
+  height: fit-content;
+  cursor: pointer;
+}
+
+mat-chip.add {
+  @include mat.elevation(10, black, 0.9);
+  border-radius: 10px;
+  // padding: 5px;
+  height: fit-content;
+  cursor: pointer;
+}

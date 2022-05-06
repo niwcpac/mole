@@ -1,0 +1,47 @@
+.icon {
+    height: 100px;
+    position: absolute;
+    top: 0px;
+}
+
+.login-title {
+    font-size: 18px;
+    line-height: 20px;
+    margin-left: 10rem;
+}
+
+mat-card-title {
+    display: flex;
+    -webkit-animation-orient: horizontal;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 14px 16px 14px 0;
+    position: relative;
+    border-radius: 5px;   
+}
+
+mat-card {
+    margin: 10px;
+    padding: 15px;
+    position: relative;
+    padding: 2rem;
+}   
+
+mat-form-field {
+    width: 100%;
+    min-width: 300px;
+}
+
+// ::ng-deep .mat-drawer-container {
+//     background: url('../../../assets/bg.jpg');
+//     -webkit-background-size: cover;
+//     -moz-background-size: cover;
+//     -o-background-size: cover;
+//     background-size: cover;
+// }
+
+::ng-deep .mat-raised-button.user {
+    width: 100%;
+    margin-top: 1rem;
+  }

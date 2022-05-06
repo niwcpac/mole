@@ -1,0 +1,57 @@
+<ac-map #ACMap>
+    <context-menu-layer [mapClickData]="mapClickContextMenu" [markerClickData]="markerClickContextMenu"></context-menu-layer>
+    <ac-toolbar *ngIf="isEntityBeingTracked" [allowDrag]="false" >
+        <ac-toolbar-button class="override-class" (onClick)="stopTrackingEntity()" >
+            <svg width="32" height="32" viewBox="0 0 32 32">
+                <path d="M 27.34375 1.65625 L 5.28125 27.9375 L 8.09375 30.3125 L 30.15625 4.03125 L 27.34375 1.65625 z M 13.84375 7.03125 C 11.412798 7.03125 9.46875 8.975298 9.46875 11.40625 L 9.46875 11.59375 L 2.53125 7.21875 L 2.53125 24.0625 L 9.46875 19.6875 C 9.4724893 20.232036 9.5676108 20.7379 9.75 21.21875 L 21.65625 7.03125 L 13.84375 7.03125 z M 28.21875 7.71875 L 14.53125 24.0625 L 25.875 24.0625 C 28.305952 24.0625 30.28125 22.087202 30.28125 19.65625 L 30.28125 11.40625 C 30.28125 9.8371439 29.456025 8.4902779 28.21875 7.71875 z"></path>
+            </svg>
+        </ac-toolbar-button>
+    </ac-toolbar>
+    <ac-layer #ACLayers acFor="let ent of entitiesSubject" [context]="this" [debug]="false" >
+        <ac-billboard-desc props="{position: ent.position, 
+            image: ent.image,
+            heightReference: ent.heightRef,
+            height: ent.height,
+            width: ent.width,
+            sizeInMeters: true,
+            description: ent.detail,
+            name: ent.id
+        }"></ac-billboard-desc>
+    </ac-layer> 
+
+    
+    <ac-layer #ACLayers acFor="let ag of agentSubject" [context]="this" [debug]="false" >
+        <ac-model-desc props="{position: ag.position, 
+            uri : ag.uri,
+            scale: ag.scale,
+            heightReference: ag.heightRef,
+            orientation: ag.orientation,
+            description:  ag.detail,
+            name: ag.id,
+            distanceDisplayCondition: ag.distanceFar,
+            viewFrom: ag.cameraZoomView
+        }"></ac-model-desc>
+        <ac-billboard-desc props="{position: ag.position, 
+            image: ag.image,
+            heightReference: ag.heightRef,
+            height: ag.height,
+            width: ag.width,
+            sizeInMeters: false,
+            description: ag.detail,
+            name: ag.id,
+            distanceDisplayCondition: ag.distanceClose
+        }"></ac-billboard-desc>
+    </ac-layer> 
+
+    <ac-layer #ACLayers acFor="let mark of markerSubject" [context]="this" [debug]="false" >
+        <ac-billboard-desc props="{position: mark.position, 
+            availability: mark.avail,
+            image: mark.image,
+            heightReference: mark.heightRef,
+            height: mark.height,
+            width: mark.width,
+            description: mark.detail,
+            name: mark.id
+        }"></ac-billboard-desc>
+    </ac-layer> 
+</ac-map>

@@ -1,0 +1,12 @@
+<!-- matTooltip={{eventType.description}} -->
+<button mat-raised-button
+        type="button"
+        class="event-type-button"
+        (click)="onEventTypeClick()"
+        title={{eventType.description}}>
+    {{ eventType.name }}
+    <fa-stack >
+        <fa-icon id="icon1-square" icon="square" stackItemSize="2x" [styles]="getMarkerColor()"></fa-icon>
+        <fa-icon id="icon1-eventtype-icon" [icon]="eventType.icon_string" [inverse]="true" stackItemSize="1x" [styles]="getColor()"></fa-icon>
+    </fa-stack>
+</button>

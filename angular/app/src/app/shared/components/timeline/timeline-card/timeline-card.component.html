@@ -1,0 +1,260 @@
+<mat-card
+  #eventCard
+  id="mat-card-timeline"
+  class="card-light"
+  *ngIf="!last"
+  (click)="setAsSelectedEvent()"
+  (dblclick)="revertResize()"
+  (window:mouseup)="setStatus($event, 0)"
+  [style.height.px]="allowResize ? ((resizeState == 1) ? localHeight : (heightObservable | async)) : 'auto'"
+  [style.transform]="'translate3d(0px,' + top + 'px,' + '0px)'"
+  [style.border-color]="(event.id == selectedId) ? getEventPointStyle(this.event).marker_color : ''"
+>
+
+  <!-- [ngStyle]="{'border-color': getEventPointStyle(event).marker_color}" -->
+  <mat-card-title id="mat-card-title-timeline" *ngIf="(!inEdit || !editingType) && event.eventType" (click)="toggleEditType()">
+    <fa-icon
+      class="fa-icon-shadow"
+      [icon]="getEventPointStyle(event).icon"
+      [ngStyle]="{'color': getEventPointStyle(event).marker_color}"
+    ></fa-icon>
+    {{event.eventType.name}}
+    <fa-icon
+      *ngIf="(event.id == selectedId)"
+      [icon]="'eye'">
+    </fa-icon>
+  </mat-card-title>
+  <mat-card-title *ngIf="(!inEdit || !editingType) && !event.eventType" (click)="toggleEditType()">
+    <fa-icon
+      icon="question-circle"
+      [ngStyle]="{'color': 'orange'}"
+    ></fa-icon>
+    Please Click
+  </mat-card-title>
+
+  <span id="span-mat-form-field-1" *ngIf="inEdit && editingType">
+    <mat-form-field appearance="fill">
+      <mat-label id="span-mat-form-field-label-1" *ngIf="event.eventType">
+          <fa-icon
+            [icon]="event.eventType.pointStyle.icon"
+            [ngStyle]="{'color':event.eventType.pointStyle.marker_color}">
+          </fa-icon>&nbsp;
+          {{event.eventType.name}}
+      </mat-label>
+      <mat-label id="span-mat-form-field-label-2" *ngIf="!event.eventType">
+          <fa-icon
+              icon="question-circle"
+              [ngStyle]="{'color':'grey'}">
+          </fa-icon>&nbsp;
+          No Event Type Assigned
+      </mat-label>
+      <mat-select id="mat-select-event-types" [(ngModel)]="event.eventType" (ngModelChange)="toggleEditType()" required>
+          <mat-option
+              *ngFor="let type of eventTypesObservable | async | orderBy:order"
+              [value]="type">
+              <fa-icon
+                  [icon]="type.pointStyle.icon"
+                  [ngStyle]="{'color':type.pointStyle.marker_color}">
+              </fa-icon>&nbsp;
+              {{type.name}}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-icon-button (click)="toggleEditType()">
+      <mat-icon>done</mat-icon>
+    </button>
+  </span>
+
+
+  <mat-card-subtitle *ngIf="event.url">
+    <span id="span-mat-card-subtitle-1" *ngIf="!inEdit || !editingStartDatetime" (click)="toggleEditStartDatetime()">
+      <fa-icon icon="clock"></fa-icon>
+      &nbsp;
+      {{event.startDatetime | date : "MMM d, y : h:mm:ss a"}}
+    </span>
+
+    <span id="span-mat-form-field-2" *ngIf="inEdit && editingStartDatetime">
+      <mat-form-field appearance="fill" class="form-element-md">
+        <mat-label>Start Datetime</mat-label>
+        <input matInput [(ngModel)]="event.startDatetime"
+          [owlDateTime]="dt1"
+          [owlDateTimeTrigger]="dt1">
+        <button mat-button [owlDateTimeTrigger]="dt1" matSuffix mat-icon-button aria-label="start_datetime">
+          <owl-date-time hour12Timer="true" #dt1></owl-date-time>
+          <mat-icon>calendar_today</mat-icon>
+        </button>
+        <owl-date-time #dt1></owl-date-time>
+      </mat-form-field>
+      <button mat-icon-button (click)="toggleEditStartDatetime()">
+        <mat-icon>done</mat-icon>
+      </button>
+    </span>
+
+
+    <div id="div-event-type-end-date-1" *ngIf="event.eventType && event.eventType.hasDuration">
+
+      <div id="div-event-type-end-event" *ngIf="event.endDatetime == null">
+        <fa-icon icon="history"></fa-icon>
+        <button mat-button
+          (click)="endEvent(event)">
+          End Event
+        </button>
+      </div>
+
+      <div id="div-event-type-end-date-2" *ngIf="event.endDatetime != null">
+        <span id="span-end-date" *ngIf="!inEdit || !editingEndDatetime" (click)="toggleEditEndDatetime()">
+          <fa-icon icon="history"></fa-icon>
+          &nbsp; Duration:
+          {{
+            getEventDuration(event.startDatetime, event.endDatetime) |
+            durationFromMilliseconds |
+            durationToFormat:'hh:mm:ss'
+          }}
+        </span>
+
+        <span id="span-mat-form-field-3" *ngIf="inEdit && editingEndDatetime">
+          <mat-form-field appearance="fill" class="form-element-md">
+            <mat-label>End Datetime</mat-label>
+            <input matInput [(ngModel)]="event.endDatetime"
+              [owlDateTime]="dt2"
+              [owlDateTimeTrigger]="dt2">
+            <button mat-button [owlDateTimeTrigger]="dt2" matSuffix mat-icon-button aria-label="end_datetime">
+              <owl-date-time hour12Timer="true" #dt2></owl-date-time>
+              <mat-icon>calendar_today</mat-icon>
+            </button>
+            <owl-date-time #dt2></owl-date-time>
+          </mat-form-field>
+          <button id="button-mat-form-field-done" mat-icon-button (click)="toggleEditEndDatetime()">
+            <mat-icon>done</mat-icon>
+          </button>
+        </span>
+
+
+      </div>
+
+    </div>
+
+  </mat-card-subtitle>
+
+  
+  
+  <mat-card-content *ngIf="showMetadata || inEdit" >
+    <!-- first list the prioritized metadata -->
+    <span id="span-mat-card-content-1" *ngFor="let key of prioritizedKeys">
+      <span id="span-meta-text" *ngIf="event.metadata[key] && (!inEdit || !editingMetadata[key])" (click)="toggleEditMetadata(key)">
+        <b>{{key}}</b>: {{event.metadata[key]}}<br>
+      </span>
+      <span id="span-mat-form-field-4" *ngIf="event.metadata[key] && inEdit && editingMetadata[key]">
+        <mat-form-field class="meta-field" appearance="fill">
+          <input matInput type="text" [value]="key"
+            (change)="updateMetadataKey(key, $event)"
+          >
+        </mat-form-field>
+        :
+        <mat-form-field class="meta-field" appearance="fill">
+          <input matInput type="text" [value]="event.metadata[key]" (change)="updateMetadataValue(key, $event)">
+        </mat-form-field>
+        <button id="button-mat-icon-done" mat-icon-button (click)="toggleEditMetadata(key)">
+          <mat-icon>done</mat-icon>
+        </button>
+        <button id="button-mat-icon-delete" mat-icon-button (click)="removeMetadata(key)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <br>
+      </span>
+    </span>
+
+    <!-- then the rest of the metadata -->
+    <span id="span-mat-card-content-2" *ngFor="let meta of event.metadata | keyvalue">
+      <div *ngIf="!prioritizedKeys.includes(meta.key)">
+        <span id="span-meta-text" *ngIf="!inEdit || !editingMetadata[meta.key]" (click)="toggleEditMetadata(meta.key)">
+          <b>{{meta.key}}</b>: {{meta.value}}<br>
+        </span>
+        <span id="span-mat-form-field-4" *ngIf="inEdit && editingMetadata[meta.key]">
+          <mat-form-field class="meta-field" appearance="fill">
+            <input matInput type="text" [value]="meta.key"
+              (change)="updateMetadataKey(meta.key, $event)"
+            >
+          </mat-form-field>
+          :
+          <mat-form-field class="meta-field" appearance="fill">
+            <input matInput type="text" [value]="meta.value" (change)="updateMetadataValue(meta.key, $event)">
+          </mat-form-field>
+          <button id="button-mat-icon-done" mat-icon-button (click)="toggleEditMetadata(meta.key)">
+            <mat-icon>done</mat-icon>
+          </button>
+          <button id="button-mat-icon-delete" mat-icon-button (click)="removeMetadata(meta.key)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <br>
+        </span>
+      </div>
+    </span>
+
+    <br id="br-pose-edit" *ngIf="editingPose">
+    <mole-maps id="mole-maps-pose"
+      *ngIf="editingPose"
+      [event]="event"
+      [showTitle]="false"
+      [allowPoseUpdates]="allowPoseUpdates"
+      (outPose)="addPose($event)"
+      style="height: 15vh;">
+    </mole-maps>
+  </mat-card-content>
+
+
+  <span class="top-right-corner">
+
+    <button id="button-mat-icon-button-notes" mat-icon-button
+      *ngIf="notesOption"
+      (click)="openNotesDialog()">
+      <mat-icon
+        [matBadge]="event.notes.length"
+        [matBadgeHidden]="event.notes.length == 0"
+        matBadgeColor="warn">speaker_notes</mat-icon>
+    </button>
+
+    <button id="button-mat-icon-button-images" mat-icon-button
+      *ngIf="imagesOption"
+      (click)="openImagesDialog()">
+      <mat-icon
+        [matBadge]="event.images.length"
+        [matBadgeHidden]="event.images.length == 0"
+        matBadgeColor="warn">collections</mat-icon>
+    </button>
+
+    <button id="button-mat-icon-button-map" mat-icon-button
+      *ngIf="mapOption"
+      (click)="toggleEditPose()">
+      <mat-icon *ngIf="event.startPose">location_on</mat-icon>
+      <mat-icon *ngIf="!event.startPose">location_off</mat-icon>
+    </button>
+
+    <button id="button-mat-icon-button-dialog" mat-icon-button
+      *ngIf="dialogOption"
+      (click)="openEventDialog(event)">
+      <mat-icon>create</mat-icon>
+    </button>
+
+    <button id="button-mat-icon-button-api" mat-icon-button
+      *ngIf="apiOption && event.url"
+      (click)="openApi(event)">
+      <mat-icon>open_in_new</mat-icon>
+    </button>
+  </span>
+
+  <div *ngIf="allowResize" class="resize-action" 
+    (mousedown)="setStatus($event, 1)"
+    (click)="revertResize()">
+  </div>
+
+</mat-card>
+
+<!-- If last event -->
+<mat-card id="mat-card-last-event"
+  class="card-light"
+  *ngIf="last">
+  <mat-card-title id="mat-card-title-last-event">
+    ⊥ {{message}}
+  </mat-card-title>
+</mat-card>

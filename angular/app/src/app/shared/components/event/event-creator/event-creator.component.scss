@@ -1,0 +1,21 @@
+mat-list-item#event-type-list {
+  display: inline-flex;
+  height:auto;
+}
+
+li {
+  display: inline-flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-left: 20px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+mat-list-item~mat-list-item {
+  border-top: 1px solid #000000;
+}
+
+mat-card {
+  padding: 0;
+}

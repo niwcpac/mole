@@ -1,0 +1,167 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "angular": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "mole",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+            "outputPath": "/home/node/dist",
+            "index": {
+              "input": "src/index.html",
+              "output": "angular.html"
+            },
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "./node_modules/cesium/Build/Cesium",
+                "output": "./assets/cesium"
+              },
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "./node_modules/cesium/Build/Cesium/Widgets/widgets.css",
+              "node_modules/@angular/material/_theming.scss",
+              "src/styles/styles.scss"
+            ],
+            "scripts": [
+              "./node_modules/cesium/Build/Cesium/Cesium.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "geodesy",
+              "util"
+            ],
+            "customWebpackConfig": {
+              "path": "./custom-webpack.config.js",
+              "replaceDuplicatePlugins": true
+            }
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "12mb",
+                  "maximumError": "15mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "200kb",
+                  "maximumError": "500kb"
+                }
+              ]
+            },
+            "development": {
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "buildOptimizer": false,
+              "sourceMap": true,
+              "optimization": false,
+              "namedChunks": true
+            },
+            "defaultConfiguration": "production"
+          }
+        },
+        "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "defaultConfiguration": "",
+          "options": {
+            "browserTarget": "angular:build:development",
+            "proxyConfig": "proxy.conf.js"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "angular:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "angular:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "./node_modules/cesium/Build/Cesium",
+                "output": "./assets/cesium"
+              },
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "./node_modules/cesium/Build/Cesium/Widgets/widgets.css",
+              "node_modules/@angular/material/_theming.scss",
+              "src/styles/styles.scss"
+            ],
+            "scripts": [
+              "./node_modules/cesium/Build/Cesium/Cesium.js"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "angular:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "angular",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
+}

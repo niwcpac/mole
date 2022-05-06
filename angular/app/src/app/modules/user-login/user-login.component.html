@@ -1,0 +1,30 @@
+<div class="center-form">
+    <mat-card-title class="card-dark">
+        <img [src]="gearURL" alt class="icon">
+        <div class="login-title">Mole: Test Analysis Tool</div>
+    </mat-card-title>
+    <mat-card class="card-light">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-card-content *ngIf="!_authService.userValue">
+                <p><mat-form-field>
+                    <input type="text" matInput formControlName="username" placeholder="Username" autofocus>
+                </mat-form-field></p>
+                <p><mat-form-field>
+                    <input type="password" matInput formControlName="password" placeholder="Password">
+                </mat-form-field></p>
+                <button class="user" mat-raised-button color="primary">
+                    <span class="material-icons">login</span>
+                </button>
+            </mat-card-content>
+            <div id="outer-form-div" class="row" *ngIf="_authService.userValue">
+                <div id="inner-form-div" class="col-sm-12">You are logged in as {{ _authService.userValue.username }}. <br />
+                    <!-- Token Expires: {{ _authService.userValue.token_expires }}<br /> -->
+                    <!-- <button (click)="refreshToken()" class="btn btn-primary">Refresh Token</button>&nbsp; -->
+                    <button mat-raised-button color="primary" id="logout-button" class="user" (click)="logout()">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div>

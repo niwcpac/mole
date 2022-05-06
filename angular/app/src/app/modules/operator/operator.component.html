@@ -1,0 +1,85 @@
+<div class="container"
+     fxLayout="row"
+     fxLayoutGap="10px">
+  <div class="container" fxLayout="column" fxFlex="calc(66%-10px)" fxLayoutGap="10px">
+<!--    <div class="container" fxLayout="row"  fxLayoutGap="10px" >-->
+<!--      <mat-card class="operator-control card-background mat-elevation-z2" fxFlex="1 1 calc(50% - 10px)">-->
+<!--        &lt;!&ndash; <mole-trial-selector [visibility]="true" [trialVisibility]="false"></mole-trial-selector> &ndash;&gt;-->
+<!--      </mat-card>-->
+<!--      <mat-card class="event-summary card-background mat-elevation-z2" fxFlex="1 1 calc(50% - 10px)">-->
+<!--        <mole-event-summary></mole-event-summary>-->
+<!--      </mat-card>-->
+<!--    </div>-->
+    <mat-card class="card-background" style="z-index: 0" fxLayout="row"  fxFlex="calc(75%-10px)">
+      <mole-maps fxFill [showTitle]="false" [enableSwitcher]="true"></mole-maps>
+    </mat-card>
+  </div>
+  <mat-card class="card-background" fxLayout="column" fxFill fxFlex="30%">
+    <mat-accordion class="card-light-dark mat-elevation-z2">
+      <mat-expansion-panel [expanded]="openEventAccordion" (closed)="onAccordionClose()" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <fa-icon [icon]="'tools'"></fa-icon>&nbsp;
+            Tools
+          </mat-panel-title>
+          <mat-panel-description>
+            Create / Filter Events
+          </mat-panel-description>
+          <span id="span-badgecount" *ngIf="badgeCount">Event Count: <mat-chip>{{badgeCount}}</mat-chip></span>
+        </mat-expansion-panel-header>
+        <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChange($event)" mat-align-tabs="center">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <fa-icon [icon]="'plus-square'"></fa-icon>&nbsp;
+              Create
+            </ng-template>
+            <mole-event-creator></mole-event-creator>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <fa-icon [icon]="'filter'"></fa-icon>&nbsp;
+              Filter
+            </ng-template>
+            <mole-event-filter id="mole-event-filter-1" (countNotification)="badgeUpdate($event)"></mole-event-filter>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <!-- <fa-icon [icon]="'eye'"></fa-icon>&nbsp; -->
+              <span>
+                <mat-checkbox [checked]="trackLive" (change)="toggleTrackLive($event.checked)"></mat-checkbox>
+                &nbsp;View&nbsp;
+                <fa-icon [icon]="'circle'" [ngStyle]="liveStyle"></fa-icon>
+              </span>
+              
+            </ng-template>
+            <mole-timeline-card
+              *ngIf="selectedEvent"
+              [event]="selectedEvent"
+              [notesOption]="true"
+              [imagesOption]="true"
+              [mapOption]="true"
+              [dialogOption]="true"
+              [inEdit]="true"
+              [showMetadata]="true">
+            </mole-timeline-card>
+            <mole-timeline-card id="mole-timeline-card2"
+              *ngIf="!selectedEvent"
+              [last]="true"
+              [message]="'No Event Selected'">
+            </mole-timeline-card>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- <h2><mat-icon>timeline</mat-icon> Timeline</h2> -->
+    <!-- <mole-event-filter-form></mole-event-filter-form> -->
+    <mole-event-filter-chips></mole-event-filter-chips>
+    <mole-timeline></mole-timeline>
+  </mat-card>
+</div>
+
+
+<div class="view-center-form">
+  <router-outlet></router-outlet>
+</div>

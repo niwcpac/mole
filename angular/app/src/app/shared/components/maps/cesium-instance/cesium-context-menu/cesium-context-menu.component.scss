@@ -1,0 +1,15 @@
+.container {
+    background-color: rgba(140, 140, 140, 0.8);
+    font-family: sans-serif;
+}
+
+.item {
+    padding: 10px;
+    color: white;
+}
+
+.item:hover {
+    cursor: pointer;
+    background-color: rgba(50, 150, 255, 0.6);
+
+}

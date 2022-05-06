@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        html {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            height: 100%;
+	        margin: 0;
+            background: linear-gradient(#111, #333, #111);
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #eee;
+            position: relative;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .message {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #87afc8;
+            font-size: 8em;
+            margin: 0;
+		    line-height: .8;
+        }
+
+        h2 {
+            margin: 30px 0;
+            line-height: .8;
+            font-weight: 300;
+            color: #C8FFF4;
+        }
+
+        h3 {
+            font-size: 2.5em;
+            line-height: .8;
+            font-weight: 300;
+            color: #C8FFF4;
+        }
+
+        li {
+            text-align: left;
+            font-size: 1.5em;
+            color: #87afc8;
+        }
+
+        .button {
+            background: transparent;
+            border: 2px solid #87afc8;
+            color: #87afc8;
+            padding: 5px 15px;
+            font-size: 1.25em;
+            transition: all 0.15s ease;
+            border-radius: 3px;
+        }
+        
+        .button:hover {
+            background: #C8FFF4;
+            border: 2px solid #C8FFF4;
+            color: #111;
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+    </style>
+    
+    <title>Mole 500 Error</title>
+</head>
+<body>
+
+    <div class="message">
+        <h1>500</h1>
+        <h3>Server Error</h3>
+        <h2>It's likely the static files aren't built, see the docs:</h2>
+        <a id="button-id" class="button">Docs</a>
+    </div>
+
+    <script type = "text/javascript">
+        hostname = window.location.hostname
+        document.getElementById("button-id").onclick = function() {
+            window.open("http://" + hostname + ":8001/getting_started.html#requirements");
+        }
+    </script>
+    
+
+</body>
+</html>

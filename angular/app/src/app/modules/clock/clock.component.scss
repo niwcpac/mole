@@ -1,0 +1,53 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+.clock-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 1.5em;
+}
+.clock-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.time-box {
+    margin: 1.5em;
+    width: 40vw;
+}
+mat-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em;
+}
+
+mat-card {
+    border: 4px solid rgb(32, 32, 32)
+}
+
+h1 {
+    font-size: 3vw;
+    line-height: 1;
+}
+h2 { 
+    font-size: 7vw;
+    line-height: 1;
+}
+h3 {
+    font-size: 2vw;
+    line-height: 1;
+}

@@ -1,0 +1,57 @@
+
+
+<div mat-dialog-content>
+  <mat-card id="mat-card-mole-timeline" class="card-light" >
+    <h2>Select the elements in the event you would like to edit:</h2>
+    <mole-timeline-card
+      [event]="event"
+      [inEdit]="true"
+      [mapOption]="true"
+      [apiOption]="true"
+      [allowPoseUpdates]="true">
+    </mole-timeline-card>
+    <mat-tab-group>
+      <mat-tab label="Metadata">
+        <br>
+        <span>
+            <mat-form-field class="meta-field" appearance="fill">
+                <mat-label>Key</mat-label>
+                <input matInput id="input-key" #newKey [(ngModel)]="metaKeyInput">
+            </mat-form-field>
+            :
+            <mat-form-field class="meta-field" appearance="fill">
+                <mat-label>Value</mat-label>
+                <input matInput id="input-value" #newValue [(ngModel)]="metaValueInput">
+            </mat-form-field>
+            <button mat-icon-button id="button1-mat-tab-group"
+                (click)="addMetadata(newKey.value, newValue.value)"
+                [disabled]="newKey.value.length == 0 || newValue.value.length == 0"
+                color="primary">
+                <mat-icon>done</mat-icon>
+            </button>
+        </span>
+      </mat-tab>
+      <mat-tab label="Notes">
+        <br>
+        <mole-notes-dialog 
+          (newNoteEvent)="addNote($event)" 
+          (updateNoteEvent)="updateNote($event)"
+          (deleteNoteEvent)="deleteNote($event)"
+          [title]="false">
+        </mole-notes-dialog>
+      </mat-tab>
+      <mat-tab label="Photos">
+        <br>
+        <mole-image-dialog 
+          (newImagesEvent)="addNewImages($event)"
+          [title]="false">
+        </mole-image-dialog>
+      </mat-tab>
+    </mat-tab-group>
+    <br>
+    <div mat-dialog-actions>
+      <button mat-flat-button id="button1-dialog-action" (click)="onNoClick()" color="accent">Cancel</button>
+      <button mat-flat-button id="button2-dialog-action" [disabled]="!event.eventType" (click)="onSubmit(event)" color="primary">Ok</button>
+    </div>
+  </mat-card>
+</div>

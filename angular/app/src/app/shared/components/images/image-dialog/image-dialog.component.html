@@ -1,0 +1,11 @@
+<h1 *ngIf="title">Images</h1>
+
+<mole-image-upload 
+    (newImagesUploadEvent)="addNewImages($event)"
+    [event]="event">
+</mole-image-upload>
+
+<mole-image-gallery 
+    [newImages]="localImages"
+    [event]="event">
+</mole-image-gallery>

@@ -1,0 +1,89 @@
+<div id="app-container" class="container"> 
+  <mat-toolbar color="primary" *ngIf="!_authService.userValue; else elseBlock" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="title-wrapper">
+      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <a class="mat-button nav-link home" routerLink="">Mole</a>
+    </div>
+    <div class="user-wrapper">
+      <mat-slide-toggle
+        [checked]="isLightTheme"
+        (change)="toggleTheme($event.checked)"
+        color="warn"
+        labelPosition="before">
+        <mat-icon *ngIf="isLightTheme" color="accent">wb_sunny</mat-icon>
+        <mat-icon *ngIf="!isLightTheme" color="accent">nights_stay</mat-icon>
+      </mat-slide-toggle>
+    </div>
+    
+  </mat-toolbar>
+  <ng-template #elseBlock>
+    <mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="title-wrapper">
+        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <a class="mat-button nav-link home" routerLink="">
+          Mole
+          <span *ngIf="pageTitle" class="pageTitle">- {{ pageTitle }}</span>
+        </a>
+      </div>
+
+      <mole-trial-selector
+        [visibility]="false"
+        [trialVisibility]="true"
+        (shareTrial)="getTrial($event)">
+      </mole-trial-selector>
+
+      <div class="user-wrapper">
+        <mat-slide-toggle
+          [checked]="isLightTheme"
+          (change)="toggleTheme($event.checked)"
+          color="warn"
+          labelPosition="before">
+          <mat-icon *ngIf="isLightTheme" color="accent">wb_sunny</mat-icon>
+          <mat-icon *ngIf="!isLightTheme" color="accent">nights_stay</mat-icon>
+        </mat-slide-toggle>
+        <button mat-button color="accent" routerLink="/login">
+          <mat-icon>account_circle</mat-icon>
+          {{ _authService.userValue.username }}
+        </button>
+        <button mat-raised-button color="accent" routerLink="/login" (click)="_authService.userLogout()">
+          <mat-icon>exit_to_app</mat-icon>
+          Logout
+        </button>
+      </div>
+
+    </mat-toolbar>
+  </ng-template>
+
+  <mat-sidenav-container class="container">
+    <mat-sidenav #snav>
+      <mat-nav-list *ngFor="let route of routes">
+        <a
+          *ngIf="route.data"
+          (click)="snav.toggle()"
+          mat-list-item
+          [routerLink]="[route.path]"
+          routerLinkActive="list-item-active">
+          <mat-icon matListIcon class="app-nav-list-icon">{{route.data['icon']}}</mat-icon>
+          {{route.data['title']}}
+        </a>
+      </mat-nav-list>
+      <mat-divider></mat-divider>
+      <mat-nav-list *ngFor="let link of links">
+        <a mat-list-item
+          [href]="link.url"
+          target="_blank"
+          rel="noopener noreferrer">
+          <mat-icon matListIcon class="app-nav-list-icon">{{link.data.icon}}</mat-icon>
+          {{link.data.title}}
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="main-content container" fxLayout>
+          <div fxFlex>
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
+          </div>
+        </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

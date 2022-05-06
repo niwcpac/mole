@@ -1,0 +1,29 @@
+.time-box {
+    margin: 1.5em;
+    width: 40vw;
+}
+mat-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 1.5em;
+}
+
+mat-card {
+    border: 4px solid rgb(32, 32, 32)
+}
+
+h1 {
+    font-size: 3vw;
+    line-height: 1;
+}
+h2 { 
+    font-size: 7vw;
+    line-height: 1;
+}
+h3 {
+    font-size: 2vw;
+    line-height: 1;
+}

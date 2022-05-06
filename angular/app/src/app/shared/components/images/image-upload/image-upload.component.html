@@ -1,0 +1,16 @@
+<div class="form-group">
+  <input #fileSelector
+    type="file"
+    (change)="handleImageInput($event)"
+    id="image-upload"
+    accept="image/*"
+    style="display: none"
+    multiple>
+      
+  <button mat-flat-button (click)="fileSelector.click()" color="primary">Upload <mat-icon>publish</mat-icon></button>
+</div>
+
+<mat-progress-bar *ngIf="uploadingImage" 
+  mode="indeterminate"
+  color="warn">
+</mat-progress-bar>

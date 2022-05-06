@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+
+mat-chip {
+  color: black !important;
+  @include mat.elevation(3, white, 0.9);
+  .mat-icon {
+    color: black;
+  }
+}

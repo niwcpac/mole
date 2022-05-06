@@ -1,0 +1,171 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+/* You can add global styles to this file, and also import other style files */
+@import './theme';
+
+@import './mat-icons'; // @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import './titillium-web'; // @import url('https://fonts.googleapis.com/css?family=Titillium+Web:600');
+@import './abril-fatface'; // @import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
+
+//TODO determine if better location for this css import
+@import '~maplibre-gl/dist/maplibre-gl.css';
+
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+@include mat.all-component-themes($mole-theme);
+
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+// Global styles.
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+}
+body {
+  font-family: mat.font-family($mole-typography);
+  line-height: mat.line-height($mole-typography, body-1);
+  font-size: mat.font-size($mole-typography, body-1);
+  height: 100%;
+  margin: 0;
+}
+
+.center-form {
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  overflow: auto;
+  padding: 20px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  border-radius: 10px;
+
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.mat-toolbar .app-name {
+  margin-left: 8px;
+}
+
+mat-sidenav {
+  min-width: 200px;
+}
+
+
+mat-sidenav mat-icon {
+  margin: 0 10px ;
+}
+
+.list-item-active {
+  font-weight: bold;
+}
+.nav-link.home {
+  font-size: 1.25em;
+}
+
+.main-content {
+  padding: 10px;
+}
+
+.center-right {
+  position: absolute;
+  top: 50%;
+  left: 88%;
+  transform: translate(-50%, -50%);
+}
+
+mat-form-field {
+  width: 50%;
+}
+
+mat-toolbar {
+  position: relative;
+  z-index: 5;
+}
+
+mat-accordion {
+  padding: 10px;
+}
+mat-accordion.card-background,
+mat-expansion-panel.card-background,
+mat-card.card-background {
+  padding: 0.5rem;
+  position: relative;
+}
+
+mat-card-title.card-light {
+  border-radius: 10px;
+  margin-bottom: 0px;
+}
+
+mat-card-title.card-dark {
+  border-radius: 10px;
+  margin-bottom: 0px;
+
+}
+
+mat-accordion.card-invisible,
+mat-card.card-invisible {
+  border-radius: 10px;
+}
+
+.mat-expansion-panel,
+mat-accordion.card-light,
+mat-card.card-light {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: thin;
+  // border-color: #607d8b;
+}
+
+.mat-expansion-panel,
+mat-accordion.card-light-dark,
+mat-card.card-light-dark {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: thin;
+}
+
+.mat-expansion-panel,
+mat-accordion.card-dark,
+mat-card.card-dark{
+  border-style: solid;
+  border-width: thin;
+}
+
+mat-divider.content-divider {
+  margin-top: 0.4rem;
+}
+
+
+.material-icons {
+  vertical-align: middle;
+  margin-top: -4px;
+}
+.mat-button .mat-button-wrapper>*,
+        .mat-flat-button .mat-button-wrapper>*, .mat-stroked-button .mat-button-wrapper>*,
+        .mat-raised-button .mat-button-wrapper>*, .mat-icon-button .mat-button-wrapper>*,
+        .mat-fab .mat-button-wrapper>*, .mat-mini-fab .mat-button-wrapper>* {
+  vertical-align: middle;
+}
+
+.mat-expansion-panel-body {
+  padding: 0;
+}
+mat-expansion-panel .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+.fa-icon-shadow {
+  filter: drop-shadow(0 0 2px #000);
+}

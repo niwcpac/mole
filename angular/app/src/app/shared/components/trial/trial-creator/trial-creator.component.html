@@ -1,0 +1,101 @@
+<div mat-dialog-content>
+  <mat-card class="card-light">
+    <div id="left" fxFlex="90%">
+      <mat-card-title id="mat-card-title-new-trial" *ngIf="!trial.url">
+        <span class="material-icons">add_box</span>
+        New Trial
+      </mat-card-title>
+      <mat-card-title id="mat-card-title-edit-trial" *ngIf="trial.url">
+        <span class="material-icons">edit</span>
+        Edit Trial
+      </mat-card-title>
+    </div>
+  </mat-card>
+  <mat-card class="card-light">
+    <form [formGroup] = "trialForm">
+      <mat-form-field appearance="fill" class="form-element-md">
+          <mat-label>Start Datetime</mat-label>
+          <input matInput formControlName="start_datetime" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="yyyyy-MMM-ddTHH:mm:ss:">
+          <button mat-button [owlDateTimeTrigger]="dt1" matSuffix mat-icon-button aria-label="start_datetime">
+            <owl-date-time color="primary" hour12Timer="true" #dt1></owl-date-time>
+            <mat-icon>calendar_today</mat-icon>
+          </button>
+          <owl-date-time #dt1></owl-date-time>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-element-md ml-2">
+          <mat-label>End Datetime</mat-label>
+          <input matInput formControlName="end_datetime" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="yyyyy-MMM-ddTHH:mm:ss:">
+          <button mat-button [owlDateTimeTrigger]="dt2" matSuffix mat-icon-button aria-label="end_datetime">
+            <owl-date-time color="primary" hour12Timer="true" #dt2></owl-date-time>
+            <mat-icon>calendar_today</mat-icon>
+          </button>
+          <owl-date-time #dt2></owl-date-time>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-element-md">
+          <mat-label>System Configuration</mat-label>
+          <mat-select formControlName="system_configuration" >
+              <mat-option id="mat-option-configs" *ngFor="let config of systemConfigs" [value]="config.name">
+                {{config.name}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-element-md">
+          <mat-label>Scenario</mat-label>
+          <mat-select formControlName="scenario" >
+              <mat-option id="mat-option-scenarios" *ngFor="let scenario of scenarios" [value]="scenario.name">
+                {{scenario.name}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-element-md">
+          <mat-label>Testers</mat-label>
+          <mat-select formControlName="testers" multiple>
+              <mat-option id="mat-option-testers" *ngFor="let tester of testers" [value]="tester.name">
+                {{ tester.name }}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-element-md">
+        <mat-label>Clock Configuration</mat-label>
+        <mat-select formControlName="clock_config">
+            <mat-option id="mat-option-clock" *ngFor="let clock of clockConfigList" [value]="clock.name">
+              {{ clock.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-element-sm">
+        <mat-label>{{selectedCampaign.trialIdMajorName}}</mat-label>
+        <input matInput formControlName="id_major" type="number">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="form-element-sm">
+        <mat-label>{{selectedCampaign.trialIdMinorName}}</mat-label>
+        <input matInput formControlName="id_minor" type="number">
+      </mat-form-field>
+      <mat-form-field  appearance="fill" class="form-element-sm">
+        <mat-label>{{selectedCampaign.trialIdMicroName}}</mat-label>
+        <input matInput formControlName="id_micro" type="number">
+      </mat-form-field>
+
+      <mat-checkbox formControlName="reported" color="primary">Reported</mat-checkbox>
+      <mat-checkbox formControlName="current" color="primary">Current</mat-checkbox>
+
+      <mat-form-field appearance="fill" class="form-element-lg">
+        <mat-label>Note</mat-label>
+        <textarea matInput formControlName="note"></textarea>
+      </mat-form-field>
+
+      <div mat-dialog-actions>
+        <button mat-flat-button id="mat-flat-button-cancel" (click)="onNoClick()" color="accent">Cancel</button>
+        <button mat-flat-button id="mat-flat-button-submit" (click)="onSubmit()" color="primary">Submit</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

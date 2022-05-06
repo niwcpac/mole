@@ -1,0 +1,23 @@
+dash_app:
+  title: Report Generator
+  request_interval_ms: 5000
+  request_interval_s: 5
+  views:
+    - Dashboard
+    - Print
+  pathname:
+    dashboard: /Dashboard
+    report: /print
+  styling:
+    default_padding: 10
+    default_margin: 10
+
+mole:
+  api: http://django:8000/api
+  endpoints:
+    trial: /trial_data
+    event: /event_data
+    entity: /entity_data
+    entity_groups: /entity_groups_data
+
+  

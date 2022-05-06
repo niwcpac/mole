@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  pulsar:
+    init: true
+    build: ./pulsar
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    entrypoint: ["/usr/bin/python"]
+    command: ["-m", "pytest", "-s", "tests/"]
+
+
+  postgres:
+    image: postgis/postgis:11-3.0
+    environment:
+      - POSTGRES_DB=${PGDATABASE} 
+      - POSTGRES_USER=${PGUSER}
+      - POSTGRES_PASSWORD=${PGPASSWORD}
+    volumes:
+      - ./mole/build/postgresql.conf:/etc/postgresql/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+
+
+  redis:
+    image: redis:latest
+
+
+  django:
+    init: true
+    volumes:
+      - ./mole:/home/django/mole
+    depends_on:
+      - postgres
+    build: mole/.
+    environment:
+      - PGDATABASE
+      - PGUSER
+      - PGPASSWORD
+      - POPULATE_DB
+      - PROFILE
+      - BACKUP_FLAG
+      - PYTHONUNBUFFERED
+      - DEBUG_DJANGO
+      - PYTHONDONTWRITEBYTECODE=1
+      - TIMEZONE
+    entrypoint: build/init_test.sh
+    working_dir: /home/django/mole

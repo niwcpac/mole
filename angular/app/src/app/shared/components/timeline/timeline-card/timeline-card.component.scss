@@ -1,0 +1,39 @@
+mat-card {
+    position: relative;
+    width: 85%;
+    flex: 1 0 auto;
+    margin: 12px;
+    text-align: left;
+    overflow: hidden;
+    // border: 2px solid;
+    // border-right: 12px solid;
+}
+
+.meta-field {
+    width: 35%;
+}
+
+.top-right-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: inherit;
+}
+
+.resize-action {
+    position: absolute;
+    left: 100%;
+    top: 100%;
+    transform: translate3d(-50%, -50%, 0) rotateZ(45deg);
+    border-style: solid;
+    border-width: 12px;
+    border-color: transparent transparent transparent grey;
+    &:hover, &:active {
+        cursor: nwse-resize;
+    }
+}
+
+.resize-action-container {
+    text-align: right;
+}
+

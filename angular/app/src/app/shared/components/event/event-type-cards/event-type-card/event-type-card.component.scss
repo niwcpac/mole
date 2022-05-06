@@ -1,0 +1,37 @@
+@use '@angular/material' as mat;
+@import '../../../../../../styles/theme';
+
+.mat-card-content {
+  font-size: 20px;
+  align-content: center;
+}
+
+.mat-card-avatar {
+  height: auto;
+  width: auto;
+}
+
+.mat-card {
+  font-size: 20px;
+  align-content: center;
+  cursor: pointer;
+  padding: 10px;
+  @include mat.elevation(1, white, 0.9);
+}
+
+mat-card.active {
+  background: mat.get-color-from-palette($mole-primary);
+}
+
+
+.mat-card-title {
+  text-align: center;
+  font-size: .5em;
+  margin: 0;
+}
+.truncated {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; // amount of line you want
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

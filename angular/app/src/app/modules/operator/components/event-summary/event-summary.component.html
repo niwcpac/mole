@@ -1,0 +1,38 @@
+
+<div id="div-mat-spinner" *ngIf="!currentEventCounts; else elseBlock" fxLayout="column" fxLayoutAlign="space-between">
+  <mat-spinner [ngStyle]="{'margin':'auto'}"></mat-spinner>
+</div>
+<ng-template #elseBlock fxLayout="column" fxLayoutAlign="space-between">
+  <mat-card id="outer-mat-card" class="card-light">
+    <!-- <div id="left" fxFlex="80%"> -->
+
+    <mat-card-title>
+
+      <mat-icon>event</mat-icon>
+      Event Summary
+      <mat-chip id="mat-chip-counts" color="primary" *ngIf="currentEventCounts">{{currentEventCounts.total}}</mat-chip>
+      <button id="button-clear-filters" mat-flat-button [disabled]="currentFilter.types.length == 0"
+              (click)="clearFilters()"
+              [ngClass]="{'allActive': !allActive, 'active': allActive}" style="float: right;">
+        Clear Filters
+      </button>
+    </mat-card-title>
+    <br>
+    <mat-card class="card-dark">
+      <div fxLayout="row wrap" fxLayoutGap="5px grid" fxFlexAlign="start" fxLayoutAlign="center">
+        <mole-summary-card #eventTypeCard
+                           fxFlex="0 0 calc(5% - 5px)"
+                           fxFlex.xl="0 1 calc(11% - 5px)"
+                           fxFlex.lg="0 1 calc(17% - 5px)"
+                           fxFlex.md="0 1 calc(26% - 5px)"
+                           fxFlex.sm="0 1 calc(34% - 5px)"
+                           fxFlex.xs="0 1 calc(51% - 5px)"
+                           fxLayoutAlign="stretch"
+                           *ngFor="let type of eventTypes"
+                           [eventType]="type"
+                           [count]="getTypeCount(type.name)">
+        </mole-summary-card>
+      </div>
+    </mat-card>
+  </mat-card>
+</ng-template>

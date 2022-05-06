@@ -1,0 +1,39 @@
+<div class="container"
+     fxLayout="row"
+     fxLayoutGap="10px"
+>
+  <div class="container" fxLayout="column" fxFlex="calc(75%-10px)" fxLayoutGap="10px">
+    <mat-card class="card-background" fxLayout="row"  fxFill>
+      <mole-maps fxFill [showTitle]="false"></mole-maps>
+    </mat-card>
+  </div>
+  <div class="container" fxLayout="column"  fxLayoutGap="10px" fxFlex="0 0 calc(25% - 10)" >
+    <mat-card class="operator-control card-background mat-elevation-z2" fxFlex=" 0 1 calc(25%-10px)">
+      <mole-score-summary></mole-score-summary>
+    </mat-card>
+    <mat-card class="card-background" fxLayout="column">
+      <mat-accordion class="card-light-dark mat-elevation-z2">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <fa-icon [icon]="'filter'"></fa-icon>&nbsp;
+              Filter
+            </mat-panel-title>
+            <mat-panel-description>
+              Filter events
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mole-event-filter></mole-event-filter>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card>
+    <mat-card class="card-background" fxLayout="column" fxFill>
+      <mat-card-title><mat-icon>timeline</mat-icon> Timeline</mat-card-title>
+      <mole-event-filter-chips></mole-event-filter-chips>
+      <mole-timeline></mole-timeline>
+    </mat-card>
+  </div>
+
+</div>
+
+

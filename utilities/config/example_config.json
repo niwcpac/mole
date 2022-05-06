@@ -1,0 +1,58 @@
+{
+    "mole": "localhost",
+    "username": "admin",
+    "password": "admin",
+    "trial_duration": {
+        "hours": 1,
+        "minutes": 0
+    },
+    "bounding_box": {
+        "min_point": {
+            "lat": 32.657360,
+            "lon": -117.283920
+        },
+        "max_point": {
+            "lat": 32.740647,
+            "lon": -117.157868
+        }
+    },
+    "event_metadata": {
+        "detail": ["Event created by Mole Utilities Event Generator."],
+        "key_1": ["choice_1", "choice_2", "choice_3"],
+        "key_2": [
+            "single_choice",
+            [1, 2, 3],
+            ["a", "b", "c"]
+        ],
+        "key_n": [
+            {"nested_1": "1a"},
+            {"nested_2": "2b"},
+            {"nested_3": "3c"}
+        ]
+    },
+    "event_type_metadata": {
+        "Node Online": {
+            "node": ["node-1", "node-2", "node-3"]
+        }
+    },
+    "event_count": 100,
+    "sequence_order": [
+        ["Start", 1],
+        ["RANDOM", 50],
+        ["End", 1]
+    ],
+    "sequences": {
+        "Start": [
+            ["Node Online", 50],
+            ["Trial Start", 1]
+        ],
+        "End": [
+            ["Trial End", 1],
+            ["Safety Stop", 1]
+        ]
+    },
+    "excluded_types": [
+        "Unassigned",
+        "Ignore"
+    ]
+}

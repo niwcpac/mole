@@ -1,0 +1,6 @@
+<mat-chip #chip [removable]="true" (removed)="removeChip()" class="mat-elevation-z4">
+  <span id="span-prefix" *ngIf="prefix">{{prefix}}:&nbsp;</span>
+  <fa-icon *ngIf="icon" [icon]="icon"></fa-icon><span id="span-icon" *ngIf="icon">&nbsp;</span>
+  {{ title }}
+  <mat-icon matChipRemove>cancel</mat-icon>
+</mat-chip>

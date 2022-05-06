@@ -1,0 +1,25 @@
+<mat-card *ngIf="filterChips.length" class="filter-chips card-light-dark"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="5px">
+  <div fxLayout="column" fxFlex="none">
+    <mat-card-title fxLayout="column">Filters:</mat-card-title>
+    <div class="clear-filter-wrapper" fxLayoutAlign="center" fxFill>
+      <button id="button1-clear-filter" class="mat-elevation-z2" mat-flat-button (click)="removeAll()" color="primary">
+        Clear
+      </button>
+    </div>
+  </div>
+  <mat-card-content fxLayout="row wrap"
+                    fxLayoutGap="5px grid"
+                    fxFlexAlign="start"
+                    fxFlex
+                    fxLayoutAlign="start">
+    <mole-event-filter-chip #filter *ngFor="let filter of filterChips"
+                            [type]="filter.type"
+                            [value]="filter.value"
+                            (clickedRemove)="removeFilter($event)"
+    ></mole-event-filter-chip>
+  </mat-card-content>
+</mat-card>
+

@@ -1,0 +1,55 @@
+{
+  "options": {
+    "paths": {
+      "root": "",
+      "fonts": "fonts",
+      "styles": "styles",
+      "mbtiles": ""
+    },
+    "formatQuality": {
+      "jpeg": 80,
+      "webp": 90,
+      "png": 90
+    },
+    "maxScaleFactor": 3,
+    "maxSize": 2048,
+    "pbfAlias": "pbf",
+    "serveAllFonts": true,
+    "serveStaticMaps": true
+  },
+  "styles": {
+    "ne_simple_style2": {
+      "style": "ne_simple_style1.json",
+      "tilejson": {
+        "type": "overlay",
+        "bounds": [
+          -180,
+          -85.051129,
+          180,
+          85.051129
+        ],
+        "format": "png"
+      },
+      "serve_rendered": true
+    },
+    "ne_simple_style": {
+      "style": "ne_simple_style.json",
+      "tilejson": {
+        "type": "overlay",
+        "bounds": [
+          -180,
+          -85.051129,
+          180,
+          85.051129
+        ],
+        "format": "png"
+      },
+      "serve_rendered": true
+    }
+  },
+  "data": {
+    "ne_simple": {
+      "mbtiles": "natural_earth_simple.mbtiles"
+    }
+  }
+}

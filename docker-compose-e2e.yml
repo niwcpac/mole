@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+
+  testing:
+    init: true
+    build: ./test_environment
+    # entrypoint: ["/usr/bin/tail", "-f", "/dev/null"]
+    entrypoint: ["pytest"]

@@ -1,0 +1,42 @@
+<mat-card fxLayout="row wrap" fxLayoutAlign="center center" class="card-dark">
+  <form [formGroup]="options">
+    <section>
+      <mat-form-field id="form-field-event-type-filter" *ngIf="useTypesField" class="event-type-filter" appearance="outline">
+        <mat-label>Event Type</mat-label>
+        <mat-select id="select1-event-type-filter" formControlName="types" multiple (selectionChange)="onTypesChange()">
+          <ngx-mat-select-search
+            [formControl]="typesFilter"
+            placeholderLabel="Search..."
+            noEntriesFoundLabel="No matching event types.">
+          </ngx-mat-select-search>
+          <mat-option
+            *ngFor="let type of (eventTypesObservable | async | orderBy:order | includesSubstr:eventTypesSelectionFilter)"
+            [value]="type">
+            <fa-icon
+              [icon]="type.pointStyle.icon"
+              [ngStyle]="{'color':type.pointStyle.marker_color}"></fa-icon>
+            &nbsp;{{type.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field id="form-field-metadata-filter" *ngIf="useMetaField" class="metadata-filter" appearance="outline">
+          <mat-label>Metadata</mat-label>
+          <input id="input-metadata-filter" #metadataFilter matInput formControlName="metadata">
+          <button id="button1-metadata-filter" mat-button matSuffix mat-icon-button aria-label="add" color="primary"
+            (click)="addMetadata(metadataFilter.value)"
+            [disabled]="metadataFilter.value.length == 0">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+      </mat-form-field>
+
+      <mat-form-field id="form-field-event-level-filter" *ngIf="useLevelField" class="event-level-filter" appearance="outline">
+        <mat-label>Event Level</mat-label>
+        <input matInput type="number" [value]="filter.level" (change)="onEventLevelFilterChange($event.target.value)" placeholder="0" formControlName="level" min="0">
+      </mat-form-field>
+
+      <mat-checkbox type="checkbox" color="primary" id="checkbox1-event-level-filter" [checked]="filter.hasPose" (change)="onPoseFilterChange($event.checked)">Has Coordinates</mat-checkbox>
+    </section>
+
+  </form>
+</mat-card>

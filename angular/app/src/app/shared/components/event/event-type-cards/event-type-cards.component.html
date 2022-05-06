@@ -1,0 +1,18 @@
+<mat-card class="card-dark mat-elevation-z4">
+  <div fxLayout="row wrap" fxLayoutGap="10px grid" fxFlexAlign="start" fxLayoutAlign="center">
+    <mole-event-type-card #cards fxFlex="0 0 calc(5% - 5px)"
+                          fxFlex.xl="0 0 calc(11% - 5px)"
+                          fxFlex.lg="0 0 calc(17% - 5px)"
+                          fxFlex.md="0 0 calc(26% - 5px)"
+                          fxFlex.sm="0 0 calc(34% - 5px)"
+                          fxFlex.xs="0 0 calc(51% - 5px)"
+                          fxLayoutAlign="stretch"
+                          *ngFor="let type of eventTypes"
+                          [eventType]="type"
+                          [useTitle]="useTitle"
+                          [useToggle]="useToggle"
+                          (cardClicked)="cardAction($event)"
+    >
+    </mole-event-type-card>
+  </div>
+</mat-card>

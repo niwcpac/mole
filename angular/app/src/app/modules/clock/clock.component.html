@@ -1,0 +1,27 @@
+<div class="container">
+
+  <div class="clock-container">
+
+    <mat-card class="clock-box">
+      <h3>{{ clockStream | async }}</h3>
+    </mat-card>
+    
+  </div>
+
+  <div class="timer-container">
+
+    <!-- Reported Clock: -->
+    <mole-timer-card [reported]="true"></mole-timer-card>
+
+    <!-- Major Clock: -->
+    <mole-timer-card [major]="true"></mole-timer-card>
+
+    <!-- Minor Clock: -->
+    <mole-timer-card [minor]="true"></mole-timer-card>
+
+    <!-- Current Clock: -->
+    <mole-timer-card></mole-timer-card>
+
+  </div>
+
+</div>

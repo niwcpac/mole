@@ -1,0 +1,15 @@
+version: 1.4
+
+jobs:
+  BackupDatabase:
+    cmd: curl "http://db_backup:8000/backup_db/?context=periodic"
+    time: 0 0 * * * *
+    notifyOnSuccess:
+      - type: stdout
+        data:
+          - stdout
+    notifyOnFailure:
+      - type: stdout
+        data:
+          - stdout
+          - stderr

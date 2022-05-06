@@ -1,0 +1,27 @@
+
+<div id="timeline-container">
+  <cdk-virtual-scroll-viewport [itemSize]="(timelineCardHeightObservable | async)">
+    <mole-timeline-card id="mole-timeline-card1"
+      *cdkVirtualFor="let event of (eventsObservable | async); let i = index; trackBy: trackByIdx;"
+      [event]="event"
+      [notesOption]="true"
+      [imagesOption]="true"
+      [mapOption]="false"
+      [dialogOption]="true"
+      [showMetadata]="true"
+      [allowResize]="true">
+    </mole-timeline-card>
+
+    <mole-timeline-card id="mole-timeline-card2"
+      *ngIf="!eventsToLoad"
+      [last]="true">
+    </mole-timeline-card>
+
+    <mat-spinner
+      *ngIf="eventsToLoad"
+      [diameter]="40">
+    </mat-spinner>
+
+  </cdk-virtual-scroll-viewport>
+</div>
+

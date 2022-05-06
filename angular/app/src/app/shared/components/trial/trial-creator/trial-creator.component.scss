@@ -1,0 +1,68 @@
+mat-toolbar {
+    margin-bottom: 1rem;
+}
+
+mat-card {
+    margin: 10px;
+    padding: 15px;
+    position: relative;
+    padding: 2rem;
+}
+
+mat-card-title {
+    margin-bottom: 0px;
+}
+    
+mat-checkbox {
+    margin-left: 1rem;
+}
+
+.mat-dialog-actions {
+    flex-wrap: nowrap;
+}
+
+.form-element-lg {
+    padding: 2px 2px 2px 2px;
+    width: 80%
+}
+
+.form-element-md {
+    padding: 2px 2px 2px 2px;
+    width: 45%
+}
+
+.form-element {
+    padding: 2px 2px 2px 2px;
+    width: 40%
+}
+
+.form-element-sm {
+    padding: 2px 2px 2px 2px;
+    width: 20%
+}
+
+.form-element-row button {
+    display: table-cell;
+    margin-right: 1rem;
+    padding: 2px 2px 2px 2px;
+    width: 20%
+}
+
+input[type=number] {
+    /*for absolutely positioning spinners*/
+    position: relative; 
+    padding: 2.5px;
+    height: 25px;
+}
+
+
+input[type=number]::-webkit-outer-spin-button, 
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: inner-spin-button !important;
+    width: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+}
+

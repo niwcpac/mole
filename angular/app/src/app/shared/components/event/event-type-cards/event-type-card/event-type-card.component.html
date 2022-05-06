@@ -1,0 +1,15 @@
+<mat-card class="card-light mat-elevation-z2" fxFlex="100%"
+          [title]="useTitle ? eventType.description: eventType.name"
+          (click)="onClick()"
+          [ngClass]="{'active': isActive}">
+  <div fxLayout="column" fxFill fxLayoutAlign="space-between center" >
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="10px">
+      <fa-icon  mat-card-avatar class="fa-icon-shadow" [icon]="['fas', eventType.pointStyle.icon]" [ngStyle]="{'color': eventType.pointStyle.marker_color}"></fa-icon>
+      <span id="span-mat-card-avatar" *ngIf="count">{{ count }}</span>
+    </div>
+    <div fxLayout="row" class="mat-card-title" *ngIf="useTitle">
+      <span id="span-mat-card-title" class="truncated"> {{ eventType.name}}</span>
+    </div>
+  </div>
+
+</mat-card>

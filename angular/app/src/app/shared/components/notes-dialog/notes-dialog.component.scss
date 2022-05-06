@@ -1,0 +1,27 @@
+
+.notes-container {
+    max-height: 30vw;
+    overflow-y: auto;
+    margin-bottom: 14px;
+
+    .top-right-corner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        // margin: inherit;
+        margin-right: 8px;
+        margin-top: 8px
+    }
+}
+
+.note-input {
+    width: 85%;
+}
+
+mat-card {
+    margin-bottom: 4px;
+}
+
+mat-form-field {
+    width: 100%;
+}

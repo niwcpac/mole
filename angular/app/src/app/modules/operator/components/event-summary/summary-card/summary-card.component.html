@@ -1,0 +1,11 @@
+<mat-card class="card-light mat-elevation-z2" fxFlex="100%"
+          [title]="eventType.name"
+          (click)="toggleFilter()"
+          [ngClass]="{'active': isActive}">
+  <mat-card-header fxLayoutAlign="center">
+  </mat-card-header>
+  <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly center" >
+      <fa-icon  mat-card-avatar [icon]="['fas', eventType.pointStyle.icon]" [ngStyle]="{'color': eventType.pointStyle.marker_color}"></fa-icon>
+    &nbsp;<span>{{ count }}</span>
+  </mat-card-content>
+</mat-card>

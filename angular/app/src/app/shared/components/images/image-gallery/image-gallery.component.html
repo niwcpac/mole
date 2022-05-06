@@ -1,0 +1,12 @@
+<div class="images" gallerize>
+    <span *ngFor="let image of event.images">
+        <img [src]="image.thumbUrl"
+            [attr.imageSrc]="image.imageUrl"
+            [attr.thumbSrc]="image.thumbUrl">
+    </span>
+</div>
+<!-- Eventually would like an image preview here -->
+<!-- Gives user message on how many images are queued to be uploaded -->
+<span *ngIf="newImages">
+    {{newImages.length}} image{{newImages.length > 1 ? 's' : ''}} queued for upload.
+</span>

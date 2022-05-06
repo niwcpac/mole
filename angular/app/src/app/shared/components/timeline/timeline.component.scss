@@ -1,0 +1,42 @@
+@import '../../../../styles/styles.scss';
+
+:host {
+    width: inherit;
+    height: inherit;
+}
+#timeline-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+
+    cdk-virtual-scroll-viewport {
+        flex: 1 1 auto;
+
+        mole-timeline-card {
+            cursor: pointer;
+        }
+
+        mat-spinner {
+            margin: 0 auto;
+        }
+
+        &::-webkit-scrollbar {
+            width: 1em;
+        }
+
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #607d8b;
+        }
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: grey;
+    }
+}
+

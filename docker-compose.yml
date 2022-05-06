@@ -1,0 +1,395 @@
+version: '3.7'
+
+services:
+  # This service for development use only
+  angular:
+    build: ./angular
+    ports:
+      - 4200:4200
+    volumes:
+      - angular_static_files:/home/node/dist
+      - ./angular/app/src:/home/node/mole_app/src:cached
+      - ./angular/app/e2e:/home/node/mole_app/e2e:cached
+      - ./angular/app/tsconfig.json:/home/node/mole_app/tsconfig.json
+      - ./angular/app/package.json:/home/node/mole_app/package.json
+      - ./angular/app/proxy.conf.js:/home/node/mole_app/proxy.conf.js
+    working_dir: /home/node/mole_app
+    entrypoint: ng serve --host 0.0.0.0 --public-host http://0.0.0.0/angular --poll 100
+    labels:
+      - traefik.enable=true
+      # Handle optional trailing slash on path prefix (e.g., /angular or /angular/)
+      #  Taken from
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-680086092 and 
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-679681822
+      - "traefik.http.middlewares.trailing-slash.chain.middlewares=slash-step1,slash-step2"
+      - "traefik.http.middlewares.slash-step1.redirectregex.regex=^(https?://[^/]+/[a-z0-9_]+)$$"
+      - "traefik.http.middlewares.slash-step1.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.slash-step1.redirectregex.permanent=true"
+      - "traefik.http.middlewares.slash-step2.stripprefixregex.regex=/[a-z0-9_]+"
+      # http
+      - "traefik.http.routers.angular.rule=PathPrefix(`/angular`)"
+      - "traefik.http.routers.angular.entrypoints=web"
+      - "traefik.http.services.angular.loadbalancer.server.port=4200"
+      - "traefik.http.routers.angular.service=angular"
+      - "traefik.http.routers.angular.middlewares=trailing-slash"
+      # https
+      - "traefik.http.routers.websecure-angular.rule=PathPrefix(`/angular`)"
+      - "traefik.http.routers.websecure-angular.entrypoints=websecure"
+      - "traefik.http.routers.websecure-angular.tls=true"
+      - "traefik.http.services.websecure-angular.loadbalancer.server.port=4200"
+      - "traefik.http.routers.websecure-angular.service=websecure-angular"
+      - "traefik.http.routers.websecure-angular.middlewares=trailing-slash"
+
+  proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.4.8
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      # - --log.level=DEBUG
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.file.filename=/configuration/certs.yml
+      - --providers.file.watch=true
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The HTTPS port
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/certificates/:/certificates/
+      - ./traefik/configuration/certs.yml:/configuration/certs.yml
+    labels:
+      - traefik.enable=false
+
+  postgres:
+    image: postgis/postgis:11-3.0
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${PGDATABASE}
+      - POSTGRES_USER=${PGUSER}
+      - POSTGRES_PASSWORD=${PGPASSWORD}
+      - PGDATABASE
+      - PGUSER
+      - PGPASSWORD
+    volumes:
+      - ./mole/build/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./db_backup/backups:/backups
+    command:
+      [
+        "postgres",
+        "-c",
+        "config_file=/etc/postgresql/postgresql.conf"
+      ]
+    labels:
+      - traefik.enable=false
+
+  django:
+    init: true
+    volumes:
+      - ./mole:/home/django/mole
+      - angular_static_files:/angular_static
+    depends_on:
+      - redis
+      - postgres
+    build:
+      context: mole/.
+      args:
+        - "NEWUSERID"
+        - "BUILD_TAG"
+        - "LONG_BUILD_TAG"
+    environment:
+      - PGDATABASE
+      - PGUSER
+      - PGPASSWORD
+      - POPULATE_DB
+      - PROFILE
+      - BACKUP_FLAG
+      - PYTHONUNBUFFERED
+      - DEBUG_DJANGO
+      - PYTHONDONTWRITEBYTECODE=1
+      - TIMEZONE
+    entrypoint: build/init.sh
+    working_dir: /home/django/mole
+    ports:
+      - 8000:8000
+      - 5678:5678
+    labels:
+      - traefik.enable=true
+      - "traefik.http.middlewares.allpaths-stripprefix.stripprefix.prefixes=/login,/operator,/dashboard,/clock"
+      # http
+      - "traefik.http.routers.mole.rule=HostRegexp(`{domain:.*}`)||PathPrefix(`/login`,`/operator`,`/dashboard`,`/clock`)"
+      - "traefik.http.routers.mole.entrypoints=web"
+      - "traefik.http.routers.mole.priority=1"
+      - "traefik.http.services.mole.loadbalancer.server.port=8000"
+      - "traefik.http.routers.mole.service=mole"
+      - "traefik.http.routers.mole.middlewares=allpaths-stripprefix"
+      # https
+      - "traefik.http.routers.websecure-mole.rule=HostRegexp(`{domain:.*}`)||PathPrefix(`/login`,`/operator`,`/dashboard`,`/clock`)"
+      - "traefik.http.routers.websecure-mole.entrypoints=websecure"
+      - "traefik.http.routers.websecure-mole.tls=true"
+      - "traefik.http.routers.websecure-mole.priority=1"
+      - "traefik.http.services.websecure-mole.loadbalancer.server.port=8000"
+      - "traefik.http.routers.websecure-mole.service=websecure-mole"
+      - "traefik.http.routers.websecure-mole.middlewares=allpaths-stripprefix"
+
+  redis:
+    image: redis:latest
+    # ports:
+    #   - "6379:6379"
+    volumes:
+      - redisdata:/data
+    labels:
+      - traefik.enable=false
+
+  docs:
+    build:
+      context: docs/.
+      args:
+        - "BUILD_TAG"
+        - "LONG_BUILD_TAG"
+    ports:
+      - "8001:8001"
+    # live reload adds significant CPU load. Disabling for default launching. It is still enabled for ./ml docs launching
+    command: [ "--no-livereload" ]
+    volumes:
+      - ./docs/raw:/docs/raw
+    labels:
+      - traefik.enable=true
+      # Handle optional trailing slash on path prefix (e.g., /docs or /docs/)
+      #  Taken from
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-680086092 and 
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-679681822
+      - "traefik.http.middlewares.trailing-slash.chain.middlewares=slash-step1,slash-step2"
+      - "traefik.http.middlewares.slash-step1.redirectregex.regex=^(https?://[^/]+/[a-z0-9_]+)$$"
+      - "traefik.http.middlewares.slash-step1.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.slash-step1.redirectregex.permanent=true"
+      - "traefik.http.middlewares.slash-step2.stripprefixregex.regex=/[a-z0-9_]+"
+      # http
+      - "traefik.http.routers.docs.rule=PathPrefix(`/docs`)"
+      - "traefik.http.routers.docs.entrypoints=web"
+      - "traefik.http.services.docs.loadbalancer.server.port=8001"
+      - "traefik.http.routers.docs.service=docs"
+      - "traefik.http.routers.docs.middlewares=trailing-slash"
+      # https
+      - "traefik.http.routers.websecure-docs.rule=PathPrefix(`/docs`)"
+      - "traefik.http.routers.websecure-docs.entrypoints=websecure"
+      - "traefik.http.routers.websecure-docs.tls=true"
+      - "traefik.http.services.websecure-docs.loadbalancer.server.port=8001"
+      - "traefik.http.routers.websecure-docs.service=websecure-docs"
+      - "traefik.http.routers.websecure-docs.middlewares=trailing-slash"
+
+  maptiles:
+    build: ./maps
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./maps/maptiles:/data
+    # Note: we are patching the tileserver-gl code in our maps Dockerfile to allow releative public_url. See maps/resources/*.js
+    command: [ "--public_url", "/maps" ]
+    labels:
+      - traefik.enable=true
+      # Handle optional trailing slash on path prefix (e.g., /maps or /maps/)
+      #  Taken from
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-680086092 and 
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-679681822
+      - "traefik.http.middlewares.trailing-slash.chain.middlewares=slash-step1,slash-step2"
+      - "traefik.http.middlewares.slash-step1.redirectregex.regex=^(https?://[^/]+/[a-z0-9_]+)$$"
+      - "traefik.http.middlewares.slash-step1.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.slash-step1.redirectregex.permanent=true"
+      - "traefik.http.middlewares.slash-step2.stripprefixregex.regex=/[a-z0-9_]+"
+      # http
+      - "traefik.http.routers.maps.rule=PathPrefix(`/maps`)"
+      - "traefik.http.routers.maps.entrypoints=web"
+      - "traefik.http.services.maps.loadbalancer.server.port=8080"
+      - "traefik.http.routers.maps.service=maps"
+      - "traefik.http.routers.maps.middlewares=trailing-slash"
+      # https
+      - "traefik.http.routers.websecure-maps.rule=PathPrefix(`/maps`)"
+      - "traefik.http.routers.websecure-maps.entrypoints=websecure"
+      - "traefik.http.routers.websecure-maps.tls=true"
+      - "traefik.http.services.websecure-maps.loadbalancer.server.port=8080"
+      - "traefik.http.routers.websecure-maps.service=websecure-maps"
+      - "traefik.http.routers.websecure-maps.middlewares=trailing-slash"
+
+  report:
+    build:
+      context: report/.
+      args:
+        - "NEWUSERID"
+        - "BUILD_TAG"
+        - "LONG_BUILD_TAG"
+    ports:
+      - "8400:8400"
+    environment:
+      - PGDATABASE
+      - PGUSER
+      - PGPASSWORD
+      - TIMEZONE
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes:
+      - ./utilities:/utilities
+      # for dev only
+      - ./report:/app
+    entrypoint: build/init.sh
+    labels:
+      - traefik.enable=true
+      # Handle optional trailing slash on path prefix (e.g., /report or /report/)
+      #  Taken from
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-680086092 and
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-679681822
+      - "traefik.http.middlewares.trailing-slash.chain.middlewares=slash-step1,slash-step2"
+      - "traefik.http.middlewares.slash-step1.redirectregex.regex=^(https?://[^/]+/[a-z0-9_]+)$$"
+      - "traefik.http.middlewares.slash-step1.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.slash-step1.redirectregex.permanent=true"
+      - "traefik.http.middlewares.slash-step2.stripprefixregex.regex=/[a-z0-9_]+"
+      # http
+      - "traefik.http.routers.report.rule=PathPrefix(`/report`)"
+      - "traefik.http.routers.report.entrypoints=web"
+      - "traefik.http.services.report.loadbalancer.server.port=8400"
+      - "traefik.http.routers.report.service=report"
+      - "traefik.http.routers.report.middlewares=trailing-slash"
+      # https
+      - "traefik.http.routers.websecure-report.rule=PathPrefix(`/report`)"
+      - "traefik.http.routers.websecure-report.entrypoints=websecure"
+      - "traefik.http.routers.websecure-report.tls=true"
+      - "traefik.http.services.websecure-report.loadbalancer.server.port=8400"
+      - "traefik.http.routers.websecure-report.service=websecure-report"
+      - "traefik.http.routers.websecure-report.middlewares=trailing-slash"
+
+  portainer:
+    image: portainer/portainer-ce:2.5.1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer/portainer-pass:/data/portainer-pass
+      - portainer_files:/data
+    ports:
+      - "8002:8000"
+      - "9000:9000"
+    entrypoint:
+      [
+        '/portainer',
+        '--admin-password-file',
+        '/data/portainer-pass',
+        '-H',
+        'unix:///var/run/docker.sock'
+      ]
+    labels:
+      - traefik.enable=true
+      # Handle optional trailing slash on path prefix (e.g., /portainer or /portainer/)
+      #  Taken from
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-680086092 and
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-679681822
+      - "traefik.http.middlewares.trailing-slash.chain.middlewares=slash-step1,slash-step2"
+      - "traefik.http.middlewares.slash-step1.redirectregex.regex=^(https?://[^/]+/[a-z0-9_]+)$$"
+      - "traefik.http.middlewares.slash-step1.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.slash-step1.redirectregex.permanent=true"
+      - "traefik.http.middlewares.slash-step2.stripprefixregex.regex=/[a-z0-9_]+"
+      # http
+      - "traefik.http.routers.portainer.rule=PathPrefix(`/portainer`)"
+      - "traefik.http.routers.portainer.entrypoints=web"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+      - "traefik.http.routers.portainer.service=portainer"
+      - "traefik.http.routers.portainer.middlewares=trailing-slash"
+      # https
+      - "traefik.http.routers.websecure-portainer.rule=PathPrefix(`/portainer`)"
+      - "traefik.http.routers.websecure-portainer.entrypoints=websecure"
+      - "traefik.http.routers.websecure-portainer.tls=true"
+      - "traefik.http.services.websecure-portainer.loadbalancer.server.port=9000"
+      - "traefik.http.routers.websecure-portainer.service=websecure-portainer"
+      - "traefik.http.routers.websecure-portainer.middlewares=trailing-slash"
+
+  db_backup:
+    build:
+      context: db_backup/.
+      args:
+        - "NEWUSERID"
+        - "BUILD_TAG"
+        - "LONG_BUILD_TAG"
+    volumes:
+      - ./db_backup/backups:/backups
+      - ./mole/media/:/home/jobberuser/mole_media/
+    ports:
+      - "8003:8000"
+    environment:
+      # - TZ=America/New_York
+      - PGDATABASE
+      - PGUSER
+      - PGPASSWORD
+      - BACKUP_FLAG
+      - TIMEZONE
+    depends_on:
+      - postgres
+    labels:
+      - traefik.enable=true
+      # Handle optional trailing slash on path prefix (e.g., /db_backup or /db_backup/)
+      #  Taken from
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-680086092 and
+      #    https://github.com/traefik/traefik/issues/5159#issuecomment-679681822
+      - "traefik.http.middlewares.trailing-slash.chain.middlewares=slash-step1,slash-step2"
+      - "traefik.http.middlewares.slash-step1.redirectregex.regex=^(https?://[^/]+/[a-z0-9_]+)$$"
+      - "traefik.http.middlewares.slash-step1.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.slash-step1.redirectregex.permanent=true"
+      - "traefik.http.middlewares.slash-step2.stripprefixregex.regex=/[a-z0-9_]+"
+      # http
+      - "traefik.http.routers.db_backup.rule=PathPrefix(`/db_backup`)"
+      - "traefik.http.routers.db_backup.entrypoints=web"
+      - "traefik.http.services.db_backup.loadbalancer.server.port=8000"
+      - "traefik.http.routers.db_backup.service=db_backup"
+      - "traefik.http.routers.db_backup.middlewares=trailing-slash"
+      # https
+      - "traefik.http.routers.websecure-db_backup.rule=PathPrefix(`/db_backup`)"
+      - "traefik.http.routers.websecure-db_backup.entrypoints=websecure"
+      - "traefik.http.routers.websecure-db_backup.tls=true"
+      - "traefik.http.services.websecure-db_backup.loadbalancer.server.port=8000"
+      - "traefik.http.routers.websecure-db_backup.service=websecure-db_backup"
+      - "traefik.http.routers.websecure-db_backup.middlewares=trailing-slash"
+
+  event_generator:
+    init: true
+    build:
+      context: event_generator/.
+      args:
+        - "BUILD_TAG"
+        - "LONG_BUILD_TAG"
+    depends_on:
+      - django
+    environment:
+      - PULSAR_IP
+      - DJANGO_IP
+      - REDIS_IP
+      - PYTHONUNBUFFERED
+      - PYTHONDONTWRITEBYTECODE=1
+    labels:
+      - "traefik.enable=false"
+
+  pulsar:
+    init: true
+    build: ./pulsar
+    ports:
+      - 6650:6650
+      - 8090:8080
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+      - INFLUXDB_IP
+      - INFLUXDB_PORT
+      - INFLUX_ORG
+      - INFLUX_TOKEN
+      - INFLUX_BUCKET
+    entrypoint: [ "/pulsar/scripts/start_pulsar.sh" ]
+    command: [ "bin/pulsar", "standalone", "-nss" ]
+    labels:
+      - "traefik.enable=false"
+
+volumes:
+  redisdata:
+  angular_static_files:
+  portainer_files:

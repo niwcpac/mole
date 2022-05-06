@@ -1,0 +1,6 @@
+version: '3.7'
+
+services:
+  docs:
+    entrypoint: mkdocs serve
+    command: []

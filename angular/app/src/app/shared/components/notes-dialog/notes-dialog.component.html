@@ -1,0 +1,57 @@
+<h2 *ngIf="title">Notes</h2>
+
+<mat-form-field class="note-input" appearance="fill">
+  <mat-label>Note</mat-label>
+  <textarea matInput #newNote
+    [(ngModel)]='newNoteValue'></textarea>
+</mat-form-field>
+&nbsp;
+<button id="mat-icon-button-1" mat-icon-button
+    (click)="attachNote()"
+    [disabled]="newNoteValue.length == 0"
+    color="primary">
+    <mat-icon>done</mat-icon>
+</button>
+
+<div class="notes-container">
+  <mat-card class="card-light" *ngFor="let note of dialogNotes | reverse; let noteIndex=index">
+    <span class="top-right-corner">
+
+      <button id="mat-icon-button-2" mat-icon-button *ngIf="!note.editing"
+        (click)="toggleEdit(note.id, true)">
+        <mat-icon *ngIf="!note.editing">edit</mat-icon>
+        <mat-icon *ngIf="note.editing">close</mat-icon>
+      </button>
+      <button id="mat-icon-button-3" mat-icon-button *ngIf="note.editing"
+        (click)="toggleEdit(note.id, false)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button id="mat-icon-button-4" mat-icon-button *ngIf="!note.editing"
+        (click)="deleteNote(note)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
+
+    <mat-card-subtitle>{{note.tester.name}}</mat-card-subtitle>
+    <mat-card-content id="mat-card-content-note" *ngIf="!note.editing">
+      {{note.note}}
+    </mat-card-content>
+
+    <mat-card-content *ngIf="note.editing">
+      <mat-form-field appearance="fill">
+        <mat-label>Note</mat-label>
+        <textarea matInput #editNote
+          [value]='note.note'></textarea>
+      </mat-form-field>
+      &nbsp;
+      <button id="mat-flat-button-1" mat-flat-button
+          (click)="updateNote(note, editNote.value)"
+          [disabled]="editNote.value.length == 0"
+          color="primary">
+          Update Note
+      </button>
+    </mat-card-content>
+
+
+  </mat-card>
+</div>

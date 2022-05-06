@@ -1,0 +1,10 @@
+data endpoint,description
+/api/trial_data,get all trial trial data
+/api/entity_data,get all entity data
+/api/entity_data?entity_type=ugv,get entity data fitlered by entity type
+/api/entity_group_data,get all entitiy group data
+/api/entity_group_data?name=Test,get entity group data filtered by entity group name
+/api/event_data,get all event data
+/api/event_data?event_type=Node+Online,get event data filtered by event type
+/api/event_data?trial=2&event_type=Node+Online,get event data filtered by trial and event type
+/api/event_data?trial=3&event_type=Node+Online&event_type=Node+Warning,get event data filtered by trial and multiple event types

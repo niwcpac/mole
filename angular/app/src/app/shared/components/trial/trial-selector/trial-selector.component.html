@@ -1,0 +1,35 @@
+
+<div class="container" id="div-selected-trial" fxLayout="row" *ngIf="selectedTrial">
+  <mat-card-header id="mat-card-header-selected-trial" *ngIf="trialVisibility">
+    <mat-card-title class="selector">
+      <form [formGroup]="form">
+          <mat-form-field>
+              <mat-label id="mat-label-selected-trial-name">{{selectedTrial.name}}</mat-label>
+              <mat-select id="mat-select-trials" formControlName="trials" panelClass="panel-light" (selectionChange)="onChangeTrial($event)">
+                <mat-option id="mat-option-trial" *ngFor="let trial of allTrialsObservable | async" [value]="trial">
+                  {{trial.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </form>
+    </mat-card-title>
+
+    <span style="margin-top: 24px">
+        <mat-chip-list>
+          <mat-chip id="mat-chip-edit" *ngIf="allowEdit" color="warn" class="edit card-light-dark mat-elevation-z6" (click)="openTrialCreator()">
+            <mat-icon>edit</mat-icon>
+          </mat-chip>
+          <mat-chip id="mat-chip-add" *ngIf="allowEdit" class="add card-light-dark mat-elevation-z6" [matMenuTriggerFor]="menu">
+            <mat-icon>add</mat-icon>
+          </mat-chip>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item id="button-day" (click)="newMajor()">{{selectedCampaign ? selectedCampaign.trialIdMajorName : "Major"}}</button>
+            <button id="button-shift" mat-menu-item (click)="newMinor()">{{selectedCampaign ? selectedCampaign.trialIdMinorName : "Minor"}}</button>
+            <button id="button-run" mat-menu-item (click)="newMicro()">{{selectedCampaign ? selectedCampaign.trialIdMicroName : "Micro"}}</button>
+          </mat-menu>
+          <mat-chip id="mat-chip-current" color="accent" *ngIf="selectedTrial.current" selected>Current</mat-chip>
+          <mat-chip id="mat-chip-reported" color="accent" *ngIf="selectedTrial.reported" selected>Reported</mat-chip>
+        </mat-chip-list>
+      </span>
+  </mat-card-header>
+</div>
