@@ -1,10 +1,9 @@
 django==2.2.28
-whitenoise==6.1.0
+dj-static==0.0.6
 djangorestframework==3.13.1 
 django-filter==2.4.0
 pytz==2018.9
 djangorestframework-gis==0.14
-static==1.1.1
 easy-thumbnails==2.6
 django-extensions==2.1.6
 django-silk==4.0.1
