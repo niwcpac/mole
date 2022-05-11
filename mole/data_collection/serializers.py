@@ -1118,7 +1118,6 @@ class EventDataSerializer(serializers.Serializer):
             )
             lin = LineString(array(poses))
             length = lin.length
-        #        import ipdb; ipdb.set_trace()
         return length
 
     def get_performers(self, obj):
