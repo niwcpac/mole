@@ -20,7 +20,6 @@ nav:
     - Maps: maps.md
     - Utilities:
       - Event Mocker: utilities_event_mocker.md
-      - Profiler: utilities_profiler.md
     - Developer:
       - Debugger: developer_debugger.md
       - User Interface: developer_angular.md

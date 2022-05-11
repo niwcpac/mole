@@ -1,7 +1,5 @@
 # **Configuration**
 
-## **Event Generator Pulsar Function**
-
 ## **First Steps**
 
 If we're starting with a blank slate, we have a couple initial steps to go through to configure Django. We need to create a series of Django model instances to tailor the Mole instrumentation to a specific domain. There are two ways to create instances: using the Django ORM or using third-party library `factory_boy`. The main difference between the two is how much data must be specified. The ORM requires all the fields to be filled out but `factory_boy` is configured to fill in fields that are left blank. Regardless of which is chosen, this should be implemented in a custom Django command. An example of one can be found at `mole/data_collection/management/commands/configure_mole.py`.
@@ -34,7 +32,7 @@ The first thing we need to create is a location.
     )
     ```
 
-The name and description fields are self-explanatory. The point field is a Well-known text representation (WKT) of a point geometry. The timezone field is a string indicating the TZ database name.
+The name and description fields are self-explanatory. The point field is a well-known text representation (WKT) of a point geometry. The timezone field is a string indicating the TZ database name.
 
 ### **Campaigns**
 Next we need to create a campaign. A campaign can represent a high level field experiment or test event. 
@@ -47,7 +45,7 @@ Next we need to create a campaign. A campaign can represent a high level field e
         name="Test Event 1",
         description="info about test event 1",
         start_datetime="2018-10-21T05:00:00-0800",
-        end_datetime="2018-03-25T19:00:00-0800",
+        end_datetime="2018-10-25T19:00:00-0800",
         location=location_1,
         trial_id_major_name="Day",
         trial_id_minor_name="Shift",
@@ -62,7 +60,7 @@ Next we need to create a campaign. A campaign can represent a high level field e
         name="Test Event 1",
         description="info about test event 1",
         start_datetime="2018-10-21T05:00:00-0800",
-        end_datetime="2018-03-25T19:00:00-0800",
+        end_datetime="2018-10-25T19:00:00-0800",
         location=location_1,
         trial_id_major_name="Day",
         trial_id_minor_name="Shift",
@@ -105,7 +103,7 @@ Next we'll create a Scenario. But first we need to create a Test Method. A Test 
         variant="autonomy",
     )
     ```
-The version number can be used to track incremental progress or evolution of the scenario and the variant field can provide other metadata about this test method. 
+The version numbers and variant can be used to track changes to test procedures. 
 
 Now we can create the scenario.
 
@@ -136,7 +134,7 @@ The scenario's location could be the same or different than the campaign's locat
 
 ### **Trials**
 
-Now we move on to our trials. Trials can represent a single run or attempt. Events of interest or data about the run can be saved in these trials, giving us an easy container to compare and contrast test results. Since trials contain a lot of data about a run, we'll need to create a couple of pre-requisite instances. The first is a Tester which needs both a user and a role.
+Now we move on to our trials. A Trial can represent a single run or attempt. Events of interest or data about the run can be saved in these trials, giving us an easy container to compare and contrast test results. Since trials contain a lot of data about a run, we'll need to create a couple of pre-requisite instances. The first is a Tester which needs both a user and a role.
 
 We use the Django authentication [user](https://docs.djangoproject.com/en/4.0/ref/contrib/auth/#django.contrib.auth.models.User) so unlike the other models, we have to use the `factory_boy` implementation to ensure that the password is saved correctly.
 
@@ -316,7 +314,7 @@ Now we can finally create an initial trial.
         testers=(my_tester,),
         test_condition=my_test_condition,
         system_configuration=sys_conf,
-        start_datetime="2021-1-22T07:00:00-0800",
+        start_datetime="2018-10-22T07:00:00-0800",
         reported=False,
     )
     ```
@@ -333,7 +331,7 @@ Now we can finally create an initial trial.
         testers=(my_tester,),
         test_condition=my_test_condition,
         system_configuration=sys_conf,
-        start_datetime="2021-1-22T07:00:00-0800",
+        start_datetime="2018-10-22T07:00:00-0800",
         reported=False,
     )
     ```
@@ -401,7 +399,7 @@ Now we move on to the event type itself.
     ```
 
 ## **Entities**
-This model provides an abstraction for any unit or system you wish to track. This could be a system that's undergoing testing or an orchestration element that you're configuring. 
+This model provides an abstraction for any unit or system we wish to track. This could be a system that's undergoing testing or an orchestration element that we're configuring. 
 
 Each entity will need an entity type. We can also assign a list of capabilities to an entity type, signifying that every entity of this type has these properties. We can further distinguish individual entities by assigning mods to them, where mods can have multiple capabilities.
 
@@ -621,7 +619,7 @@ Now we'll create the region.
     If `key_point` is not explicitly set to `None`, the factory will create an arbitrary point for it.
 
 ## **PoseSources**
-Mole also has the ability to track entities as they move. We do this through the `Pose` model. Poses have a `PoseSource`, which distinguish poses of different origins. 
+Mole also has the ability to track entities as they move. We do this through the `Pose` model. Poses have a `PoseSource`, which distinguishes poses of different origins. 
 
 For creating poses later, we'll need to have at least one `PoseSource`.
 

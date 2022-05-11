@@ -13,11 +13,11 @@ serve an set of map tiles in the .mbtiles format, place the file in the `maps/ma
 
 The tiles will be served at 
 
-    http://localhost:8081/data/<filename_without_extension>/<z>/<y>/<x>.jpg
+    http://localhost/maps/data/<filename_without_extension>/<z>/<y>/<x>.jpg
     
 A map preview is served at 
 
-    http://localhost:8081/data/<filename_without_extension>
+    http://localhost/maps/data/<filename_without_extension>
 
 The `maps` service runs by default.  To disable it, use the `--nomaps` flag to `./ml run`:
 
