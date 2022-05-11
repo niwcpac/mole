@@ -1,5 +1,5 @@
 django==2.2.28
-dj-static==0.0.6
+whitenoise==6.1.0
 djangorestframework==3.13.1 
 django-filter==2.4.0
 pytz==2018.9

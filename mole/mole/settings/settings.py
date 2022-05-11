@@ -117,6 +117,7 @@ SECRET_KEY = "472hl78gf94h%7^g76IjAakksIfbcHadfLk20Tsms5r0flsl3#49@$&%azdmfkGjDj
 
 MIDDLEWARE = (
     #    'django.middleware.cache.UpdateCacheMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
