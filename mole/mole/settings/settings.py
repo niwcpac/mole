@@ -262,3 +262,5 @@ THUMBNAIL_ALIASES = {"": {"thumb": {"size": (64, 64), "crop": True}}}
 THUMBNAIL_SUBDIR = "thumbs"
 
 LOGIN_REDIRECT_URL = "/"
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
