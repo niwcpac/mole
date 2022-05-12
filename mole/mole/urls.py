@@ -1,6 +1,7 @@
 from data_collection import views, routers
 from automation import views as auto_views
-from django.conf.urls import url, include
+from django.conf.urls import include
+from django.urls import re_path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import mole.views as viewpath
@@ -90,22 +91,22 @@ router.register(r"script_conditions", auto_views.ScriptConditionViewSet)
 
 router.add_api_view(
     "server_datetime",
-    url(
+    re_path(
         r"server_datetime/$", views.ServerDatetimeView.as_view(), name="server_datetime"
     ),
 )
 
 
 urlpatterns = [
-    url(r"^api/", include(router.urls)),
-    url(r"^api-auth/", include("rest_framework.urls")),
-    url(r"api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    url(r"api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    url(r"^accounts/login/$", auth_views.LoginView.as_view()),
-    url(r"^accounts/logout/$", auth_views.LogoutView.as_view()),
-    url(r"^$", viewpath.home),
-    url(r".*/$", viewpath.home),
+    re_path(r"^api/", include(router.urls)),
+    re_path(r"^api-auth/", include("rest_framework.urls")),
+    re_path(r"api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    re_path(r"api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    re_path(r"^accounts/login/$", auth_views.LoginView.as_view()),
+    re_path(r"^accounts/logout/$", auth_views.LogoutView.as_view()),
+    re_path(r"^$", viewpath.home),
+    re_path(r".*/$", viewpath.home),
 ]
 
 if settings.PROFILE:
-    urlpatterns += [url(r"^silk/", include("silk.urls", namespace="silk"))]
+    urlpatterns += [re_path(r"^silk/", include("silk.urls", namespace="silk"))]

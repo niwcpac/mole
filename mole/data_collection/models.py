@@ -6,7 +6,8 @@ from django.utils import timezone
 import pytz
 
 from django.contrib.gis.db import models
-from django.contrib.postgres.fields import JSONField, ArrayField
+from django.contrib.postgres.fields import ArrayField
+from django.db.models import JSONField
 from django.db.models import signals, Q
 from easy_thumbnails.fields import ThumbnailerImageField
 
