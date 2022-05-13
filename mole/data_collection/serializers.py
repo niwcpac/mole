@@ -914,7 +914,10 @@ class ImageDataSerializer(serializers.Serializer):
     image_url = serializers.SerializerMethodField()
     image_type = serializers.ReadOnlyField()
     event = serializers.ReadOnlyField()
-    event_id = serializers.SerializerMethodField()
+    event_id = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+        source="event.id"
+    )
     timestamp = serializers.ReadOnlyField()
 
     class Meta:
@@ -924,9 +927,6 @@ class ImageDataSerializer(serializers.Serializer):
         request = self.context.get("request")
         image_url_escaped = request.build_absolute_uri(obj.image.url)
         return http.unquote(image_url_escaped)
-
-    def get_event_id(self, obj):
-        return obj.event.id
 
 
 class ServerTypeSerializer(serializers.HyperlinkedModelSerializer):
