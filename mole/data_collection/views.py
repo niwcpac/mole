@@ -1460,7 +1460,7 @@ class EventDataViewSet(rest_pandas.PandasViewSet):
         "start_pose", "event_type", "weather"
     )
     serializer_class = dcs.EventDataSerializer
-    filter_class = EventFilter
+    filterset_class = EventFilter
     schema = None
 
 
@@ -1470,7 +1470,7 @@ class EntityDataViewSet(rest_pandas.PandasViewSet):
         "entity_type",
     )
     serializer_class = dcs.EntityDataSerializer
-    filter_class = EntityFilter
+    filterset_class = EntityFilter
     schema = None
 
 
