@@ -455,7 +455,10 @@ class RegionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
-    has_segments = serializers.SerializerMethodField()
+    has_segments = serializers.BooleanField(
+        source="test_method.has_segments", 
+        default=False,
+    )
     potential_segments = SegmentSerializer(many=True, read_only=True)
 
     class Meta:
@@ -475,9 +478,6 @@ class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
             "time_limit",
             "scripts",
         )
-
-    def get_has_segments(self, obj):
-        return obj.test_method.has_segments
 
 
 class WeatherSerializer(serializers.HyperlinkedModelSerializer):
