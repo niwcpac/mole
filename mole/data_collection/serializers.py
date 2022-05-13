@@ -251,8 +251,12 @@ class EntitySerializer(DynamicFieldsHyperlinkedModelSerializer):
     )
     region = serializers.SerializerMethodField()
     latest_pose = serializers.SerializerMethodField()
-    module_type = serializers.SerializerMethodField()
-    point_style = serializers.SerializerMethodField()
+    module_type = serializers.StringRelatedField(
+        source="entity_type",
+    )
+    point_style = AggregatedPointStyleSerializer(
+        source="entity_type.point_style",
+    )
 
     class Meta:
         model = dcm.Entity
@@ -302,13 +306,6 @@ class EntitySerializer(DynamicFieldsHyperlinkedModelSerializer):
         return PoseSerializer(
             last_pose, read_only=True, context={"request": request}
         ).data
-
-    def get_module_type(self, obj):
-        return obj.entity_type.name
-
-    def get_point_style(self, obj):
-        point_style = obj.entity_type.point_style
-        return AggregatedPointStyleSerializer(point_style).data
 
 
 class CampaignSerializer(serializers.HyperlinkedModelSerializer):
