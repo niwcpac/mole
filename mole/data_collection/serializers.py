@@ -518,7 +518,10 @@ class SystemConfigurationSerializer(serializers.HyperlinkedModelSerializer):
 
 class TrialSerializer(serializers.HyperlinkedModelSerializer):
     scenario = ScenarioSerializer()
-    name = serializers.SerializerMethodField()
+    name = serializers.StringRelatedField(
+        source="*",
+        read_only=True,
+    )
     performers = serializers.SerializerMethodField()
     script_run_counts = serializers.SerializerMethodField()
 
@@ -547,9 +550,6 @@ class TrialSerializer(serializers.HyperlinkedModelSerializer):
             "performers",
             "script_run_counts",
         )
-
-    def get_name(self, obj):
-        return obj.__str__()
 
     def get_performers(self, obj):
         performers = []
