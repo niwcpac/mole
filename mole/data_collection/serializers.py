@@ -487,17 +487,15 @@ class WeatherSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TestConditionSerializer(serializers.HyperlinkedModelSerializer):
-    name = serializers.SerializerMethodField("get_test_condition_name")
+    name = serializers.StringRelatedField(
+        source="*",
+        read_only=True,
+    )
 
     class Meta:
         model = dcm.TestCondition
         fields = ("url", "id", "name", "weather", "trials")
         read_only_fields = ("trials",)
-
-    # Name for test condition is derived from component elements.  Update this if additional components are added.
-    def get_test_condition_name(self, obj):
-        test_condition_name = str(obj)
-        return test_condition_name
 
 
 class PerformerSerializer(serializers.HyperlinkedModelSerializer):
