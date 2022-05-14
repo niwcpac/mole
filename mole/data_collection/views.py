@@ -1604,6 +1604,7 @@ class TriggerViewSet(viewsets.ModelViewSet):
 
 class ServerDatetimeView(views.APIView):
     permission_classes = []
+    schema = None
 
     def get(self, request, format=None):
         timezone.activate(timezone.get_default_timezone_name())
