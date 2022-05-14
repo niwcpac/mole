@@ -1596,7 +1596,7 @@ class TriggerViewSet(viewsets.ModelViewSet):
     serializer_class = dcs.TriggerSerializer
     filterset_class = TriggerFilter
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def publish(self, request):
         content = {"detail": "Unused endpoint."}
         return Response(content, status=status.HTTP_200_OK)
