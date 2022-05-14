@@ -710,6 +710,7 @@ class TrialViewSet(viewsets.ModelViewSet):
     )
     filterset_class = TrialFilter
     serializer_class = dcs.TrialSerializer
+    schema = schemas.TrialSchema()
 
     def perform_update(self, serializer):
         saved = serializer.save()
@@ -757,14 +758,14 @@ class TrialViewSet(viewsets.ModelViewSet):
         )
         trial_producer.close()
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def latest(self, request):
         latest_trial = dcm.Trial.objects.latest("start_datetime")
         return Response(
             dcs.TrialSerializer(latest_trial, context={"request": request}).data
         )
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def current(self, request):
         try:
             current_trial = dcm.get_current_trial()
@@ -776,7 +777,7 @@ class TrialViewSet(viewsets.ModelViewSet):
             response = Response(content, status=status.HTTP_404_NOT_FOUND)
         return response
 
-    @action(detail=True)
+    @action(detail=True, schema=None)
     def event_count(self, request, pk=None):
         # Initialize dictionary with all event types
         type_counts = dict.fromkeys(
@@ -801,7 +802,7 @@ class TrialViewSet(viewsets.ModelViewSet):
         response = Response(content)
         return response
 
-    @action(detail=True)
+    @action(detail=True, schema=None)
     def clock_state(self, request, pk=None):
         # get current trial
         try:
