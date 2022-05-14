@@ -570,7 +570,7 @@ class TestMethodViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.TestMethod.objects.all().prefetch_related("scenarios")
     serializer_class = dcs.TestMethodSerializer
-
+    schema = schemas.TestMethodSchema()
 
 class ScenarioViewSet(viewsets.ModelViewSet):
     """

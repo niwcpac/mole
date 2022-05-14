@@ -61,3 +61,23 @@ class TrialSchema(AutoSchema):
         # Handle SerializerMethodFields or custom fields here...
         # ...
         return super().map_field(field)
+
+
+class TestMethodSchema(AutoSchema):
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+
+    def map_field(self, field):
+        if field.field_name == "trials":
+            return {
+                "type": "array",
+                "items": { "type" : "object" },
+            }
+        elif field.field_name == "campaigns":
+            return {
+                "type": "array",
+                "items": { "type" : "string" },
+            }
+
+        # Handle SerializerMethodFields or custom fields here...
+        # ...
+        return super().map_field(field)
