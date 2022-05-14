@@ -1316,7 +1316,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         rest_pandas.PandasCSVRenderer,
         rest_pandas.PandasTextRenderer,
     ]
-    
+    schema = schemas.EventSchema()
 
     def list(self, request, *args, **kwargs):
         # We need a custom list function

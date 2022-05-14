@@ -81,3 +81,31 @@ class TestMethodSchema(AutoSchema):
         # Handle SerializerMethodFields or custom fields here...
         # ...
         return super().map_field(field)
+
+
+class EventSchema(AutoSchema):
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+
+    def map_field(self, field):
+        if field.field_name == "point_style":
+            return {
+                "type": "object",
+            }
+        elif field.field_name == "related_entities":
+            return {
+                "type": "object",
+            }
+        elif field.field_name == "unfound_entities":
+            return {
+                "type": "array",
+                "items": { "type" : "string" },
+            }
+        elif field.field_name == "invalid_entities":
+            return {
+                "type": "array",
+                "items": { "type" : "string" },
+            }
+
+        # Handle SerializerMethodFields or custom fields here...
+        # ...
+        return super().map_field(field)

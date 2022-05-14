@@ -1346,7 +1346,7 @@ class TriggerSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
-    start_pose = PoseSerializer()
+    start_pose = PoseSerializer(allow_null=True)
     trial = serializers.HyperlinkedRelatedField(
         view_name="trial-detail", label="Trial", queryset=dcm.Trial.objects.all()
     )
@@ -1354,8 +1354,8 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
     weather = WeatherSerializer()
     notes = NoteSerializer(read_only=True, many=True)
     images = ImageSerializer(read_only=True, many=True)
-    trigger = TriggerSerializer(label="Trigger")
-    segment = SegmentSerializer()
+    trigger = TriggerSerializer(label="Trigger", allow_null=True)
+    segment = SegmentSerializer(allow_null=True)
     point_style = serializers.SerializerMethodField()
 
     related_entities = serializers.SerializerMethodField()
