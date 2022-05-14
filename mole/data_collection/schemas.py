@@ -4,8 +4,6 @@ class EntitySchema(AutoSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
-        # print(type(field))
-        # print(field.field_name)
         if field.field_name == "campaigns":
             return {
                 "type": "array",
@@ -20,6 +18,26 @@ class EntitySchema(AutoSchema):
             return {
                 "type": "object",
             }
+        # Handle SerializerMethodFields or custom fields here...
+        # ...
+        return super().map_field(field)
+
+
+class CampaignSchema(AutoSchema):
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+
+    def map_field(self, field):
+        if field.field_name == "entities":
+            return {
+                "type": "array",
+                "items": { "type" : "object" },
+            }
+        elif field.field_name == "scenarios":
+            return {
+                "type": "array",
+                "items": { "type" : "object" },
+            }
+
         # Handle SerializerMethodFields or custom fields here...
         # ...
         return super().map_field(field)

@@ -476,6 +476,7 @@ class CampaignViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.Campaign.objects.all().select_related("location")
     serializer_class = dcs.CampaignSerializer
+    schema = schemas.CampaignSchema()
 
     @action(detail=False)
     def latest(self, request):
