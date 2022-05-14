@@ -27,6 +27,7 @@ from rest_framework.pagination import CursorPagination
 from data_collection.permissions import IsOwnerOrReadOnly, IsTargetUserOrReadOnly
 import data_collection.models as dcm
 import data_collection.serializers as dcs
+from data_collection import schemas
 
 from ast import literal_eval
 import pandas as pd
@@ -307,6 +308,7 @@ class EntityViewSet(AllowPUTAsCreateMixin, viewsets.ModelViewSet):
     serializer_class = dcs.EntitySerializer
     pagination_class = EntityPagination
     filterset_class = EntityFilter
+    schema = schemas.EntitySchema()
 
     @action(detail=True)
     def around(self, request, pk=None):

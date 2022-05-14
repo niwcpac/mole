@@ -6,6 +6,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import mole.views as viewpath
 from django.contrib.auth import views as auth_views
 from django.conf import settings
+from rest_framework.schemas import get_schema_view
+from django.urls import path
 
 router = routers.HybridRouter()
 router.register(r"users", views.UserViewSet)
@@ -95,8 +97,21 @@ router.add_api_view(
     ),
 )
 
+base_urls = [
+    url(r"^api/", include(router.urls)),
+]
 
-urlpatterns = [
+urlpatterns = base_urls + [
+    path(
+        'api/openapi', 
+        get_schema_view(
+            title="Your Project",
+            description="API for all things …",
+            version="1.0.0",
+            patterns=base_urls,
+        ), 
+        name='openapi-schema',
+    ),
     url(r"^api/", include(router.urls)),
     url(r"^api-auth/", include("rest_framework.urls")),
     url(r"api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

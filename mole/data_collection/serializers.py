@@ -297,7 +297,7 @@ class EntitySerializer(DynamicFieldsHyperlinkedModelSerializer):
             return [r.name for r in region]
 
         except AttributeError:
-            return
+            return []
 
     def get_latest_pose(self, obj):
         request = self.context.get("request", None)
