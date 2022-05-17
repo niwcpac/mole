@@ -253,9 +253,11 @@ class EntitySerializer(DynamicFieldsHyperlinkedModelSerializer):
     latest_pose = serializers.SerializerMethodField()
     module_type = serializers.StringRelatedField(
         source="entity_type",
+        read_only=True,
     )
     point_style = AggregatedPointStyleSerializer(
         source="entity_type.point_style",
+        read_only=True,
     )
 
     class Meta:
