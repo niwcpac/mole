@@ -19,17 +19,17 @@ Navigate to the root directory of the project and run the following command:
 
 `$ ./ml init`
 
-The Report Generator is available at **http://localhost:8400** or 
-**http://report.localhost/**.
+The Report Generator is available at **[http://localhost:8400](http://localhost:8400)** or 
+**[http://localhost/report](http://localhost/report)**.
 
 !!! info "Tip"
 
-    If Mole is running on seperate machine, you can run the report as a standalone app using `./ml report`.
+    If Mole is running on separate machine, you can run the report as a standalone app using `./ml report`.
     The report generator has an input box for users to enter an API endpoint manually.
 
 ### **Quickstart**
 
-Quickly get started on creating plotly figures with the report generator.
+Quickly get started on creating Plotly figures with the report generator.
 
 #### **Create a graph function**
 Navigate to `/data/graph_functions.py` and create a function with the following parameters:
@@ -99,7 +99,7 @@ is being executed.
 
 The `/dash` directory contains the core components of the report.
 
-- `base.py` is the base class of the Dash app. The dynamic callbacks functionaility are defined in this file. 
+- `base.py` is the base class of the Dash app. The dynamic callbacks functionality are defined in this file. 
 
 - `report_modules.py` consists of reusable report UI components such as *dcc.Graph* and *dcc.Dropdown*, or a custom *Div* such as `html.Div()`.
 
@@ -214,7 +214,7 @@ def csv_table(data, filename, font_color, plot_color, height, width):
 
 The dynamic callback for this CSV-figure has the following inputs:
 
-- **url**, the current page based on the URL. Switching between [Report](http://localhost:8000/Report) and [Dashboard](http://localhost:8400/) will trigger the callback.
+- **url**, the current page based on the URL. Switching between [Print](http://localhost/report/Print) and [Dashboard](http://localhost/report) will trigger the callback.
 
 - **csv-session**, the data acquired from upload.
 
@@ -265,4 +265,4 @@ def example(trial, font_color, plot_color, height, width):
 All exported figures can be found in `report/exported_figures`.
 
 ### ***PDF Print/Export***
-The Report Generator comes with a dedicated page that is styled specfically for PDF exporting. This page can be found on `localhost:8400/Report`. To export the report to a PDF, simply click the export button on the top right corner of the page.
+The Report Generator comes with a dedicated page that is styled specfically for PDF exporting. This page can be found at [http://localhost/report/Print](http://localhost/report/Print). To export the report to a PDF, simply click the `export` button on the top right corner of the page.

@@ -12,7 +12,6 @@
 /postgres/
 /docs/built/
 /compose_init_db.yml
-/db_backup/backups
 /maps/maptiles/
 portainer/
 report/exported_figures/

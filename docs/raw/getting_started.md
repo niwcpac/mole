@@ -20,6 +20,9 @@ Reboot, then confirm docker is running.
     
     $ docker run hello-world
 
+!!! tip "Note"
+    If building the Docker containers hangs in the Mole initialization step below, see [Configuring Docker to Use a Different DNS Server](#configuring-docker-to-use-a-different-dns-server).  This may be due to Docker's default DNS server (Google's 8.8.8.8) being blocked on your network.
+
 2) docker-compose
 
 Install Docker-Compose locally, set permissions, and modify the path. See [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
@@ -33,7 +36,7 @@ Confirm that docker-compose is installed
     $ docker-compose --version
 
 !!! tip "Note"
-    In order for Mole to automatically generate keys/certificates for https, the `openssl` command must be installed on the host.
+    In order for Mole to automatically generate keys/certificates for https, the `openssl` command must be installed on the host. This is generally the case by default.
 
 ## **Services**
 Mole is composed of a number of different services including the following:
@@ -80,11 +83,11 @@ In order to "trust" the Mole certificate, perform the following:
 * Select `Manage Certificates`
 * Select `Authorities`
 * Click `Import`
-* Browse to the location of the Mole repository under `mole_project/traefik/certificates`
+* Browse to the location of the Mole repository under `mole/traefik/certificates`
 * Select `moleCA.pem`
 * Click `Trust this certificate for identifying websites`
 
-If you are trying to "trust" the Mole certificate on a machine other than the Mole server, first copy the `mole_project/traefik/certificates/moleCA.pem` file from the Mole server to an accssible location, then browse to this location when selecting the certificate to import.
+If you are trying to "trust" the Mole certificate on a machine other than the Mole server, first copy the `mole/traefik/certificates/moleCA.pem` file from the Mole server to an accssible location, then browse to this location when selecting the certificate to import.
 
 !!! tip "Note"
     Once the Mole Certificate Authority certificate has been imported it should be at the top of the list as `org-_Mole`. If the CA certificate is updated in the server, it must be replaced in the browser as well.
@@ -94,7 +97,7 @@ Although `./ml init` automatically generates keys/certificates the first time it
 
 This helper has options for selectively generating only the certificate authority (`./ml keys --ca`) or the server (`./ml keys --server`) keys. This is useful, for example, to re-generate the server keys while keeping the same certificate authority.
 
-In order for the certificate to be valid for hosts or IPs other than `localhost` or `127.0.0.1` respectively, the desired hosts/IPs must be added to `traefik/configuration/cert.ext` under the `alt_names` section.
+In order for the certificate to be valid for hosts or IPs other than `localhost` or `127.0.0.1`, the desired hosts/IPs must be added to `traefik/configuration/cert.ext` under the `alt_names` section.
 
 Once the `cert.ext` file has been updated with new hosts/IPs, a new server certificate must be generated using `./ml key --server`. This will generate a new "server" certificate using the existing Certificate Authority. I.e., no new Certificate Authority key/cert is generated when the `--server` flag is used.
 
@@ -107,7 +110,7 @@ Once the `cert.ext` file has been updated with new hosts/IPs, a new server certi
 
 ## **Running**
 The `ml` script at the root of the Mole repo can be used to build containers, start services, populate dbs, stop services, 
-or build and serve documentation.  It is structured with a number of commands.  Additional help on each command 
+or build and serve documentation.  It is structured with a number of subcommands.  Additional help on each command 
 can be found by passing the `-h` flag.  E.g., `./ml run -h`.
 
 If this is the first time you are running Mole, use the following command to configure Mole and initialize the database with defaults:
@@ -115,7 +118,7 @@ If this is the first time you are running Mole, use the following command to con
     $./ml init
 
 !!! failure "Warning"
-    See [Configuring Docker to Use a Different DNS Server](#configuring-docker-to-use-a-different-dns-server) below if building the containers hangs.  This may be due to Docker's default DNS server (Google's 8.8.8.8) being blocked on your network.
+    Mole is currently intended to be run within a trusted network. It has not yet been vetted for open-internet deployment. 
 
 Subsequent runs can use:
 
@@ -138,7 +141,7 @@ See below for additional information on the `./ml` command and examples of its u
 * `keys`  : Generate CA or server keys/certificates for https.
 * `run`   : Runs a pre-configured container.<br>
             - use `-q` flag to run as a daemon.<br>
-            - use `--lite` flag to omit running superflous containters (e.g., portainer, docs, and proxy)<br>
+            - use `--lite` flag to omit running superflous containters (e.g., portainer, docs, etc.)<br>
             - use `-a` flag to spin up angular development server<br>
 * `stop`  : Stops all containers.
 * `test`  : Runs the Django unit tests. Note: Mole does not run
@@ -148,6 +151,9 @@ See below for additional information on the `./ml` command and examples of its u
 * `docs`  : Build documentation (including OpenAPI schema and graphing database models). Documentation is served at <http://localhost:8001> or <http://docs.localhost>.
 * `maps`  : Serve map tiles at <http://localhost:8081> or <http://maps.localhost>.  Note: Mole does not 
               run with this command.  See Docs for more information.
+* `db`   : Saves and loads database + media backup archives.<br>
+            - use `-b` flag to create a backup archive
+            - use `-l` flag to load a backup archive
 * `management` : Load/Save docker images to or from an archive file. 
                 This archive file can be used to export docker images for use
                 on external machines. Also builds containers from images 
@@ -163,7 +169,7 @@ The following command will build containers and populate the database with initi
 
     $./ml init
 
-!!! failure "Warning"
+!!! tip "Note"
     See below if building the containers hangs.  This may be due to Docker's default DNS server (Google's 8.8.8.8) being blocked on your network.
 
 The following command will build containers and populate the database with initial data using a custom "configure_mole" script (configure_mole_test):
@@ -175,10 +181,10 @@ The following command will run previously built containers as a daemon:
 
     $./ml run -q
 
-Mole is available at [http://localhost:8000](http://localhost:8000).  The browseable API is available at [http://localhost:8000/api](http://localhost:8000/api)
+Mole is available at [http://localhost](http://localhost).  The browseable API is available at [http://localhost/api](http://localhost/api)
 
 !!! tip
-    Documentation is also accessible at [http://localhost:8001](http://localhost:8001) when Mole is running.
+    Documentation is also accessible at [http://localhost/docs](http://localhost/docs) when Mole is running.
 
 
 The following command will run previously built containers, but not run the map tile server:
@@ -197,13 +203,9 @@ The following command will build the Angular files to be served statically from 
 
     $./ml ang -b
 
-The following command will build Mole documentation:
+The following command will build and serve the Mole documentation:
 
     $./ml docs
-
-The following command will serve Mole documentation at [http://localhost:8001](http://localhost:8001):
-
-    $./ml docs -s
 
 The following command will run the Mole map tile server alone:
 
@@ -216,9 +218,6 @@ The following command will run the automated tests:
 
     $./ml test
     
-!!! tip "Note"
-    See [maps](maps.md) section of documentation for information on creating tiles and configuring the map server.
-
 The following command will build Django migration files if schema changes have been made:
 
     $./ml django -mm
@@ -243,20 +242,20 @@ command below.
     `-nb` flag on the init command: `./ml init -nb`
 
 !!! tip
-    On-demand backups (`./ml db -b`) can be created with Mole running or stopped; services will be returned to their pre-backup stated. 
+    On-demand backups (`./ml db -b`) can be created with Mole running or stopped; services will be returned to their pre-backup state. 
 
 In all cases, backups are ultimately launched via a web service. A `GET` request to <http://localhost:8003/backup_db/> or <http://backup.localhost/backup_db/> will launch a database backup job. This service is throttled to approximately one request per minute.
 
 !!! tip
-    The database backup web service includes an interactive API documentation served at <http://localhost:8003/docs/> or <http://backup.localhost/docs/>
+    The database backup web service includes an interactive API documentation served at <http://localhost:8003/docs/> or <http://localhost/db_backup/docs/>
 
 There are two optional querystring parameters for the backup service:
 
-* `context` represents a string that will be appended to the end of the backup filename to indicate the context for the creation of the backup. (e.g., "startup", "shutdown", "on-demand", etc.). For example a `GET` request to <http://backup.localhost/backup_db/?context=docs> (via browser, curl, or otherwise) would initiate a database backup with `_docs` appended to the end of the filename.
-* `sync` indicates that the request shouldn't return a response until the backup has been completed. This is useful if a subsequent action (e.g., clearing the database) needs to ensure the backup has been completed prior to preceeding. Normally the backup call returns immediately and launches the database backup job in the background. Example: <http://backup.localhost/backup_db/?sync=true>.
+* `context` represents a string that will be appended to the end of the backup filename to indicate the context for the creation of the backup. (e.g., "startup", "shutdown", "on-demand", etc.). For example a `GET` request to <http://localhost/db_backup/backup_db/?context=docs> (via browser, curl, or otherwise) would initiate a database backup with `_docs` appended to the end of the filename.
+* `sync` indicates that the request shouldn't return a response until the backup has been completed. This is useful if a subsequent action (e.g., clearing the database) needs to ensure the backup has been completed prior to preceeding. Normally the backup call returns immediately and launches the database backup job in the background. Example: <http://localhost/db_backup/backup_db/?sync=true>.
 
 !!! tip "Note"
-    To include both `context` and `sync` querystrings, separate them with an ampersand (`&`) symbol, e.g., <http://backup.localhost/backup_db/?context=docs&sync=true>. If this is done from a terminal `curl` command, ensure to wrap the url in quotation marks so the `&` isn't interpreted as a request to background the job. Example: `curl "http://backup.localhost/backup_db/?context=docs&sync=true"`
+    To include both `context` and `sync` querystrings, separate them with an ampersand (`&`) symbol, e.g., <http://localhost/db_backup/backup_db/?context=docs&sync=true>. If this is done from a terminal `curl` command, ensure to wrap the url in quotation marks so the `&` isn't interpreted as a request to background the job. Example: `curl "http://localhost/db_backup/backup_db/?context=docs&sync=true"`
 
 ### Database Backup Location
 Saved database archives are stored in the `db_backup/backups/` directory.  The naming convention is `mole_backup_<year>-<month>-<day>_<hour>_<minute>-<second>_<stage>.sql` where `<stage>` is a string that indicates the reason the database file was created (e.g., "start_up", "shutdown", "pre-init", "pre-load", "on_demand", "periodic")
@@ -266,23 +265,23 @@ Database files can be restored using the following command: `./ml db -l <archive
 archive format. Mole is also able to import backups from outside of the `db_backups/backups` 
 directory if the absolute filepath is provided.
 
-## **Exporting docker images to an external host**
+## **Exporting Docker Images to an External Host**
 
-To run the Docker containers you must have docker images in a local repo. Normally, these containers are built
-and configured when whe execute the init command. However, when a host is unable to access outside networks, it will
-be unable to build images on initialization. You can load archived images with the ml management command, and run
+To run the Docker containers you must have Docker images in a local repo. Normally, these containers are built
+and configured when we execute the `init` command. However, when a host is unable to access outside networks, it will
+be unable to build images on initialization. You can load archived images with the `ml manage` command, and run
 preconfigured images. 
 
 !!! tip "Note"
     This feature is currently unable to export on machines with differing architectures. 
 
 Process:
-1) Save project images that have already been populated and constructed. To save all project images into a single 
+1) Save project images that have already been populated and constructed. To save all project Docker images into a single 
     archive use the following command
 
     ./ml manage -s
 
-   this will save the project images to archive `mole_project.tar.gz`
+   this will save the project Docker images to archive `mole_project.tar.gz`
 
 2) You may now export the archive to another host. Simply save to external media or transfer if you have that option.
 
