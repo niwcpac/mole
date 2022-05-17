@@ -303,6 +303,9 @@ class EntitySerializer(DynamicFieldsHyperlinkedModelSerializer):
         request = self.context.get("request", None)
         last_pose = dcm.Pose.objects.filter(entity=obj).order_by("timestamp").last()
 
+        if last_pose is None:
+            return None
+
         return PoseSerializer(
             last_pose, read_only=True, context={"request": request}
         ).data

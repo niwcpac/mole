@@ -904,6 +904,7 @@ class TesterViewSet(viewsets.ModelViewSet):
     queryset = dcm.Tester.objects.all().select_related("user", "role")
     serializer_class = dcs.TesterSerializer
     filterset_class = TesterFilter
+    schema = schemas.TesterSchema()
 
     @action(detail=False)
     def current(self, request):
@@ -1056,6 +1057,7 @@ class NoteViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.Note.objects.all().select_related("event")
     serializer_class = dcs.NoteSerializer
+    schema = schemas.NoteSchema()
 
 
 class ServerTypeViewSet(viewsets.ModelViewSet):
@@ -1595,6 +1597,7 @@ class TriggerViewSet(viewsets.ModelViewSet):
     )
     serializer_class = dcs.TriggerSerializer
     filterset_class = TriggerFilter
+    schema = schemas.TriggerSchema()
 
     @action(detail=False, schema=None)
     def publish(self, request):
@@ -1818,3 +1821,4 @@ class RegionViewSet(viewsets.ModelViewSet):
     queryset = dcm.Region.objects.all()
     filterset_class = RegionFilter
     serializer_class = dcs.RegionSerializer
+    schema = schemas.RegionSchema()

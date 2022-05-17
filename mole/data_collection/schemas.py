@@ -1,6 +1,8 @@
-from rest_framework.schemas.openapi import AutoSchema
+from rest_framework_gis.schema import GeoFeatureAutoSchema
 
-class EntitySchema(AutoSchema):
+from data_collection import serializers as dcs
+
+class EntitySchema(GeoFeatureAutoSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -15,15 +17,17 @@ class EntitySchema(AutoSchema):
                 "items": { "type" : "string" },
             }
         elif field.field_name == "latest_pose":
-            return {
-                "type": "object",
-            }
+            data = self.map_serializer(dcs.PoseSerializer())
+            data["type"] = "object"
+            data["nullable"] = True
+            return data
+
         # Handle SerializerMethodFields or custom fields here...
         # ...
         return super().map_field(field)
 
 
-class CampaignSchema(AutoSchema):
+class CampaignSchema(GeoFeatureAutoSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -43,7 +47,7 @@ class CampaignSchema(AutoSchema):
         return super().map_field(field)
 
 
-class TrialSchema(AutoSchema):
+class TrialSchema(GeoFeatureAutoSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -63,7 +67,7 @@ class TrialSchema(AutoSchema):
         return super().map_field(field)
 
 
-class TestMethodSchema(AutoSchema):
+class TestMethodSchema(GeoFeatureAutoSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -83,14 +87,14 @@ class TestMethodSchema(AutoSchema):
         return super().map_field(field)
 
 
-class EventSchema(AutoSchema):
+class EventSchema(GeoFeatureAutoSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
-        if field.field_name == "point_style":
-            return {
-                "type": "object",
-            }
+        if isinstance(field.parent, dcs.EventSerializer) and field.field_name == "point_style":
+            data = self.map_serializer(dcs.AggregatedPointStyleSerializer())
+            data["type"] = "object"
+            return data
         elif field.field_name == "related_entities":
             return {
                 "type": "object",
@@ -105,6 +109,77 @@ class EventSchema(AutoSchema):
                 "type": "array",
                 "items": { "type" : "string" },
             }
+        elif field.field_name == "start_pose":
+            data = self.map_serializer(dcs.PoseSerializer())
+            data["type"] = "object"
+            data["nullable"] = True
+            return data
+
+        # Handle SerializerMethodFields or custom fields here...
+        # ...
+        return super().map_field(field)
+
+
+class TesterSchema(GeoFeatureAutoSchema):
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+
+    def map_field(self, field):
+        if field.field_name == "user_id":
+            return {
+                "type": "integer",
+            }
+        elif field.field_name == "role_id":
+            return {
+                "type": "integer",
+            }
+
+        # Handle SerializerMethodFields or custom fields here...
+        # ...
+        return super().map_field(field)
+
+
+class TriggerSchema(GeoFeatureAutoSchema):
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+
+    def map_field(self, field):
+        if field.field_name == "converted_cond_vars":
+            return {
+                "type": "array",
+                "items": { "type" : "string" },
+            }
+        elif field.field_name == "trig_resp":
+            return {
+                "type": "array",
+                "items": { "type" : "object" },
+            }
+
+        # Handle SerializerMethodFields or custom fields here...
+        # ...
+        return super().map_field(field)
+
+
+class RegionSchema(GeoFeatureAutoSchema):
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+
+    def map_field(self, field):
+        if field.field_name == "entities":
+            return {
+                "type": "object",
+            }
+
+        # Handle SerializerMethodFields or custom fields here...
+        # ...
+        return super().map_field(field)
+
+
+class NoteSchema(GeoFeatureAutoSchema):
+    """Extension of ``AutoSchema`` to add support for custom field schemas."""
+
+    def map_field(self, field):
+        if field.field_name == "tester":
+            data = TesterSchema().map_serializer(dcs.TesterSerializer())
+            data["type"] = "object"
+            return data
 
         # Handle SerializerMethodFields or custom fields here...
         # ...
