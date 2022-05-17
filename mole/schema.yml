@@ -11203,6 +11203,7 @@ components:
         profile:
           type: string
           readOnly: true
+          nullable: true
       required:
       - username
       - password
@@ -11237,6 +11238,7 @@ components:
             profile:
               type: string
               readOnly: true
+              nullable: true
           required:
           - username
           - password

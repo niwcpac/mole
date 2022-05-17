@@ -56,7 +56,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ("url", "id", "username", "password", "profile")
         extra_kwargs = {
             "password": {"write_only": True},
-            "profile": {"read_only": True},
+            "profile": {"read_only": True, "allow_null": True},
         }
 
     def update(self, instance, validated_data):
