@@ -462,7 +462,7 @@ class RegionSerializer(serializers.HyperlinkedModelSerializer):
 class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
     has_segments = serializers.BooleanField(
         source="test_method.has_segments", 
-        default=False,
+        read_only=True,
     )
     potential_segments = SegmentSerializer(many=True, read_only=True)
 
