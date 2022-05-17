@@ -11194,7 +11194,7 @@ components:
           type: string
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
-          pattern: ^[\w.@+-]+$
+          pattern: ^[\w.@+-]+\z
           maxLength: 150
         password:
           type: string
@@ -11229,7 +11229,7 @@ components:
               type: string
               description: Required. 150 characters or fewer. Letters, digits and
                 @/./+/-/_ only.
-              pattern: ^[\w.@+-]+$
+              pattern: ^[\w.@+-]+\z
               maxLength: 150
             password:
               type: string
@@ -11589,10 +11589,10 @@ components:
               type: string
               nullable: true
               maxLength: 100
+          readOnly: true
       required:
       - name
       - entity_type
-      - point_style
     EntityGroup:
       type: object
       properties:
@@ -11807,7 +11807,7 @@ components:
               type: string
             has_segments:
               type: boolean
-              default: false
+              readOnly: true
             potential_segments:
               type: array
               items:
@@ -12029,7 +12029,7 @@ components:
           type: string
         has_segments:
           type: boolean
-          default: false
+          readOnly: true
         potential_segments:
           type: array
           items:
