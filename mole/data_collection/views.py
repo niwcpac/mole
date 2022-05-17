@@ -27,6 +27,7 @@ from rest_framework.pagination import CursorPagination
 from data_collection.permissions import IsOwnerOrReadOnly, IsTargetUserOrReadOnly
 import data_collection.models as dcm
 import data_collection.serializers as dcs
+from data_collection import schemas
 
 from ast import literal_eval
 import pandas as pd
@@ -307,6 +308,7 @@ class EntityViewSet(AllowPUTAsCreateMixin, viewsets.ModelViewSet):
     serializer_class = dcs.EntitySerializer
     pagination_class = EntityPagination
     filterset_class = EntityFilter
+    schema = schemas.EntitySchema()
 
     @action(detail=True)
     def around(self, request, pk=None):
@@ -474,6 +476,7 @@ class CampaignViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.Campaign.objects.all().select_related("location")
     serializer_class = dcs.CampaignSerializer
+    schema = schemas.CampaignSchema()
 
     @action(detail=False)
     def latest(self, request):
@@ -567,7 +570,7 @@ class TestMethodViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.TestMethod.objects.all().prefetch_related("scenarios")
     serializer_class = dcs.TestMethodSerializer
-
+    schema = schemas.TestMethodSchema()
 
 class ScenarioViewSet(viewsets.ModelViewSet):
     """
@@ -707,6 +710,7 @@ class TrialViewSet(viewsets.ModelViewSet):
     )
     filterset_class = TrialFilter
     serializer_class = dcs.TrialSerializer
+    schema = schemas.TrialSchema()
 
     def perform_update(self, serializer):
         saved = serializer.save()
@@ -754,14 +758,14 @@ class TrialViewSet(viewsets.ModelViewSet):
         )
         trial_producer.close()
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def latest(self, request):
         latest_trial = dcm.Trial.objects.latest("start_datetime")
         return Response(
             dcs.TrialSerializer(latest_trial, context={"request": request}).data
         )
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def current(self, request):
         try:
             current_trial = dcm.get_current_trial()
@@ -773,7 +777,7 @@ class TrialViewSet(viewsets.ModelViewSet):
             response = Response(content, status=status.HTTP_404_NOT_FOUND)
         return response
 
-    @action(detail=True)
+    @action(detail=True, schema=None)
     def event_count(self, request, pk=None):
         # Initialize dictionary with all event types
         type_counts = dict.fromkeys(
@@ -798,7 +802,7 @@ class TrialViewSet(viewsets.ModelViewSet):
         response = Response(content)
         return response
 
-    @action(detail=True)
+    @action(detail=True, schema=None)
     def clock_state(self, request, pk=None):
         # get current trial
         try:
@@ -900,6 +904,7 @@ class TesterViewSet(viewsets.ModelViewSet):
     queryset = dcm.Tester.objects.all().select_related("user", "role")
     serializer_class = dcs.TesterSerializer
     filterset_class = TesterFilter
+    schema = schemas.TesterSchema()
 
     @action(detail=False)
     def current(self, request):
@@ -1052,6 +1057,7 @@ class NoteViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.Note.objects.all().select_related("event")
     serializer_class = dcs.NoteSerializer
+    schema = schemas.NoteSchema()
 
 
 class ServerTypeViewSet(viewsets.ModelViewSet):
@@ -1312,7 +1318,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         rest_pandas.PandasCSVRenderer,
         rest_pandas.PandasTextRenderer,
     ]
-    
+    schema = schemas.EventSchema()
 
     def list(self, request, *args, **kwargs):
         # We need a custom list function
@@ -1591,8 +1597,9 @@ class TriggerViewSet(viewsets.ModelViewSet):
     )
     serializer_class = dcs.TriggerSerializer
     filterset_class = TriggerFilter
+    schema = schemas.TriggerSchema()
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def publish(self, request):
         content = {"detail": "Unused endpoint."}
         return Response(content, status=status.HTTP_200_OK)
@@ -1600,6 +1607,7 @@ class TriggerViewSet(viewsets.ModelViewSet):
 
 class ServerDatetimeView(views.APIView):
     permission_classes = []
+    schema = None
 
     def get(self, request, format=None):
         timezone.activate(timezone.get_default_timezone_name())
@@ -1813,3 +1821,4 @@ class RegionViewSet(viewsets.ModelViewSet):
     queryset = dcm.Region.objects.all()
     filterset_class = RegionFilter
     serializer_class = dcs.RegionSerializer
+    schema = schemas.RegionSchema()

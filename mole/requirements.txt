@@ -22,3 +22,4 @@ uritemplate==4.1.1
 pyyaml==6.0
 pydotplus==2.0.2
 markdown==3.3.7
+drf-openapi-tester==2.1.0

@@ -2,11 +2,12 @@ from data_collection import views, routers
 from automation import views as auto_views
 from django.conf.urls import include
 from django.urls import re_path
-from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import mole.views as viewpath
 from django.contrib.auth import views as auth_views
 from django.conf import settings
+from rest_framework.schemas import get_schema_view
+from django.urls import path
 
 router = routers.HybridRouter()
 router.register(r"users", views.UserViewSet)
@@ -96,8 +97,21 @@ router.add_api_view(
     ),
 )
 
+base_urls = [
+    re_path(r"^api/", include(router.urls)),
+]
 
-urlpatterns = [
+urlpatterns = base_urls + [
+    re_path(
+        "^api/openapi", 
+        get_schema_view(
+            title="Your Project",
+            description="API for all things …",
+            version="1.0.0",
+            patterns=base_urls,
+        ), 
+        name='openapi-schema',
+    ),
     re_path(r"^api/", include(router.urls)),
     re_path(r"^api-auth/", include("rest_framework.urls")),
     re_path(r"api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
