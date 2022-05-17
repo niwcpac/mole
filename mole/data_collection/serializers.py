@@ -476,7 +476,6 @@ class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
             "variant",
             "test_method",
             "location",
-            "test_method",
             "has_segments",
             "potential_segments",
             "entity_groups",
