@@ -8,6 +8,7 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from rest_framework.schemas import get_schema_view
 from django.urls import path
+from django.views.generic import TemplateView
 
 router = routers.HybridRouter()
 router.register(r"users", views.UserViewSet)
@@ -103,7 +104,7 @@ base_urls = [
 
 urlpatterns = base_urls + [
     re_path(
-        "^api/openapi", 
+        "^api/openapi/", 
         get_schema_view(
             title="Your Project",
             description="API for all things …",
@@ -112,6 +113,10 @@ urlpatterns = base_urls + [
         ), 
         name='openapi-schema',
     ),
+    path('api/swagger-ui/', TemplateView.as_view(
+        template_name='SwaggerUI_4.11.1/index.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='swagger-ui'),
     re_path(r"^api/", include(router.urls)),
     re_path(r"^api-auth/", include("rest_framework.urls")),
     re_path(r"api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
