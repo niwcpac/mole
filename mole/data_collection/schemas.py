@@ -2,7 +2,16 @@ from rest_framework_gis.schema import GeoFeatureAutoSchema
 
 from data_collection import serializers as dcs
 
-class EntitySchema(GeoFeatureAutoSchema):
+class MoleBaseSchema(GeoFeatureAutoSchema):
+    def get_tags(self, path, method):
+
+        if path.startswith('/'):
+            path = path[1:]
+
+        return [path.split('/')[1].replace('_', '-')]
+        return super().get_tags(path, method)
+
+class EntitySchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -27,7 +36,7 @@ class EntitySchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class CampaignSchema(GeoFeatureAutoSchema):
+class CampaignSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -47,7 +56,7 @@ class CampaignSchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class TrialSchema(GeoFeatureAutoSchema):
+class TrialSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -67,7 +76,7 @@ class TrialSchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class TestMethodSchema(GeoFeatureAutoSchema):
+class TestMethodSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -87,7 +96,7 @@ class TestMethodSchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class EventSchema(GeoFeatureAutoSchema):
+class EventSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -120,7 +129,7 @@ class EventSchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class TesterSchema(GeoFeatureAutoSchema):
+class TesterSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -138,7 +147,7 @@ class TesterSchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class TriggerSchema(GeoFeatureAutoSchema):
+class TriggerSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -158,7 +167,7 @@ class TriggerSchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class RegionSchema(GeoFeatureAutoSchema):
+class RegionSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
@@ -172,7 +181,7 @@ class RegionSchema(GeoFeatureAutoSchema):
         return super().map_field(field)
 
 
-class NoteSchema(GeoFeatureAutoSchema):
+class NoteSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
 
     def map_field(self, field):
