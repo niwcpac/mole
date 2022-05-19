@@ -1,7 +1,8 @@
 openapi: 3.0.2
 info:
-  title: ''
+  title: Mole
   version: ''
+  description: Mole API
 paths:
   /api/users/:
     get:
@@ -21,7 +22,7 @@ paths:
                   $ref: '#/components/schemas/User'
           description: ''
       tags:
-      - api
+      - users
     post:
       operationId: createUser
       description: 'This endpoint represents users of the system
@@ -48,7 +49,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
       tags:
-      - api
+      - users
   /api/users/current/:
     get:
       operationId: currentUser
@@ -65,7 +66,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
       tags:
-      - api
+      - users
   /api/users/{id}/:
     get:
       operationId: retrieveUser
@@ -88,7 +89,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
       tags:
-      - api
+      - users
     put:
       operationId: updateUser
       description: 'This endpoint represents users of the system
@@ -121,7 +122,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
       tags:
-      - api
+      - users
     patch:
       operationId: partialUpdateUser
       description: 'This endpoint represents users of the system
@@ -154,7 +155,7 @@ paths:
                 $ref: '#/components/schemas/User'
           description: ''
       tags:
-      - api
+      - users
     delete:
       operationId: destroyUser
       description: 'This endpoint represents users of the system
@@ -172,7 +173,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - users
   /api/user_profiles/:
     get:
       operationId: listUserProfiles
@@ -192,7 +193,7 @@ paths:
                   $ref: '#/components/schemas/UserProfile'
           description: ''
       tags:
-      - api
+      - user-profiles
     post:
       operationId: createUserProfile
       description: 'This endpoint represents user profiles
@@ -220,7 +221,7 @@ paths:
                 $ref: '#/components/schemas/UserProfile'
           description: ''
       tags:
-      - api
+      - user-profiles
   /api/user_profiles/current/:
     get:
       operationId: currentUserProfile
@@ -238,7 +239,7 @@ paths:
                 $ref: '#/components/schemas/UserProfile'
           description: ''
       tags:
-      - api
+      - user-profiles
   /api/user_profiles/{id}/:
     get:
       operationId: retrieveUserProfile
@@ -262,7 +263,7 @@ paths:
                 $ref: '#/components/schemas/UserProfile'
           description: ''
       tags:
-      - api
+      - user-profiles
     put:
       operationId: updateUserProfile
       description: 'This endpoint represents user profiles
@@ -296,7 +297,7 @@ paths:
                 $ref: '#/components/schemas/UserProfile'
           description: ''
       tags:
-      - api
+      - user-profiles
     patch:
       operationId: partialUpdateUserProfile
       description: 'This endpoint represents user profiles
@@ -330,7 +331,7 @@ paths:
                 $ref: '#/components/schemas/UserProfile'
           description: ''
       tags:
-      - api
+      - user-profiles
     delete:
       operationId: destroyUserProfile
       description: 'This endpoint represents user profiles
@@ -349,7 +350,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - user-profiles
   /api/roles/:
     get:
       operationId: listRoles
@@ -365,7 +366,7 @@ paths:
                   $ref: '#/components/schemas/Role'
           description: ''
       tags:
-      - api
+      - roles
     post:
       operationId: createRole
       description: ''
@@ -389,7 +390,7 @@ paths:
                 $ref: '#/components/schemas/Role'
           description: ''
       tags:
-      - api
+      - roles
   /api/roles/{id}/:
     get:
       operationId: retrieveRole
@@ -409,7 +410,7 @@ paths:
                 $ref: '#/components/schemas/Role'
           description: ''
       tags:
-      - api
+      - roles
     put:
       operationId: updateRole
       description: ''
@@ -439,7 +440,7 @@ paths:
                 $ref: '#/components/schemas/Role'
           description: ''
       tags:
-      - api
+      - roles
     patch:
       operationId: partialUpdateRole
       description: ''
@@ -469,7 +470,7 @@ paths:
                 $ref: '#/components/schemas/Role'
           description: ''
       tags:
-      - api
+      - roles
     delete:
       operationId: destroyRole
       description: ''
@@ -484,7 +485,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - roles
   /api/testers/:
     get:
       operationId: listTesters
@@ -538,7 +539,7 @@ paths:
                   $ref: '#/components/schemas/Tester'
           description: ''
       tags:
-      - api
+      - testers
     post:
       operationId: createTester
       description: 'This endpoint represents testers.
@@ -576,7 +577,7 @@ paths:
                 $ref: '#/components/schemas/Tester'
           description: ''
       tags:
-      - api
+      - testers
   /api/testers/current/:
     get:
       operationId: currentTester
@@ -604,7 +605,7 @@ paths:
                 $ref: '#/components/schemas/Tester'
           description: ''
       tags:
-      - api
+      - testers
   /api/testers/{id}/:
     get:
       operationId: retrieveTester
@@ -662,7 +663,7 @@ paths:
                 $ref: '#/components/schemas/Tester'
           description: ''
       tags:
-      - api
+      - testers
     put:
       operationId: updateTester
       description: 'This endpoint represents testers.
@@ -730,7 +731,7 @@ paths:
                 $ref: '#/components/schemas/Tester'
           description: ''
       tags:
-      - api
+      - testers
     patch:
       operationId: partialUpdateTester
       description: 'This endpoint represents testers.
@@ -798,7 +799,7 @@ paths:
                 $ref: '#/components/schemas/Tester'
           description: ''
       tags:
-      - api
+      - testers
     delete:
       operationId: destroyTester
       description: 'This endpoint represents testers.
@@ -851,7 +852,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - testers
   /api/entity_states/:
     get:
       operationId: listEntityStates
@@ -867,7 +868,7 @@ paths:
                   $ref: '#/components/schemas/EntityState'
           description: ''
       tags:
-      - api
+      - entity-states
     post:
       operationId: createEntityState
       description: This endpoint represents entity states.
@@ -891,7 +892,7 @@ paths:
                 $ref: '#/components/schemas/EntityState'
           description: ''
       tags:
-      - api
+      - entity-states
   /api/entity_states/{name}/:
     get:
       operationId: retrieveEntityState
@@ -911,7 +912,7 @@ paths:
                 $ref: '#/components/schemas/EntityState'
           description: ''
       tags:
-      - api
+      - entity-states
     put:
       operationId: updateEntityState
       description: This endpoint represents entity states.
@@ -941,7 +942,7 @@ paths:
                 $ref: '#/components/schemas/EntityState'
           description: ''
       tags:
-      - api
+      - entity-states
     patch:
       operationId: partialUpdateEntityState
       description: This endpoint represents entity states.
@@ -971,7 +972,7 @@ paths:
                 $ref: '#/components/schemas/EntityState'
           description: ''
       tags:
-      - api
+      - entity-states
     delete:
       operationId: destroyEntityState
       description: This endpoint represents entity states.
@@ -986,7 +987,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - entity-states
   /api/entity_types/:
     get:
       operationId: listEntityTypes
@@ -1002,7 +1003,7 @@ paths:
                   $ref: '#/components/schemas/EntityType'
           description: ''
       tags:
-      - api
+      - entity-types
     post:
       operationId: createEntityType
       description: ''
@@ -1026,7 +1027,7 @@ paths:
                 $ref: '#/components/schemas/EntityType'
           description: ''
       tags:
-      - api
+      - entity-types
   /api/entity_types/{name}/:
     get:
       operationId: retrieveEntityType
@@ -1046,7 +1047,7 @@ paths:
                 $ref: '#/components/schemas/EntityType'
           description: ''
       tags:
-      - api
+      - entity-types
     put:
       operationId: updateEntityType
       description: ''
@@ -1076,7 +1077,7 @@ paths:
                 $ref: '#/components/schemas/EntityType'
           description: ''
       tags:
-      - api
+      - entity-types
     patch:
       operationId: partialUpdateEntityType
       description: ''
@@ -1106,7 +1107,7 @@ paths:
                 $ref: '#/components/schemas/EntityType'
           description: ''
       tags:
-      - api
+      - entity-types
     delete:
       operationId: destroyEntityType
       description: ''
@@ -1121,7 +1122,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - entity-types
   /api/entity_event_roles/:
     get:
       operationId: listEntityEventRoles
@@ -1158,7 +1159,7 @@ paths:
                   $ref: '#/components/schemas/EntityEventRole'
           description: ''
       tags:
-      - api
+      - entity-event-roles
     post:
       operationId: createEntityEventRole
       description: "This endpoint represents Entity roles within Events. The metadata_key\
@@ -1203,7 +1204,7 @@ paths:
                 $ref: '#/components/schemas/EntityEventRole'
           description: ''
       tags:
-      - api
+      - entity-event-roles
   /api/entity_event_roles/{id}/:
     get:
       operationId: retrieveEntityEventRole
@@ -1244,7 +1245,7 @@ paths:
                 $ref: '#/components/schemas/EntityEventRole'
           description: ''
       tags:
-      - api
+      - entity-event-roles
     put:
       operationId: updateEntityEventRole
       description: "This endpoint represents Entity roles within Events. The metadata_key\
@@ -1295,7 +1296,7 @@ paths:
                 $ref: '#/components/schemas/EntityEventRole'
           description: ''
       tags:
-      - api
+      - entity-event-roles
     patch:
       operationId: partialUpdateEntityEventRole
       description: "This endpoint represents Entity roles within Events. The metadata_key\
@@ -1346,7 +1347,7 @@ paths:
                 $ref: '#/components/schemas/EntityEventRole'
           description: ''
       tags:
-      - api
+      - entity-event-roles
     delete:
       operationId: destroyEntityEventRole
       description: "This endpoint represents Entity roles within Events. The metadata_key\
@@ -1382,7 +1383,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - entity-event-roles
   /api/entities/:
     get:
       operationId: listEntitys
@@ -1506,7 +1507,7 @@ paths:
                       $ref: '#/components/schemas/Entity'
           description: ''
       tags:
-      - api
+      - entities
     post:
       operationId: createEntity
       description: "This endpoint represents entities.\n\nEntities can be query string\
@@ -1546,7 +1547,7 @@ paths:
                 $ref: '#/components/schemas/Entity'
           description: ''
       tags:
-      - api
+      - entities
   /api/entities/radius/:
     get:
       operationId: radiusEntity
@@ -1572,7 +1573,7 @@ paths:
                 $ref: '#/components/schemas/Entity'
           description: ''
       tags:
-      - api
+      - entities
   /api/entities/{name}/:
     get:
       operationId: retrieveEntity
@@ -1679,7 +1680,7 @@ paths:
                 $ref: '#/components/schemas/Entity'
           description: ''
       tags:
-      - api
+      - entities
     put:
       operationId: updateEntity
       description: "This endpoint represents entities.\n\nEntities can be query string\
@@ -1796,7 +1797,7 @@ paths:
                 $ref: '#/components/schemas/Entity'
           description: ''
       tags:
-      - api
+      - entities
     patch:
       operationId: partialUpdateEntity
       description: "This endpoint represents entities.\n\nEntities can be query string\
@@ -1913,7 +1914,7 @@ paths:
                 $ref: '#/components/schemas/Entity'
           description: ''
       tags:
-      - api
+      - entities
     delete:
       operationId: destroyEntity
       description: "This endpoint represents entities.\n\nEntities can be query string\
@@ -2015,7 +2016,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - entities
   /api/entities/{name}/around/:
     get:
       operationId: aroundEntity
@@ -2049,7 +2050,7 @@ paths:
                 $ref: '#/components/schemas/Entity'
           description: ''
       tags:
-      - api
+      - entities
   /api/entity_groups/:
     get:
       operationId: listEntityGroups
@@ -2065,7 +2066,7 @@ paths:
                   $ref: '#/components/schemas/EntityGroup'
           description: ''
       tags:
-      - api
+      - entity-groups
     post:
       operationId: createEntityGroup
       description: ''
@@ -2089,7 +2090,7 @@ paths:
                 $ref: '#/components/schemas/EntityGroup'
           description: ''
       tags:
-      - api
+      - entity-groups
   /api/entity_groups/{id}/:
     get:
       operationId: retrieveEntityGroup
@@ -2109,7 +2110,7 @@ paths:
                 $ref: '#/components/schemas/EntityGroup'
           description: ''
       tags:
-      - api
+      - entity-groups
     put:
       operationId: updateEntityGroup
       description: ''
@@ -2139,7 +2140,7 @@ paths:
                 $ref: '#/components/schemas/EntityGroup'
           description: ''
       tags:
-      - api
+      - entity-groups
     patch:
       operationId: partialUpdateEntityGroup
       description: ''
@@ -2169,7 +2170,7 @@ paths:
                 $ref: '#/components/schemas/EntityGroup'
           description: ''
       tags:
-      - api
+      - entity-groups
     delete:
       operationId: destroyEntityGroup
       description: ''
@@ -2184,7 +2185,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - entity-groups
   /api/point_styles/:
     get:
       operationId: listPointStyles
@@ -2200,7 +2201,7 @@ paths:
                   $ref: '#/components/schemas/PointStyle'
           description: ''
       tags:
-      - api
+      - point-styles
     post:
       operationId: createPointStyle
       description: ''
@@ -2224,7 +2225,7 @@ paths:
                 $ref: '#/components/schemas/PointStyle'
           description: ''
       tags:
-      - api
+      - point-styles
   /api/point_styles/{name}/:
     get:
       operationId: retrievePointStyle
@@ -2244,7 +2245,7 @@ paths:
                 $ref: '#/components/schemas/PointStyle'
           description: ''
       tags:
-      - api
+      - point-styles
     put:
       operationId: updatePointStyle
       description: ''
@@ -2274,7 +2275,7 @@ paths:
                 $ref: '#/components/schemas/PointStyle'
           description: ''
       tags:
-      - api
+      - point-styles
     patch:
       operationId: partialUpdatePointStyle
       description: ''
@@ -2304,7 +2305,7 @@ paths:
                 $ref: '#/components/schemas/PointStyle'
           description: ''
       tags:
-      - api
+      - point-styles
     delete:
       operationId: destroyPointStyle
       description: ''
@@ -2319,7 +2320,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - point-styles
   /api/locations/:
     get:
       operationId: listLocations
@@ -2335,7 +2336,7 @@ paths:
                   $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - api
+      - locations
     post:
       operationId: createLocation
       description: ''
@@ -2359,7 +2360,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - api
+      - locations
   /api/locations/{id}/:
     get:
       operationId: retrieveLocation
@@ -2379,7 +2380,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - api
+      - locations
     put:
       operationId: updateLocation
       description: ''
@@ -2409,7 +2410,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - api
+      - locations
     patch:
       operationId: partialUpdateLocation
       description: ''
@@ -2439,7 +2440,7 @@ paths:
                 $ref: '#/components/schemas/Location'
           description: ''
       tags:
-      - api
+      - locations
     delete:
       operationId: destroyLocation
       description: ''
@@ -2454,7 +2455,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - locations
   /api/campaigns/:
     get:
       operationId: listCampaigns
@@ -2479,7 +2480,7 @@ paths:
                   $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
-      - api
+      - campaigns
     post:
       operationId: createCampaign
       description: 'This endpoint represents test campaigns.
@@ -2512,7 +2513,7 @@ paths:
                 $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
-      - api
+      - campaigns
   /api/campaigns/latest/:
     get:
       operationId: latestCampaign
@@ -2535,7 +2536,7 @@ paths:
                 $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
-      - api
+      - campaigns
   /api/campaigns/{id}/:
     get:
       operationId: retrieveCampaign
@@ -2564,7 +2565,7 @@ paths:
                 $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
-      - api
+      - campaigns
     put:
       operationId: updateCampaign
       description: 'This endpoint represents test campaigns.
@@ -2603,7 +2604,7 @@ paths:
                 $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
-      - api
+      - campaigns
     patch:
       operationId: partialUpdateCampaign
       description: 'This endpoint represents test campaigns.
@@ -2642,7 +2643,7 @@ paths:
                 $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
-      - api
+      - campaigns
     delete:
       operationId: destroyCampaign
       description: 'This endpoint represents test campaigns.
@@ -2666,7 +2667,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - campaigns
   /api/campaigns/{id}/latest_trial/:
     get:
       operationId: latestTrialCampaign
@@ -2695,7 +2696,7 @@ paths:
                 $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
-      - api
+      - campaigns
   /api/trials/:
     get:
       operationId: listTrials
@@ -2800,7 +2801,7 @@ paths:
                   $ref: '#/components/schemas/Trial'
           description: ''
       tags:
-      - api
+      - trials
     post:
       operationId: createTrial
       description: 'This endpoint represents test trials.
@@ -2858,7 +2859,7 @@ paths:
                 $ref: '#/components/schemas/Trial'
           description: ''
       tags:
-      - api
+      - trials
   /api/trials/{id}/:
     get:
       operationId: retrieveTrial
@@ -2967,7 +2968,7 @@ paths:
                 $ref: '#/components/schemas/Trial'
           description: ''
       tags:
-      - api
+      - trials
     put:
       operationId: updateTrial
       description: 'This endpoint represents test trials.
@@ -3086,7 +3087,7 @@ paths:
                 $ref: '#/components/schemas/Trial'
           description: ''
       tags:
-      - api
+      - trials
     patch:
       operationId: partialUpdateTrial
       description: 'This endpoint represents test trials.
@@ -3205,7 +3206,7 @@ paths:
                 $ref: '#/components/schemas/Trial'
           description: ''
       tags:
-      - api
+      - trials
     delete:
       operationId: destroyTrial
       description: 'This endpoint represents test trials.
@@ -3309,7 +3310,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - trials
   /api/weather/:
     get:
       operationId: listWeathers
@@ -3331,7 +3332,7 @@ paths:
                   $ref: '#/components/schemas/Weather'
           description: ''
       tags:
-      - api
+      - weather
     post:
       operationId: createWeather
       description: 'This endpoint represents weather.
@@ -3361,7 +3362,7 @@ paths:
                 $ref: '#/components/schemas/Weather'
           description: ''
       tags:
-      - api
+      - weather
   /api/weather/current/:
     get:
       operationId: currentWeather
@@ -3381,7 +3382,7 @@ paths:
                 $ref: '#/components/schemas/Weather'
           description: ''
       tags:
-      - api
+      - weather
   /api/weather/{id}/:
     get:
       operationId: retrieveWeather
@@ -3407,7 +3408,7 @@ paths:
                 $ref: '#/components/schemas/Weather'
           description: ''
       tags:
-      - api
+      - weather
     put:
       operationId: updateWeather
       description: 'This endpoint represents weather.
@@ -3443,7 +3444,7 @@ paths:
                 $ref: '#/components/schemas/Weather'
           description: ''
       tags:
-      - api
+      - weather
     patch:
       operationId: partialUpdateWeather
       description: 'This endpoint represents weather.
@@ -3479,7 +3480,7 @@ paths:
                 $ref: '#/components/schemas/Weather'
           description: ''
       tags:
-      - api
+      - weather
     delete:
       operationId: destroyWeather
       description: 'This endpoint represents weather.
@@ -3500,7 +3501,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - weather
   /api/test_condition/:
     get:
       operationId: listTestConditions
@@ -3516,7 +3517,7 @@ paths:
                   $ref: '#/components/schemas/TestCondition'
           description: ''
       tags:
-      - api
+      - test-condition
     post:
       operationId: createTestCondition
       description: ''
@@ -3540,7 +3541,7 @@ paths:
                 $ref: '#/components/schemas/TestCondition'
           description: ''
       tags:
-      - api
+      - test-condition
   /api/test_condition/{id}/:
     get:
       operationId: retrieveTestCondition
@@ -3560,7 +3561,7 @@ paths:
                 $ref: '#/components/schemas/TestCondition'
           description: ''
       tags:
-      - api
+      - test-condition
     put:
       operationId: updateTestCondition
       description: ''
@@ -3590,7 +3591,7 @@ paths:
                 $ref: '#/components/schemas/TestCondition'
           description: ''
       tags:
-      - api
+      - test-condition
     patch:
       operationId: partialUpdateTestCondition
       description: ''
@@ -3620,7 +3621,7 @@ paths:
                 $ref: '#/components/schemas/TestCondition'
           description: ''
       tags:
-      - api
+      - test-condition
     delete:
       operationId: destroyTestCondition
       description: ''
@@ -3635,7 +3636,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - test-condition
   /api/performers/:
     get:
       operationId: listPerformers
@@ -3651,7 +3652,7 @@ paths:
                   $ref: '#/components/schemas/Performer'
           description: ''
       tags:
-      - api
+      - performers
     post:
       operationId: createPerformer
       description: ''
@@ -3675,7 +3676,7 @@ paths:
                 $ref: '#/components/schemas/Performer'
           description: ''
       tags:
-      - api
+      - performers
   /api/performers/{id}/:
     get:
       operationId: retrievePerformer
@@ -3695,7 +3696,7 @@ paths:
                 $ref: '#/components/schemas/Performer'
           description: ''
       tags:
-      - api
+      - performers
     put:
       operationId: updatePerformer
       description: ''
@@ -3725,7 +3726,7 @@ paths:
                 $ref: '#/components/schemas/Performer'
           description: ''
       tags:
-      - api
+      - performers
     patch:
       operationId: partialUpdatePerformer
       description: ''
@@ -3755,7 +3756,7 @@ paths:
                 $ref: '#/components/schemas/Performer'
           description: ''
       tags:
-      - api
+      - performers
     delete:
       operationId: destroyPerformer
       description: ''
@@ -3770,7 +3771,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - performers
   /api/test_methods/:
     get:
       operationId: listTestMethods
@@ -3786,7 +3787,7 @@ paths:
                   $ref: '#/components/schemas/TestMethod'
           description: ''
       tags:
-      - api
+      - test-methods
     post:
       operationId: createTestMethod
       description: ''
@@ -3810,7 +3811,7 @@ paths:
                 $ref: '#/components/schemas/TestMethod'
           description: ''
       tags:
-      - api
+      - test-methods
   /api/test_methods/{id}/:
     get:
       operationId: retrieveTestMethod
@@ -3830,7 +3831,7 @@ paths:
                 $ref: '#/components/schemas/TestMethod'
           description: ''
       tags:
-      - api
+      - test-methods
     put:
       operationId: updateTestMethod
       description: ''
@@ -3860,7 +3861,7 @@ paths:
                 $ref: '#/components/schemas/TestMethod'
           description: ''
       tags:
-      - api
+      - test-methods
     patch:
       operationId: partialUpdateTestMethod
       description: ''
@@ -3890,7 +3891,7 @@ paths:
                 $ref: '#/components/schemas/TestMethod'
           description: ''
       tags:
-      - api
+      - test-methods
     delete:
       operationId: destroyTestMethod
       description: ''
@@ -3905,7 +3906,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - test-methods
   /api/scenarios/:
     get:
       operationId: listScenarios
@@ -3922,7 +3923,7 @@ paths:
                   $ref: '#/components/schemas/Scenario'
           description: ''
       tags:
-      - api
+      - scenarios
     post:
       operationId: createScenario
       description: Scenarios have a `time_limit` field that represents how long this
@@ -3947,7 +3948,7 @@ paths:
                 $ref: '#/components/schemas/Scenario'
           description: ''
       tags:
-      - api
+      - scenarios
   /api/scenarios/{id}/:
     get:
       operationId: retrieveScenario
@@ -3968,7 +3969,7 @@ paths:
                 $ref: '#/components/schemas/Scenario'
           description: ''
       tags:
-      - api
+      - scenarios
     put:
       operationId: updateScenario
       description: Scenarios have a `time_limit` field that represents how long this
@@ -3999,7 +4000,7 @@ paths:
                 $ref: '#/components/schemas/Scenario'
           description: ''
       tags:
-      - api
+      - scenarios
     patch:
       operationId: partialUpdateScenario
       description: Scenarios have a `time_limit` field that represents how long this
@@ -4030,7 +4031,7 @@ paths:
                 $ref: '#/components/schemas/Scenario'
           description: ''
       tags:
-      - api
+      - scenarios
     delete:
       operationId: destroyScenario
       description: Scenarios have a `time_limit` field that represents how long this
@@ -4046,7 +4047,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - scenarios
   /api/capabilities_under_test/:
     get:
       operationId: listCapabilityUnderTests
@@ -4062,7 +4063,7 @@ paths:
                   $ref: '#/components/schemas/CapabilityUnderTest'
           description: ''
       tags:
-      - api
+      - capabilities-under-test
     post:
       operationId: createCapabilityUnderTest
       description: ''
@@ -4086,7 +4087,7 @@ paths:
                 $ref: '#/components/schemas/CapabilityUnderTest'
           description: ''
       tags:
-      - api
+      - capabilities-under-test
   /api/capabilities_under_test/{id}/:
     get:
       operationId: retrieveCapabilityUnderTest
@@ -4106,7 +4107,7 @@ paths:
                 $ref: '#/components/schemas/CapabilityUnderTest'
           description: ''
       tags:
-      - api
+      - capabilities-under-test
     put:
       operationId: updateCapabilityUnderTest
       description: ''
@@ -4136,7 +4137,7 @@ paths:
                 $ref: '#/components/schemas/CapabilityUnderTest'
           description: ''
       tags:
-      - api
+      - capabilities-under-test
     patch:
       operationId: partialUpdateCapabilityUnderTest
       description: ''
@@ -4166,7 +4167,7 @@ paths:
                 $ref: '#/components/schemas/CapabilityUnderTest'
           description: ''
       tags:
-      - api
+      - capabilities-under-test
     delete:
       operationId: destroyCapabilityUnderTest
       description: ''
@@ -4181,7 +4182,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - capabilities-under-test
   /api/system_configurations/:
     get:
       operationId: listSystemConfigurations
@@ -4197,7 +4198,7 @@ paths:
                   $ref: '#/components/schemas/SystemConfiguration'
           description: ''
       tags:
-      - api
+      - system-configurations
     post:
       operationId: createSystemConfiguration
       description: ''
@@ -4221,7 +4222,7 @@ paths:
                 $ref: '#/components/schemas/SystemConfiguration'
           description: ''
       tags:
-      - api
+      - system-configurations
   /api/system_configurations/{id}/:
     get:
       operationId: retrieveSystemConfiguration
@@ -4241,7 +4242,7 @@ paths:
                 $ref: '#/components/schemas/SystemConfiguration'
           description: ''
       tags:
-      - api
+      - system-configurations
     put:
       operationId: updateSystemConfiguration
       description: ''
@@ -4271,7 +4272,7 @@ paths:
                 $ref: '#/components/schemas/SystemConfiguration'
           description: ''
       tags:
-      - api
+      - system-configurations
     patch:
       operationId: partialUpdateSystemConfiguration
       description: ''
@@ -4301,7 +4302,7 @@ paths:
                 $ref: '#/components/schemas/SystemConfiguration'
           description: ''
       tags:
-      - api
+      - system-configurations
     delete:
       operationId: destroySystemConfiguration
       description: ''
@@ -4316,7 +4317,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - system-configurations
   /api/pose_sources/:
     get:
       operationId: listPoseSources
@@ -4332,7 +4333,7 @@ paths:
                   $ref: '#/components/schemas/PoseSource'
           description: ''
       tags:
-      - api
+      - pose-sources
     post:
       operationId: createPoseSource
       description: ''
@@ -4356,7 +4357,7 @@ paths:
                 $ref: '#/components/schemas/PoseSource'
           description: ''
       tags:
-      - api
+      - pose-sources
   /api/pose_sources/{id}/:
     get:
       operationId: retrievePoseSource
@@ -4376,7 +4377,7 @@ paths:
                 $ref: '#/components/schemas/PoseSource'
           description: ''
       tags:
-      - api
+      - pose-sources
     put:
       operationId: updatePoseSource
       description: ''
@@ -4406,7 +4407,7 @@ paths:
                 $ref: '#/components/schemas/PoseSource'
           description: ''
       tags:
-      - api
+      - pose-sources
     patch:
       operationId: partialUpdatePoseSource
       description: ''
@@ -4436,7 +4437,7 @@ paths:
                 $ref: '#/components/schemas/PoseSource'
           description: ''
       tags:
-      - api
+      - pose-sources
     delete:
       operationId: destroyPoseSource
       description: ''
@@ -4451,7 +4452,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - pose-sources
   /api/poses/:
     get:
       operationId: listPoses
@@ -4537,7 +4538,7 @@ paths:
                       $ref: '#/components/schemas/Pose'
           description: ''
       tags:
-      - api
+      - poses
     post:
       operationId: createPose
       description: 'This endpoint represents entity poses
@@ -4586,7 +4587,7 @@ paths:
                 $ref: '#/components/schemas/Pose'
           description: ''
       tags:
-      - api
+      - poses
   /api/poses/{id}/:
     get:
       operationId: retrievePose
@@ -4655,7 +4656,7 @@ paths:
                 $ref: '#/components/schemas/Pose'
           description: ''
       tags:
-      - api
+      - poses
     put:
       operationId: updatePose
       description: 'This endpoint represents entity poses
@@ -4734,7 +4735,7 @@ paths:
                 $ref: '#/components/schemas/Pose'
           description: ''
       tags:
-      - api
+      - poses
     patch:
       operationId: partialUpdatePose
       description: 'This endpoint represents entity poses
@@ -4813,7 +4814,7 @@ paths:
                 $ref: '#/components/schemas/Pose'
           description: ''
       tags:
-      - api
+      - poses
     delete:
       operationId: destroyPose
       description: 'This endpoint represents entity poses
@@ -4877,7 +4878,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - poses
   /api/queryset_specifications/:
     get:
       operationId: listQuerySetSpecifications
@@ -4893,7 +4894,7 @@ paths:
                   $ref: '#/components/schemas/QuerySetSpecification'
           description: ''
       tags:
-      - api
+      - queryset-specifications
     post:
       operationId: createQuerySetSpecification
       description: ''
@@ -4917,7 +4918,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetSpecification'
           description: ''
       tags:
-      - api
+      - queryset-specifications
   /api/queryset_specifications/{id}/:
     get:
       operationId: retrieveQuerySetSpecification
@@ -4937,7 +4938,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetSpecification'
           description: ''
       tags:
-      - api
+      - queryset-specifications
     put:
       operationId: updateQuerySetSpecification
       description: ''
@@ -4967,7 +4968,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetSpecification'
           description: ''
       tags:
-      - api
+      - queryset-specifications
     patch:
       operationId: partialUpdateQuerySetSpecification
       description: ''
@@ -4997,7 +4998,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetSpecification'
           description: ''
       tags:
-      - api
+      - queryset-specifications
     delete:
       operationId: destroyQuerySetSpecification
       description: ''
@@ -5012,7 +5013,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - queryset-specifications
   /api/queryset_methods/:
     get:
       operationId: listQuerySetMethods
@@ -5028,7 +5029,7 @@ paths:
                   $ref: '#/components/schemas/QuerySetMethod'
           description: ''
       tags:
-      - api
+      - queryset-methods
     post:
       operationId: createQuerySetMethod
       description: ''
@@ -5052,7 +5053,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetMethod'
           description: ''
       tags:
-      - api
+      - queryset-methods
   /api/queryset_methods/{id}/:
     get:
       operationId: retrieveQuerySetMethod
@@ -5072,7 +5073,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetMethod'
           description: ''
       tags:
-      - api
+      - queryset-methods
     put:
       operationId: updateQuerySetMethod
       description: ''
@@ -5102,7 +5103,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetMethod'
           description: ''
       tags:
-      - api
+      - queryset-methods
     patch:
       operationId: partialUpdateQuerySetMethod
       description: ''
@@ -5132,7 +5133,7 @@ paths:
                 $ref: '#/components/schemas/QuerySetMethod'
           description: ''
       tags:
-      - api
+      - queryset-methods
     delete:
       operationId: destroyQuerySetMethod
       description: ''
@@ -5147,7 +5148,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - queryset-methods
   /api/extraction_fields/:
     get:
       operationId: listExtractionFields
@@ -5163,7 +5164,7 @@ paths:
                   $ref: '#/components/schemas/ExtractionField'
           description: ''
       tags:
-      - api
+      - extraction-fields
     post:
       operationId: createExtractionField
       description: ''
@@ -5187,7 +5188,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionField'
           description: ''
       tags:
-      - api
+      - extraction-fields
   /api/extraction_fields/{id}/:
     get:
       operationId: retrieveExtractionField
@@ -5207,7 +5208,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionField'
           description: ''
       tags:
-      - api
+      - extraction-fields
     put:
       operationId: updateExtractionField
       description: ''
@@ -5237,7 +5238,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionField'
           description: ''
       tags:
-      - api
+      - extraction-fields
     patch:
       operationId: partialUpdateExtractionField
       description: ''
@@ -5267,7 +5268,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionField'
           description: ''
       tags:
-      - api
+      - extraction-fields
     delete:
       operationId: destroyExtractionField
       description: ''
@@ -5282,7 +5283,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - extraction-fields
   /api/extraction_specications/:
     get:
       operationId: listExtractionSpecifications
@@ -5298,7 +5299,7 @@ paths:
                   $ref: '#/components/schemas/ExtractionSpecification'
           description: ''
       tags:
-      - api
+      - extraction-specications
     post:
       operationId: createExtractionSpecification
       description: ''
@@ -5322,7 +5323,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionSpecification'
           description: ''
       tags:
-      - api
+      - extraction-specications
   /api/extraction_specications/{id}/:
     get:
       operationId: retrieveExtractionSpecification
@@ -5342,7 +5343,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionSpecification'
           description: ''
       tags:
-      - api
+      - extraction-specications
     put:
       operationId: updateExtractionSpecification
       description: ''
@@ -5372,7 +5373,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionSpecification'
           description: ''
       tags:
-      - api
+      - extraction-specications
     patch:
       operationId: partialUpdateExtractionSpecification
       description: ''
@@ -5402,7 +5403,7 @@ paths:
                 $ref: '#/components/schemas/ExtractionSpecification'
           description: ''
       tags:
-      - api
+      - extraction-specications
     delete:
       operationId: destroyExtractionSpecification
       description: ''
@@ -5417,7 +5418,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - extraction-specications
   /api/iterated_extraction_specications/:
     get:
       operationId: listIteratedExtractionSpecifications
@@ -5433,7 +5434,7 @@ paths:
                   $ref: '#/components/schemas/IteratedExtractionSpecification'
           description: ''
       tags:
-      - api
+      - iterated-extraction-specications
     post:
       operationId: createIteratedExtractionSpecification
       description: ''
@@ -5457,7 +5458,7 @@ paths:
                 $ref: '#/components/schemas/IteratedExtractionSpecification'
           description: ''
       tags:
-      - api
+      - iterated-extraction-specications
   /api/iterated_extraction_specications/{id}/:
     get:
       operationId: retrieveIteratedExtractionSpecification
@@ -5477,7 +5478,7 @@ paths:
                 $ref: '#/components/schemas/IteratedExtractionSpecification'
           description: ''
       tags:
-      - api
+      - iterated-extraction-specications
     put:
       operationId: updateIteratedExtractionSpecification
       description: ''
@@ -5507,7 +5508,7 @@ paths:
                 $ref: '#/components/schemas/IteratedExtractionSpecification'
           description: ''
       tags:
-      - api
+      - iterated-extraction-specications
     patch:
       operationId: partialUpdateIteratedExtractionSpecification
       description: ''
@@ -5537,7 +5538,7 @@ paths:
                 $ref: '#/components/schemas/IteratedExtractionSpecification'
           description: ''
       tags:
-      - api
+      - iterated-extraction-specications
     delete:
       operationId: destroyIteratedExtractionSpecification
       description: ''
@@ -5552,7 +5553,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - iterated-extraction-specications
   /api/data_manipulators/:
     get:
       operationId: listDataManipulators
@@ -5568,7 +5569,7 @@ paths:
                   $ref: '#/components/schemas/DataManipulator'
           description: ''
       tags:
-      - api
+      - data-manipulators
     post:
       operationId: createDataManipulator
       description: ''
@@ -5592,7 +5593,7 @@ paths:
                 $ref: '#/components/schemas/DataManipulator'
           description: ''
       tags:
-      - api
+      - data-manipulators
   /api/data_manipulators/{id}/:
     get:
       operationId: retrieveDataManipulator
@@ -5612,7 +5613,7 @@ paths:
                 $ref: '#/components/schemas/DataManipulator'
           description: ''
       tags:
-      - api
+      - data-manipulators
     put:
       operationId: updateDataManipulator
       description: ''
@@ -5642,7 +5643,7 @@ paths:
                 $ref: '#/components/schemas/DataManipulator'
           description: ''
       tags:
-      - api
+      - data-manipulators
     patch:
       operationId: partialUpdateDataManipulator
       description: ''
@@ -5672,7 +5673,7 @@ paths:
                 $ref: '#/components/schemas/DataManipulator'
           description: ''
       tags:
-      - api
+      - data-manipulators
     delete:
       operationId: destroyDataManipulator
       description: ''
@@ -5687,7 +5688,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - data-manipulators
   /api/iterated_data_manipulators/:
     get:
       operationId: listIteratedDataManipulators
@@ -5703,7 +5704,7 @@ paths:
                   $ref: '#/components/schemas/IteratedDataManipulator'
           description: ''
       tags:
-      - api
+      - iterated-data-manipulators
     post:
       operationId: createIteratedDataManipulator
       description: ''
@@ -5727,7 +5728,7 @@ paths:
                 $ref: '#/components/schemas/IteratedDataManipulator'
           description: ''
       tags:
-      - api
+      - iterated-data-manipulators
   /api/iterated_data_manipulators/{id}/:
     get:
       operationId: retrieveIteratedDataManipulator
@@ -5747,7 +5748,7 @@ paths:
                 $ref: '#/components/schemas/IteratedDataManipulator'
           description: ''
       tags:
-      - api
+      - iterated-data-manipulators
     put:
       operationId: updateIteratedDataManipulator
       description: ''
@@ -5777,7 +5778,7 @@ paths:
                 $ref: '#/components/schemas/IteratedDataManipulator'
           description: ''
       tags:
-      - api
+      - iterated-data-manipulators
     patch:
       operationId: partialUpdateIteratedDataManipulator
       description: ''
@@ -5807,7 +5808,7 @@ paths:
                 $ref: '#/components/schemas/IteratedDataManipulator'
           description: ''
       tags:
-      - api
+      - iterated-data-manipulators
     delete:
       operationId: destroyIteratedDataManipulator
       description: ''
@@ -5822,7 +5823,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - iterated-data-manipulators
   /api/iterators/:
     get:
       operationId: listIterators
@@ -5838,7 +5839,7 @@ paths:
                   $ref: '#/components/schemas/Iterator'
           description: ''
       tags:
-      - api
+      - iterators
     post:
       operationId: createIterator
       description: ''
@@ -5862,7 +5863,7 @@ paths:
                 $ref: '#/components/schemas/Iterator'
           description: ''
       tags:
-      - api
+      - iterators
   /api/iterators/{id}/:
     get:
       operationId: retrieveIterator
@@ -5882,7 +5883,7 @@ paths:
                 $ref: '#/components/schemas/Iterator'
           description: ''
       tags:
-      - api
+      - iterators
     put:
       operationId: updateIterator
       description: ''
@@ -5912,7 +5913,7 @@ paths:
                 $ref: '#/components/schemas/Iterator'
           description: ''
       tags:
-      - api
+      - iterators
     patch:
       operationId: partialUpdateIterator
       description: ''
@@ -5942,7 +5943,7 @@ paths:
                 $ref: '#/components/schemas/Iterator'
           description: ''
       tags:
-      - api
+      - iterators
     delete:
       operationId: destroyIterator
       description: ''
@@ -5957,7 +5958,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - iterators
   /api/figure_families/:
     get:
       operationId: listFigureFamilys
@@ -5973,7 +5974,7 @@ paths:
                   $ref: '#/components/schemas/FigureFamily'
           description: ''
       tags:
-      - api
+      - figure-families
     post:
       operationId: createFigureFamily
       description: ''
@@ -5997,7 +5998,7 @@ paths:
                 $ref: '#/components/schemas/FigureFamily'
           description: ''
       tags:
-      - api
+      - figure-families
   /api/figure_families/{id}/:
     get:
       operationId: retrieveFigureFamily
@@ -6017,7 +6018,7 @@ paths:
                 $ref: '#/components/schemas/FigureFamily'
           description: ''
       tags:
-      - api
+      - figure-families
     put:
       operationId: updateFigureFamily
       description: ''
@@ -6047,7 +6048,7 @@ paths:
                 $ref: '#/components/schemas/FigureFamily'
           description: ''
       tags:
-      - api
+      - figure-families
     patch:
       operationId: partialUpdateFigureFamily
       description: ''
@@ -6077,7 +6078,7 @@ paths:
                 $ref: '#/components/schemas/FigureFamily'
           description: ''
       tags:
-      - api
+      - figure-families
     delete:
       operationId: destroyFigureFamily
       description: ''
@@ -6092,7 +6093,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - figure-families
   /api/figure_types/:
     get:
       operationId: listFigureTypes
@@ -6108,7 +6109,7 @@ paths:
                   $ref: '#/components/schemas/FigureType'
           description: ''
       tags:
-      - api
+      - figure-types
     post:
       operationId: createFigureType
       description: ''
@@ -6132,7 +6133,7 @@ paths:
                 $ref: '#/components/schemas/FigureType'
           description: ''
       tags:
-      - api
+      - figure-types
   /api/figure_types/{id}/:
     get:
       operationId: retrieveFigureType
@@ -6152,7 +6153,7 @@ paths:
                 $ref: '#/components/schemas/FigureType'
           description: ''
       tags:
-      - api
+      - figure-types
     put:
       operationId: updateFigureType
       description: ''
@@ -6182,7 +6183,7 @@ paths:
                 $ref: '#/components/schemas/FigureType'
           description: ''
       tags:
-      - api
+      - figure-types
     patch:
       operationId: partialUpdateFigureType
       description: ''
@@ -6212,7 +6213,7 @@ paths:
                 $ref: '#/components/schemas/FigureType'
           description: ''
       tags:
-      - api
+      - figure-types
     delete:
       operationId: destroyFigureType
       description: ''
@@ -6227,7 +6228,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - figure-types
   /api/reports/:
     get:
       operationId: listReports
@@ -6243,7 +6244,7 @@ paths:
                   $ref: '#/components/schemas/Report'
           description: ''
       tags:
-      - api
+      - reports
     post:
       operationId: createReport
       description: ''
@@ -6267,7 +6268,7 @@ paths:
                 $ref: '#/components/schemas/Report'
           description: ''
       tags:
-      - api
+      - reports
   /api/reports/{id}/:
     get:
       operationId: retrieveReport
@@ -6287,7 +6288,7 @@ paths:
                 $ref: '#/components/schemas/Report'
           description: ''
       tags:
-      - api
+      - reports
     put:
       operationId: updateReport
       description: ''
@@ -6317,7 +6318,7 @@ paths:
                 $ref: '#/components/schemas/Report'
           description: ''
       tags:
-      - api
+      - reports
     patch:
       operationId: partialUpdateReport
       description: ''
@@ -6347,7 +6348,7 @@ paths:
                 $ref: '#/components/schemas/Report'
           description: ''
       tags:
-      - api
+      - reports
     delete:
       operationId: destroyReport
       description: ''
@@ -6362,7 +6363,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - reports
   /api/mods/:
     get:
       operationId: listMods
@@ -6378,7 +6379,7 @@ paths:
                   $ref: '#/components/schemas/Mod'
           description: ''
       tags:
-      - api
+      - mods
     post:
       operationId: createMod
       description: ''
@@ -6402,7 +6403,7 @@ paths:
                 $ref: '#/components/schemas/Mod'
           description: ''
       tags:
-      - api
+      - mods
   /api/mods/{name}/:
     get:
       operationId: retrieveMod
@@ -6422,7 +6423,7 @@ paths:
                 $ref: '#/components/schemas/Mod'
           description: ''
       tags:
-      - api
+      - mods
     put:
       operationId: updateMod
       description: ''
@@ -6452,7 +6453,7 @@ paths:
                 $ref: '#/components/schemas/Mod'
           description: ''
       tags:
-      - api
+      - mods
     patch:
       operationId: partialUpdateMod
       description: ''
@@ -6482,7 +6483,7 @@ paths:
                 $ref: '#/components/schemas/Mod'
           description: ''
       tags:
-      - api
+      - mods
     delete:
       operationId: destroyMod
       description: ''
@@ -6497,7 +6498,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - mods
   /api/capabilities/:
     get:
       operationId: listCapabilitys
@@ -6513,7 +6514,7 @@ paths:
                   $ref: '#/components/schemas/Capability'
           description: ''
       tags:
-      - api
+      - capabilities
     post:
       operationId: createCapability
       description: ''
@@ -6537,7 +6538,7 @@ paths:
                 $ref: '#/components/schemas/Capability'
           description: ''
       tags:
-      - api
+      - capabilities
   /api/capabilities/{id}/:
     get:
       operationId: retrieveCapability
@@ -6557,7 +6558,7 @@ paths:
                 $ref: '#/components/schemas/Capability'
           description: ''
       tags:
-      - api
+      - capabilities
     put:
       operationId: updateCapability
       description: ''
@@ -6587,7 +6588,7 @@ paths:
                 $ref: '#/components/schemas/Capability'
           description: ''
       tags:
-      - api
+      - capabilities
     patch:
       operationId: partialUpdateCapability
       description: ''
@@ -6617,7 +6618,7 @@ paths:
                 $ref: '#/components/schemas/Capability'
           description: ''
       tags:
-      - api
+      - capabilities
     delete:
       operationId: destroyCapability
       description: ''
@@ -6632,7 +6633,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - capabilities
   /api/event_levels/:
     get:
       operationId: listEventLevels
@@ -6648,7 +6649,7 @@ paths:
                   $ref: '#/components/schemas/EventLevel'
           description: ''
       tags:
-      - api
+      - event-levels
     post:
       operationId: createEventLevel
       description: ''
@@ -6672,7 +6673,7 @@ paths:
                 $ref: '#/components/schemas/EventLevel'
           description: ''
       tags:
-      - api
+      - event-levels
   /api/event_levels/{id}/:
     get:
       operationId: retrieveEventLevel
@@ -6692,7 +6693,7 @@ paths:
                 $ref: '#/components/schemas/EventLevel'
           description: ''
       tags:
-      - api
+      - event-levels
     put:
       operationId: updateEventLevel
       description: ''
@@ -6722,7 +6723,7 @@ paths:
                 $ref: '#/components/schemas/EventLevel'
           description: ''
       tags:
-      - api
+      - event-levels
     patch:
       operationId: partialUpdateEventLevel
       description: ''
@@ -6752,7 +6753,7 @@ paths:
                 $ref: '#/components/schemas/EventLevel'
           description: ''
       tags:
-      - api
+      - event-levels
     delete:
       operationId: destroyEventLevel
       description: ''
@@ -6767,7 +6768,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - event-levels
   /api/event_types/:
     get:
       operationId: listEventTypes
@@ -6803,7 +6804,7 @@ paths:
                   $ref: '#/components/schemas/EventType'
           description: ''
       tags:
-      - api
+      - event-types
     post:
       operationId: createEventType
       description: 'This endpoint represents Event Types.
@@ -6847,7 +6848,7 @@ paths:
                 $ref: '#/components/schemas/EventType'
           description: ''
       tags:
-      - api
+      - event-types
   /api/event_types/{id}/:
     get:
       operationId: retrieveEventType
@@ -6887,7 +6888,7 @@ paths:
                 $ref: '#/components/schemas/EventType'
           description: ''
       tags:
-      - api
+      - event-types
     put:
       operationId: updateEventType
       description: 'This endpoint represents Event Types.
@@ -6937,7 +6938,7 @@ paths:
                 $ref: '#/components/schemas/EventType'
           description: ''
       tags:
-      - api
+      - event-types
     patch:
       operationId: partialUpdateEventType
       description: 'This endpoint represents Event Types.
@@ -6987,7 +6988,7 @@ paths:
                 $ref: '#/components/schemas/EventType'
           description: ''
       tags:
-      - api
+      - event-types
     delete:
       operationId: destroyEventType
       description: 'This endpoint represents Event Types.
@@ -7022,7 +7023,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - event-types
   /api/events/:
     get:
       operationId: listEvents
@@ -7202,7 +7203,7 @@ paths:
                       $ref: '#/components/schemas/Event'
           description: ''
       tags:
-      - api
+      - events
     post:
       operationId: createEvent
       description: "If a new event is submitted without an associated *start_datetime*,\
@@ -7248,7 +7249,7 @@ paths:
                 $ref: '#/components/schemas/Event'
           description: ''
       tags:
-      - api
+      - events
   /api/events/{id}/:
     get:
       operationId: retrieveEvent
@@ -7364,7 +7365,7 @@ paths:
                 $ref: '#/components/schemas/Event'
           description: ''
       tags:
-      - api
+      - events
     put:
       operationId: updateEvent
       description: "If the metadata is updated (via PUT/PATCH), the `related_entities`\
@@ -7497,7 +7498,7 @@ paths:
                 $ref: '#/components/schemas/Event'
           description: ''
       tags:
-      - api
+      - events
     patch:
       operationId: partialUpdateEvent
       description: "If the metadata is updated (via PUT/PATCH), the `related_entities`\
@@ -7630,7 +7631,7 @@ paths:
                 $ref: '#/components/schemas/Event'
           description: ''
       tags:
-      - api
+      - events
     delete:
       operationId: destroyEvent
       description: Delete an event
@@ -7735,7 +7736,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - events
   /api/segments/:
     get:
       operationId: listSegments
@@ -7751,7 +7752,7 @@ paths:
                   $ref: '#/components/schemas/Segment'
           description: ''
       tags:
-      - api
+      - segments
     post:
       operationId: createSegment
       description: ''
@@ -7775,7 +7776,7 @@ paths:
                 $ref: '#/components/schemas/Segment'
           description: ''
       tags:
-      - api
+      - segments
   /api/segments/{id}/:
     get:
       operationId: retrieveSegment
@@ -7795,7 +7796,7 @@ paths:
                 $ref: '#/components/schemas/Segment'
           description: ''
       tags:
-      - api
+      - segments
     put:
       operationId: updateSegment
       description: ''
@@ -7825,7 +7826,7 @@ paths:
                 $ref: '#/components/schemas/Segment'
           description: ''
       tags:
-      - api
+      - segments
     patch:
       operationId: partialUpdateSegment
       description: ''
@@ -7855,7 +7856,7 @@ paths:
                 $ref: '#/components/schemas/Segment'
           description: ''
       tags:
-      - api
+      - segments
     delete:
       operationId: destroySegment
       description: ''
@@ -7870,7 +7871,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - segments
   /api/notes/:
     get:
       operationId: listNotes
@@ -7895,7 +7896,7 @@ paths:
                   $ref: '#/components/schemas/Note'
           description: ''
       tags:
-      - api
+      - notes
     post:
       operationId: createNote
       description: 'This endpoint represents notes on events.
@@ -7928,7 +7929,7 @@ paths:
                 $ref: '#/components/schemas/Note'
           description: ''
       tags:
-      - api
+      - notes
   /api/notes/{id}/:
     get:
       operationId: retrieveNote
@@ -7957,7 +7958,7 @@ paths:
                 $ref: '#/components/schemas/Note'
           description: ''
       tags:
-      - api
+      - notes
     put:
       operationId: updateNote
       description: 'This endpoint represents notes on events.
@@ -7996,7 +7997,7 @@ paths:
                 $ref: '#/components/schemas/Note'
           description: ''
       tags:
-      - api
+      - notes
     patch:
       operationId: partialUpdateNote
       description: 'This endpoint represents notes on events.
@@ -8035,7 +8036,7 @@ paths:
                 $ref: '#/components/schemas/Note'
           description: ''
       tags:
-      - api
+      - notes
     delete:
       operationId: destroyNote
       description: 'This endpoint represents notes on events.
@@ -8059,7 +8060,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - notes
   /api/image_types/:
     get:
       operationId: listImageTypes
@@ -8075,7 +8076,7 @@ paths:
                   $ref: '#/components/schemas/ImageType'
           description: ''
       tags:
-      - api
+      - image-types
     post:
       operationId: createImageType
       description: ''
@@ -8099,7 +8100,7 @@ paths:
                 $ref: '#/components/schemas/ImageType'
           description: ''
       tags:
-      - api
+      - image-types
   /api/image_types/{id}/:
     get:
       operationId: retrieveImageType
@@ -8119,7 +8120,7 @@ paths:
                 $ref: '#/components/schemas/ImageType'
           description: ''
       tags:
-      - api
+      - image-types
     put:
       operationId: updateImageType
       description: ''
@@ -8149,7 +8150,7 @@ paths:
                 $ref: '#/components/schemas/ImageType'
           description: ''
       tags:
-      - api
+      - image-types
     patch:
       operationId: partialUpdateImageType
       description: ''
@@ -8179,7 +8180,7 @@ paths:
                 $ref: '#/components/schemas/ImageType'
           description: ''
       tags:
-      - api
+      - image-types
     delete:
       operationId: destroyImageType
       description: ''
@@ -8194,7 +8195,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - image-types
   /api/images/:
     get:
       operationId: listImages
@@ -8210,7 +8211,7 @@ paths:
                   $ref: '#/components/schemas/Image'
           description: ''
       tags:
-      - api
+      - images
     post:
       operationId: createImage
       description: ''
@@ -8234,7 +8235,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
       tags:
-      - api
+      - images
   /api/images/{id}/:
     get:
       operationId: retrieveImage
@@ -8254,7 +8255,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
       tags:
-      - api
+      - images
     put:
       operationId: updateImage
       description: ''
@@ -8284,7 +8285,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
       tags:
-      - api
+      - images
     patch:
       operationId: partialUpdateImage
       description: ''
@@ -8314,7 +8315,7 @@ paths:
                 $ref: '#/components/schemas/Image'
           description: ''
       tags:
-      - api
+      - images
     delete:
       operationId: destroyImage
       description: ''
@@ -8329,7 +8330,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - images
   /api/server_types/:
     get:
       operationId: listServerTypes
@@ -8345,7 +8346,7 @@ paths:
                   $ref: '#/components/schemas/ServerType'
           description: ''
       tags:
-      - api
+      - server-types
     post:
       operationId: createServerType
       description: ''
@@ -8369,7 +8370,7 @@ paths:
                 $ref: '#/components/schemas/ServerType'
           description: ''
       tags:
-      - api
+      - server-types
   /api/server_types/{id}/:
     get:
       operationId: retrieveServerType
@@ -8389,7 +8390,7 @@ paths:
                 $ref: '#/components/schemas/ServerType'
           description: ''
       tags:
-      - api
+      - server-types
     put:
       operationId: updateServerType
       description: ''
@@ -8419,7 +8420,7 @@ paths:
                 $ref: '#/components/schemas/ServerType'
           description: ''
       tags:
-      - api
+      - server-types
     patch:
       operationId: partialUpdateServerType
       description: ''
@@ -8449,7 +8450,7 @@ paths:
                 $ref: '#/components/schemas/ServerType'
           description: ''
       tags:
-      - api
+      - server-types
     delete:
       operationId: destroyServerType
       description: ''
@@ -8464,7 +8465,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - server-types
   /api/server_params/:
     get:
       operationId: listServerParams
@@ -8486,7 +8487,7 @@ paths:
                   $ref: '#/components/schemas/ServerParam'
           description: ''
       tags:
-      - api
+      - server-params
     post:
       operationId: createServerParam
       description: "This endpoint represents arbitrary server parameters.  These are\
@@ -8516,7 +8517,7 @@ paths:
                 $ref: '#/components/schemas/ServerParam'
           description: ''
       tags:
-      - api
+      - server-params
   /api/server_params/{id}/:
     get:
       operationId: retrieveServerParam
@@ -8542,7 +8543,7 @@ paths:
                 $ref: '#/components/schemas/ServerParam'
           description: ''
       tags:
-      - api
+      - server-params
     put:
       operationId: updateServerParam
       description: "This endpoint represents arbitrary server parameters.  These are\
@@ -8578,7 +8579,7 @@ paths:
                 $ref: '#/components/schemas/ServerParam'
           description: ''
       tags:
-      - api
+      - server-params
     patch:
       operationId: partialUpdateServerParam
       description: "This endpoint represents arbitrary server parameters.  These are\
@@ -8614,7 +8615,7 @@ paths:
                 $ref: '#/components/schemas/ServerParam'
           description: ''
       tags:
-      - api
+      - server-params
     delete:
       operationId: destroyServerParam
       description: "This endpoint represents arbitrary server parameters.  These are\
@@ -8635,7 +8636,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - server-params
   /api/servers/:
     get:
       operationId: listServers
@@ -8692,7 +8693,7 @@ paths:
                   $ref: '#/components/schemas/Server'
           description: ''
       tags:
-      - api
+      - servers
     post:
       operationId: createServer
       description: 'This endpoint represents available servers. These are used to
@@ -8733,7 +8734,7 @@ paths:
                 $ref: '#/components/schemas/Server'
           description: ''
       tags:
-      - api
+      - servers
   /api/servers/{id}/:
     get:
       operationId: retrieveServer
@@ -8794,7 +8795,7 @@ paths:
                 $ref: '#/components/schemas/Server'
           description: ''
       tags:
-      - api
+      - servers
     put:
       operationId: updateServer
       description: 'This endpoint represents available servers. These are used to
@@ -8865,7 +8866,7 @@ paths:
                 $ref: '#/components/schemas/Server'
           description: ''
       tags:
-      - api
+      - servers
     patch:
       operationId: partialUpdateServer
       description: 'This endpoint represents available servers. These are used to
@@ -8936,7 +8937,7 @@ paths:
                 $ref: '#/components/schemas/Server'
           description: ''
       tags:
-      - api
+      - servers
     delete:
       operationId: destroyServer
       description: 'This endpoint represents available servers. These are used to
@@ -8992,7 +8993,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - servers
   /api/key_value_pairs/:
     get:
       operationId: listKeyValuePairs
@@ -9008,7 +9009,7 @@ paths:
                   $ref: '#/components/schemas/KeyValuePair'
           description: ''
       tags:
-      - api
+      - key-value-pairs
     post:
       operationId: createKeyValuePair
       description: ''
@@ -9032,7 +9033,7 @@ paths:
                 $ref: '#/components/schemas/KeyValuePair'
           description: ''
       tags:
-      - api
+      - key-value-pairs
   /api/key_value_pairs/{id}/:
     get:
       operationId: retrieveKeyValuePair
@@ -9052,7 +9053,7 @@ paths:
                 $ref: '#/components/schemas/KeyValuePair'
           description: ''
       tags:
-      - api
+      - key-value-pairs
     put:
       operationId: updateKeyValuePair
       description: ''
@@ -9082,7 +9083,7 @@ paths:
                 $ref: '#/components/schemas/KeyValuePair'
           description: ''
       tags:
-      - api
+      - key-value-pairs
     patch:
       operationId: partialUpdateKeyValuePair
       description: ''
@@ -9112,7 +9113,7 @@ paths:
                 $ref: '#/components/schemas/KeyValuePair'
           description: ''
       tags:
-      - api
+      - key-value-pairs
     delete:
       operationId: destroyKeyValuePair
       description: ''
@@ -9127,7 +9128,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - key-value-pairs
   /api/trigger_responses/:
     get:
       operationId: listTriggerResponses
@@ -9143,7 +9144,7 @@ paths:
                   $ref: '#/components/schemas/TriggerResponse'
           description: ''
       tags:
-      - api
+      - trigger-responses
     post:
       operationId: createTriggerResponse
       description: ''
@@ -9167,7 +9168,7 @@ paths:
                 $ref: '#/components/schemas/TriggerResponse'
           description: ''
       tags:
-      - api
+      - trigger-responses
   /api/trigger_responses/{id}/:
     get:
       operationId: retrieveTriggerResponse
@@ -9187,7 +9188,7 @@ paths:
                 $ref: '#/components/schemas/TriggerResponse'
           description: ''
       tags:
-      - api
+      - trigger-responses
     put:
       operationId: updateTriggerResponse
       description: ''
@@ -9217,7 +9218,7 @@ paths:
                 $ref: '#/components/schemas/TriggerResponse'
           description: ''
       tags:
-      - api
+      - trigger-responses
     patch:
       operationId: partialUpdateTriggerResponse
       description: ''
@@ -9247,7 +9248,7 @@ paths:
                 $ref: '#/components/schemas/TriggerResponse'
           description: ''
       tags:
-      - api
+      - trigger-responses
     delete:
       operationId: destroyTriggerResponse
       description: ''
@@ -9262,7 +9263,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - trigger-responses
   /api/ordered_trigger_responses/:
     get:
       operationId: listOrderedTriggerResponses
@@ -9278,7 +9279,7 @@ paths:
                   $ref: '#/components/schemas/OrderedTriggerResponse'
           description: ''
       tags:
-      - api
+      - ordered-trigger-responses
     post:
       operationId: createOrderedTriggerResponse
       description: ''
@@ -9302,7 +9303,7 @@ paths:
                 $ref: '#/components/schemas/OrderedTriggerResponse'
           description: ''
       tags:
-      - api
+      - ordered-trigger-responses
   /api/ordered_trigger_responses/{id}/:
     get:
       operationId: retrieveOrderedTriggerResponse
@@ -9322,7 +9323,7 @@ paths:
                 $ref: '#/components/schemas/OrderedTriggerResponse'
           description: ''
       tags:
-      - api
+      - ordered-trigger-responses
     put:
       operationId: updateOrderedTriggerResponse
       description: ''
@@ -9352,7 +9353,7 @@ paths:
                 $ref: '#/components/schemas/OrderedTriggerResponse'
           description: ''
       tags:
-      - api
+      - ordered-trigger-responses
     patch:
       operationId: partialUpdateOrderedTriggerResponse
       description: ''
@@ -9382,7 +9383,7 @@ paths:
                 $ref: '#/components/schemas/OrderedTriggerResponse'
           description: ''
       tags:
-      - api
+      - ordered-trigger-responses
     delete:
       operationId: destroyOrderedTriggerResponse
       description: ''
@@ -9397,7 +9398,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - ordered-trigger-responses
   /api/triggers/:
     get:
       operationId: listTriggers
@@ -9426,7 +9427,7 @@ paths:
                   $ref: '#/components/schemas/Trigger'
           description: ''
       tags:
-      - api
+      - triggers
     post:
       operationId: createTrigger
       description: 'This endpoint represents event triggers.
@@ -9457,7 +9458,7 @@ paths:
                 $ref: '#/components/schemas/Trigger'
           description: ''
       tags:
-      - api
+      - triggers
   /api/triggers/{id}/:
     get:
       operationId: retrieveTrigger
@@ -9490,7 +9491,7 @@ paths:
                 $ref: '#/components/schemas/Trigger'
           description: ''
       tags:
-      - api
+      - triggers
     put:
       operationId: updateTrigger
       description: 'This endpoint represents event triggers.
@@ -9533,7 +9534,7 @@ paths:
                 $ref: '#/components/schemas/Trigger'
           description: ''
       tags:
-      - api
+      - triggers
     patch:
       operationId: partialUpdateTrigger
       description: 'This endpoint represents event triggers.
@@ -9576,7 +9577,7 @@ paths:
                 $ref: '#/components/schemas/Trigger'
           description: ''
       tags:
-      - api
+      - triggers
     delete:
       operationId: destroyTrigger
       description: 'This endpoint represents event triggers.
@@ -9604,7 +9605,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - triggers
   /api/condition_variables/:
     get:
       operationId: listConditionVariables
@@ -9620,7 +9621,7 @@ paths:
                   $ref: '#/components/schemas/ConditionVariable'
           description: ''
       tags:
-      - api
+      - condition-variables
     post:
       operationId: createConditionVariable
       description: ''
@@ -9644,7 +9645,7 @@ paths:
                 $ref: '#/components/schemas/ConditionVariable'
           description: ''
       tags:
-      - api
+      - condition-variables
   /api/condition_variables/{id}/:
     get:
       operationId: retrieveConditionVariable
@@ -9664,7 +9665,7 @@ paths:
                 $ref: '#/components/schemas/ConditionVariable'
           description: ''
       tags:
-      - api
+      - condition-variables
     put:
       operationId: updateConditionVariable
       description: ''
@@ -9694,7 +9695,7 @@ paths:
                 $ref: '#/components/schemas/ConditionVariable'
           description: ''
       tags:
-      - api
+      - condition-variables
     patch:
       operationId: partialUpdateConditionVariable
       description: ''
@@ -9724,7 +9725,7 @@ paths:
                 $ref: '#/components/schemas/ConditionVariable'
           description: ''
       tags:
-      - api
+      - condition-variables
     delete:
       operationId: destroyConditionVariable
       description: ''
@@ -9739,7 +9740,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - condition-variables
   /api/requested_data/:
     get:
       operationId: listRequestedDatas
@@ -9755,7 +9756,7 @@ paths:
                   $ref: '#/components/schemas/RequestedData'
           description: ''
       tags:
-      - api
+      - requested-data
     post:
       operationId: createRequestedData
       description: ''
@@ -9779,7 +9780,7 @@ paths:
                 $ref: '#/components/schemas/RequestedData'
           description: ''
       tags:
-      - api
+      - requested-data
   /api/requested_data/{id}/:
     get:
       operationId: retrieveRequestedData
@@ -9799,7 +9800,7 @@ paths:
                 $ref: '#/components/schemas/RequestedData'
           description: ''
       tags:
-      - api
+      - requested-data
     put:
       operationId: updateRequestedData
       description: ''
@@ -9829,7 +9830,7 @@ paths:
                 $ref: '#/components/schemas/RequestedData'
           description: ''
       tags:
-      - api
+      - requested-data
     patch:
       operationId: partialUpdateRequestedData
       description: ''
@@ -9859,7 +9860,7 @@ paths:
                 $ref: '#/components/schemas/RequestedData'
           description: ''
       tags:
-      - api
+      - requested-data
     delete:
       operationId: destroyRequestedData
       description: ''
@@ -9874,7 +9875,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - requested-data
   /api/regions/:
     get:
       operationId: listRegions
@@ -9941,7 +9942,7 @@ paths:
                   $ref: '#/components/schemas/Region'
           description: ''
       tags:
-      - api
+      - regions
     post:
       operationId: createRegion
       description: 'This endpoint represents an area of interests. Regions can be
@@ -9998,7 +9999,7 @@ paths:
                 $ref: '#/components/schemas/Region'
           description: ''
       tags:
-      - api
+      - regions
   /api/regions/{name}/:
     get:
       operationId: retrieveRegion
@@ -10069,7 +10070,7 @@ paths:
                 $ref: '#/components/schemas/Region'
           description: ''
       tags:
-      - api
+      - regions
     put:
       operationId: updateRegion
       description: 'This endpoint represents an area of interests. Regions can be
@@ -10150,7 +10151,7 @@ paths:
                 $ref: '#/components/schemas/Region'
           description: ''
       tags:
-      - api
+      - regions
     patch:
       operationId: partialUpdateRegion
       description: 'This endpoint represents an area of interests. Regions can be
@@ -10231,7 +10232,7 @@ paths:
                 $ref: '#/components/schemas/Region'
           description: ''
       tags:
-      - api
+      - regions
     delete:
       operationId: destroyRegion
       description: 'This endpoint represents an area of interests. Regions can be
@@ -10297,7 +10298,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - regions
   /api/region_types/:
     get:
       operationId: listRegionTypes
@@ -10313,7 +10314,7 @@ paths:
                   $ref: '#/components/schemas/RegionType'
           description: ''
       tags:
-      - api
+      - region-types
     post:
       operationId: createRegionType
       description: ''
@@ -10337,7 +10338,7 @@ paths:
                 $ref: '#/components/schemas/RegionType'
           description: ''
       tags:
-      - api
+      - region-types
   /api/region_types/{name}/:
     get:
       operationId: retrieveRegionType
@@ -10357,7 +10358,7 @@ paths:
                 $ref: '#/components/schemas/RegionType'
           description: ''
       tags:
-      - api
+      - region-types
     put:
       operationId: updateRegionType
       description: ''
@@ -10387,7 +10388,7 @@ paths:
                 $ref: '#/components/schemas/RegionType'
           description: ''
       tags:
-      - api
+      - region-types
     patch:
       operationId: partialUpdateRegionType
       description: ''
@@ -10417,7 +10418,7 @@ paths:
                 $ref: '#/components/schemas/RegionType'
           description: ''
       tags:
-      - api
+      - region-types
     delete:
       operationId: destroyRegionType
       description: ''
@@ -10432,7 +10433,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - region-types
   /api/clock_configs/:
     get:
       operationId: listClockConfigs
@@ -10448,7 +10449,7 @@ paths:
                   $ref: '#/components/schemas/ClockConfig'
           description: ''
       tags:
-      - api
+      - clock-configs
     post:
       operationId: createClockConfig
       description: Configuration for Mole experimentation clock.
@@ -10472,7 +10473,7 @@ paths:
                 $ref: '#/components/schemas/ClockConfig'
           description: ''
       tags:
-      - api
+      - clock-configs
   /api/clock_configs/{id}/:
     get:
       operationId: retrieveClockConfig
@@ -10492,7 +10493,7 @@ paths:
                 $ref: '#/components/schemas/ClockConfig'
           description: ''
       tags:
-      - api
+      - clock-configs
     put:
       operationId: updateClockConfig
       description: Configuration for Mole experimentation clock.
@@ -10522,7 +10523,7 @@ paths:
                 $ref: '#/components/schemas/ClockConfig'
           description: ''
       tags:
-      - api
+      - clock-configs
     patch:
       operationId: partialUpdateClockConfig
       description: Configuration for Mole experimentation clock.
@@ -10552,7 +10553,7 @@ paths:
                 $ref: '#/components/schemas/ClockConfig'
           description: ''
       tags:
-      - api
+      - clock-configs
     delete:
       operationId: destroyClockConfig
       description: Configuration for Mole experimentation clock.
@@ -10567,7 +10568,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - clock-configs
   /api/clock_phases/:
     get:
       operationId: listClockPhases
@@ -10583,7 +10584,7 @@ paths:
                   $ref: '#/components/schemas/ClockPhase'
           description: ''
       tags:
-      - api
+      - clock-phases
     post:
       operationId: createClockPhase
       description: Phases for Mole experimentation clock.
@@ -10607,7 +10608,7 @@ paths:
                 $ref: '#/components/schemas/ClockPhase'
           description: ''
       tags:
-      - api
+      - clock-phases
   /api/clock_phases/{id}/:
     get:
       operationId: retrieveClockPhase
@@ -10627,7 +10628,7 @@ paths:
                 $ref: '#/components/schemas/ClockPhase'
           description: ''
       tags:
-      - api
+      - clock-phases
     put:
       operationId: updateClockPhase
       description: Phases for Mole experimentation clock.
@@ -10657,7 +10658,7 @@ paths:
                 $ref: '#/components/schemas/ClockPhase'
           description: ''
       tags:
-      - api
+      - clock-phases
     patch:
       operationId: partialUpdateClockPhase
       description: Phases for Mole experimentation clock.
@@ -10687,7 +10688,7 @@ paths:
                 $ref: '#/components/schemas/ClockPhase'
           description: ''
       tags:
-      - api
+      - clock-phases
     delete:
       operationId: destroyClockPhase
       description: Phases for Mole experimentation clock.
@@ -10702,7 +10703,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - clock-phases
   /api/scripts/:
     get:
       operationId: listScripts
@@ -10718,7 +10719,7 @@ paths:
                   $ref: '#/components/schemas/Script'
           description: ''
       tags:
-      - api
+      - scripts
     post:
       operationId: createScript
       description: ''
@@ -10742,7 +10743,7 @@ paths:
                 $ref: '#/components/schemas/Script'
           description: ''
       tags:
-      - api
+      - scripts
   /api/scripts/{id}/:
     get:
       operationId: retrieveScript
@@ -10762,7 +10763,7 @@ paths:
                 $ref: '#/components/schemas/Script'
           description: ''
       tags:
-      - api
+      - scripts
     put:
       operationId: updateScript
       description: ''
@@ -10792,7 +10793,7 @@ paths:
                 $ref: '#/components/schemas/Script'
           description: ''
       tags:
-      - api
+      - scripts
     patch:
       operationId: partialUpdateScript
       description: ''
@@ -10822,7 +10823,7 @@ paths:
                 $ref: '#/components/schemas/Script'
           description: ''
       tags:
-      - api
+      - scripts
     delete:
       operationId: destroyScript
       description: ''
@@ -10837,7 +10838,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - scripts
   /api/scripted_events/:
     get:
       operationId: listScriptedEvents
@@ -10853,7 +10854,7 @@ paths:
                   $ref: '#/components/schemas/ScriptedEvent'
           description: ''
       tags:
-      - api
+      - scripted-events
     post:
       operationId: createScriptedEvent
       description: ''
@@ -10877,7 +10878,7 @@ paths:
                 $ref: '#/components/schemas/ScriptedEvent'
           description: ''
       tags:
-      - api
+      - scripted-events
   /api/scripted_events/{id}/:
     get:
       operationId: retrieveScriptedEvent
@@ -10897,7 +10898,7 @@ paths:
                 $ref: '#/components/schemas/ScriptedEvent'
           description: ''
       tags:
-      - api
+      - scripted-events
     put:
       operationId: updateScriptedEvent
       description: ''
@@ -10927,7 +10928,7 @@ paths:
                 $ref: '#/components/schemas/ScriptedEvent'
           description: ''
       tags:
-      - api
+      - scripted-events
     patch:
       operationId: partialUpdateScriptedEvent
       description: ''
@@ -10957,7 +10958,7 @@ paths:
                 $ref: '#/components/schemas/ScriptedEvent'
           description: ''
       tags:
-      - api
+      - scripted-events
     delete:
       operationId: destroyScriptedEvent
       description: ''
@@ -10972,7 +10973,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - scripted-events
   /api/script_conditions/:
     get:
       operationId: listScriptConditions
@@ -10988,7 +10989,7 @@ paths:
                   $ref: '#/components/schemas/ScriptCondition'
           description: ''
       tags:
-      - api
+      - script-conditions
     post:
       operationId: createScriptCondition
       description: ''
@@ -11012,7 +11013,7 @@ paths:
                 $ref: '#/components/schemas/ScriptCondition'
           description: ''
       tags:
-      - api
+      - script-conditions
   /api/script_conditions/{id}/:
     get:
       operationId: retrieveScriptCondition
@@ -11032,7 +11033,7 @@ paths:
                 $ref: '#/components/schemas/ScriptCondition'
           description: ''
       tags:
-      - api
+      - script-conditions
     put:
       operationId: updateScriptCondition
       description: ''
@@ -11062,7 +11063,7 @@ paths:
                 $ref: '#/components/schemas/ScriptCondition'
           description: ''
       tags:
-      - api
+      - script-conditions
     patch:
       operationId: partialUpdateScriptCondition
       description: ''
@@ -11092,7 +11093,7 @@ paths:
                 $ref: '#/components/schemas/ScriptCondition'
           description: ''
       tags:
-      - api
+      - script-conditions
     delete:
       operationId: destroyScriptCondition
       description: ''
@@ -11107,7 +11108,7 @@ paths:
         '204':
           description: ''
       tags:
-      - api
+      - script-conditions
   /api/:
     get:
       operationId: listAPIRoots
@@ -11122,63 +11123,7 @@ paths:
                 items: {}
           description: ''
       tags:
-      - api
-  /api/token/:
-    post:
-      operationId: createTokenObtainPair
-      description: 'Takes a set of user credentials and returns an access and refresh
-        JSON web
-
-        token pair to prove the authentication of those credentials.'
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TokenObtainPair'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenObtainPair'
-          description: ''
-      tags:
-      - api
-  /api/token/refresh/:
-    post:
-      operationId: createTokenRefresh
-      description: 'Takes a refresh type JSON web token and returns an access type
-        JSON web
-
-        token if the refresh token is valid.'
-      parameters: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TokenRefresh'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenRefresh'
-          description: ''
-      tags:
-      - api
+      - ''
 components:
   schemas:
     User:
@@ -13974,24 +13919,3 @@ components:
           type: string
           nullable: true
           maxLength: 100
-    TokenObtainPair:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-          writeOnly: true
-      required:
-      - username
-      - password
-    TokenRefresh:
-      type: object
-      properties:
-        refresh:
-          type: string
-        access:
-          type: string
-          readOnly: true
-      required:
-      - refresh

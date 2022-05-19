@@ -106,8 +106,8 @@ urlpatterns = base_urls + [
     re_path(
         "^api/openapi/", 
         get_schema_view(
-            title="Your Project",
-            description="API for all things …",
+            title="Mole",
+            description="Mole API",
             version="1.0.0",
             patterns=base_urls,
         ), 
