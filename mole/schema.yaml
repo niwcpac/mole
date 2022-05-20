@@ -11139,7 +11139,7 @@ components:
           type: string
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
-          pattern: ^[\w.@+-]+\z
+          pattern: ^[\w.@+-]+\Z
           maxLength: 150
         password:
           type: string
@@ -11174,7 +11174,7 @@ components:
               type: string
               description: Required. 150 characters or fewer. Letters, digits and
                 @/./+/-/_ only.
-              pattern: ^[\w.@+-]+\z
+              pattern: ^[\w.@+-]+\Z
               maxLength: 150
             password:
               type: string

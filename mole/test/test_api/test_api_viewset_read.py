@@ -13,7 +13,7 @@ import factory
 from .parameterized import NamedParameterizedTestsMeta, parameterized
 from .viewset_to_factory import viewset_to_factory
 
-schema_tester = SchemaTester(schema_file_path="./schema.yml")
+schema_tester = SchemaTester(schema_file_path="./schema.yaml")
 read_test_list = viewset_to_factory.items()
 
 
