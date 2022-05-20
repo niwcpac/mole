@@ -7,7 +7,6 @@ import mole.views as viewpath
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from rest_framework.schemas import get_schema_view
-from django.urls import path
 from django.views.generic import TemplateView
 
 router = routers.HybridRouter()
@@ -113,7 +112,7 @@ urlpatterns = base_urls + [
         ), 
         name='openapi-schema',
     ),
-    path('api/swagger-ui/', TemplateView.as_view(
+    re_path('^api/swagger-ui/', TemplateView.as_view(
         template_name='SwaggerUI_4.11.1/index.html',
         extra_context={'schema_url':'openapi-schema'}
     ), name='swagger-ui'),
