@@ -144,7 +144,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = dcs.UserSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def current(self, request):
         user = request.user
         return Response(dcs.UserSerializer(user, context={"request": request}).data)
@@ -478,14 +478,14 @@ class CampaignViewSet(viewsets.ModelViewSet):
     serializer_class = dcs.CampaignSerializer
     schema = schemas.CampaignSchema()
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def latest(self, request):
         latest_campaign = dcm.Campaign.objects.latest("start_datetime")
         return Response(
             dcs.CampaignSerializer(latest_campaign, context={"request": request}).data
         )
 
-    @action(detail=True)
+    @action(detail=True, schema=None)
     def latest_trial(self, request, pk):
         try:
             latest_campaign = dcm.Campaign.objects.latest("start_datetime")
@@ -595,7 +595,7 @@ class WeatherViewSet(viewsets.ModelViewSet):
     queryset = dcm.Weather.objects.all()
     serializer_class = dcs.WeatherSerializer
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def current(self, request):
         try:
             current_weather = dcm.Weather.objects.get(current=True)
@@ -765,8 +765,8 @@ class TrialViewSet(viewsets.ModelViewSet):
             dcs.TrialSerializer(latest_trial, context={"request": request}).data
         )
 
-    @action(detail=False, schema=None)
-    def current(self, request):
+    @action(detail=False)
+    def current(self, request, schema=None):
         try:
             current_trial = dcm.get_current_trial()
             response = Response(
@@ -777,7 +777,7 @@ class TrialViewSet(viewsets.ModelViewSet):
             response = Response(content, status=status.HTTP_404_NOT_FOUND)
         return response
 
-    @action(detail=True, schema=None)
+    @action(detail=True)
     def event_count(self, request, pk=None):
         # Initialize dictionary with all event types
         type_counts = dict.fromkeys(
@@ -802,7 +802,7 @@ class TrialViewSet(viewsets.ModelViewSet):
         response = Response(content)
         return response
 
-    @action(detail=True, schema=None)
+    @action(detail=True)
     def clock_state(self, request, pk=None):
         # get current trial
         try:
@@ -906,7 +906,7 @@ class TesterViewSet(viewsets.ModelViewSet):
     filterset_class = TesterFilter
     schema = schemas.TesterSchema()
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def current(self, request):
         user = request.user
         try:
@@ -946,7 +946,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = dcm.UserProfile.objects.all()
     serializer_class = dcs.UserProfileSerializer
 
-    @action(detail=False)
+    @action(detail=False, schema=None)
     def current(self, request):
         user = request.user
         if not user.is_authenticated:

@@ -88,24 +88,6 @@ class CampaignSchema(MoleBaseSchema):
         # ...
         return super().map_field(field)
 
-    def get_responses(self, path, method):
-        method_name = getattr(self.view, 'action', method.lower())
-        if method_name == "latest" or method_name == "latest_trial":
-            status_code = "200"
-            serializer = self.get_request_serializer(path, method)
-            return {
-                status_code: {
-                    "content": {
-                        "application/json": {"schema": {'$ref': '#/components/schemas/{}'.format(self.get_component_name(serializer))}}
-                    },
-                    # description is a mandatory property,
-                    # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject
-                    # TODO: put something meaningful into it
-                    "description": "",
-                }
-            }
-        return super().get_responses(path, method)
-
 
 class TrialSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
@@ -126,6 +108,35 @@ class TrialSchema(MoleBaseSchema):
         # ...
         return super().map_field(field)
 
+    def get_responses(self, path, method):
+        method_name = getattr(self.view, 'action', method.lower())
+        if method_name == "event_count":
+            status_code = "200"
+            return {
+                status_code: {
+                    "content": {
+                        "application/json": {"schema": {"type": "object"}}
+                    },
+                    # description is a mandatory property,
+                    # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject
+                    # TODO: put something meaningful into it
+                    "description": "",
+                }
+            }
+        elif method_name == "clock_state":
+            status_code = "200"
+            return {
+                status_code: {
+                    "content": {
+                        "application/json": {"schema": {"type": "object"}}
+                    },
+                    # description is a mandatory property,
+                    # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject
+                    # TODO: put something meaningful into it
+                    "description": "",
+                }
+            }
+        return super().get_responses(path, method)
 
 class TestMethodSchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
