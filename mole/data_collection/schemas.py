@@ -39,11 +39,12 @@ class EntitySchema(MoleBaseSchema):
 
     def get_responses(self, path, method):
         method_name = getattr(self.view, 'action', method.lower())
-        if method_name == "around":
-            print("around the entity")
-        elif method_name == "radius":
-            print("radius around a point")
+        if method_name == "around" or method_name == "radius":
             status_code = "200"
+            if method_name == "around":
+                description = "list entities that are within a certain distance from a target entity"
+            elif method_name == "radius":
+                description = "list entities that are within a certain distance from a target location"
             return {
                 status_code: {
                     "content": {
@@ -62,7 +63,7 @@ class EntitySchema(MoleBaseSchema):
                     # description is a mandatory property,
                     # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject
                     # TODO: put something meaningful into it
-                    "description": "list entities that are within a certain distance from a target location",
+                    "description": description,
                 }
             }
         return super().get_responses(path, method)
