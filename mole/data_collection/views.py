@@ -765,8 +765,8 @@ class TrialViewSet(viewsets.ModelViewSet):
             dcs.TrialSerializer(latest_trial, context={"request": request}).data
         )
 
-    @action(detail=False)
-    def current(self, request, schema=None):
+    @action(detail=False, schema=None)
+    def current(self, request):
         try:
             current_trial = dcm.get_current_trial()
             response = Response(
