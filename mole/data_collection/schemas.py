@@ -8,8 +8,10 @@ class MoleBaseSchema(GeoFeatureAutoSchema):
         if path.startswith('/'):
             path = path[1:]
 
+        # The original implementation uses the first element of the path,
+        # which doesn't work for our paths (api/<model_name>/)
+        # it sets the tag as 'api' instead of the actual model
         return [path.split('/')[1].replace('_', '-')]
-        return super().get_tags(path, method)
 
 class EntitySchema(MoleBaseSchema):
     """Extension of ``AutoSchema`` to add support for custom field schemas."""
@@ -34,6 +36,36 @@ class EntitySchema(MoleBaseSchema):
         # Handle SerializerMethodFields or custom fields here...
         # ...
         return super().map_field(field)
+
+    def get_responses(self, path, method):
+        method_name = getattr(self.view, 'action', method.lower())
+        if method_name == "around":
+            print("around the entity")
+        elif method_name == "radius":
+            print("radius around a point")
+            status_code = "200"
+            return {
+                status_code: {
+                    "content": {
+                        "application/json": {"schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "oneOf": ["string", "number"],
+                                },
+                                "minItems": 2,
+                                "maxItems": 2,
+                            },
+                        }}
+                    },
+                    # description is a mandatory property,
+                    # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject
+                    # TODO: put something meaningful into it
+                    "description": "list entities that are within a certain distance from a target location",
+                }
+            }
+        return super().get_responses(path, method)
 
 
 class CampaignSchema(MoleBaseSchema):
