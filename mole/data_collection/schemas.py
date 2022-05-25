@@ -53,7 +53,7 @@ class EntitySchema(MoleBaseSchema):
                             "items": {
                                 "type": "array",
                                 "items": {
-                                    "oneOf": ["string", "number"],
+                                    "oneOf": [{"type": "string"}, {"type": "number"}],
                                 },
                                 "minItems": 2,
                                 "maxItems": 2,

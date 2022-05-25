@@ -50,23 +50,6 @@ paths:
           description: ''
       tags:
       - users
-  /api/users/current/:
-    get:
-      operationId: currentUser
-      description: 'This endpoint represents users of the system
-
-
-        There is a `users/current/` endpoint to retrieve the current user'
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-      tags:
-      - users
   /api/users/{id}/:
     get:
       operationId: retrieveUser
@@ -215,24 +198,6 @@ paths:
               $ref: '#/components/schemas/UserProfile'
       responses:
         '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserProfile'
-          description: ''
-      tags:
-      - user-profiles
-  /api/user_profiles/current/:
-    get:
-      operationId: currentUserProfile
-      description: 'This endpoint represents user profiles
-
-
-        There is a `user_profiles/current/` endpoint to retrieve the current user''s
-        profile'
-      parameters: []
-      responses:
-        '200':
           content:
             application/json:
               schema:
@@ -571,34 +536,6 @@ paths:
               $ref: '#/components/schemas/Tester'
       responses:
         '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Tester'
-          description: ''
-      tags:
-      - testers
-  /api/testers/current/:
-    get:
-      operationId: currentTester
-      description: 'This endpoint represents testers.
-
-
-        Testers can be query string filtered based on `userid`, `username`, `role_id`,
-        and `role_name`.
-
-
-        There is a `testers/current/` endpoint to retrieve the tester that matches
-        the current user/role (from profile).
-
-        If the system is unable to determine the current tester (e.g. because the
-        current user has no profile set or because
-
-        there is no tester matching the current user/role combination, a 404 error
-        is returned.'
-      parameters: []
-      responses:
-        '200':
           content:
             application/json:
               schema:
@@ -1570,8 +1507,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entity'
-          description: ''
+                type: array
+                items:
+                  type: array
+                  items:
+                    oneOf:
+                    - type: string
+                    - type: number
+                  minItems: 2
+                  maxItems: 2
+          description: list entities that are within a certain distance from a target
+            location
       tags:
       - entities
   /api/entities/{name}/:
@@ -2047,8 +1993,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Entity'
-          description: ''
+                type: array
+                items:
+                  type: array
+                  items:
+                    oneOf:
+                    - type: string
+                    - type: number
+                  minItems: 2
+                  maxItems: 2
+          description: list entities that are within a certain distance from a target
+            entity
       tags:
       - entities
   /api/entity_groups/:
@@ -2514,29 +2469,6 @@ paths:
           description: ''
       tags:
       - campaigns
-  /api/campaigns/latest/:
-    get:
-      operationId: latestCampaign
-      description: 'This endpoint represents test campaigns.
-
-
-        The following query-type endpoints are defined:
-
-
-        * `campaigns/latest/`: retrieve the most recent campaign.
-
-        * `campaigns/{id}/latest_trial/`: retrieve the most recent trial for a given
-        campaign'
-      parameters: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Campaign'
-          description: ''
-      tags:
-      - campaigns
   /api/campaigns/{id}/:
     get:
       operationId: retrieveCampaign
@@ -2665,35 +2597,6 @@ paths:
           type: string
       responses:
         '204':
-          description: ''
-      tags:
-      - campaigns
-  /api/campaigns/{id}/latest_trial/:
-    get:
-      operationId: latestTrialCampaign
-      description: 'This endpoint represents test campaigns.
-
-
-        The following query-type endpoints are defined:
-
-
-        * `campaigns/latest/`: retrieve the most recent campaign.
-
-        * `campaigns/{id}/latest_trial/`: retrieve the most recent trial for a given
-        campaign'
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this campaign.
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Campaign'
           description: ''
       tags:
       - campaigns
@@ -3311,6 +3214,48 @@ paths:
           description: ''
       tags:
       - trials
+  /api/trials/{id}/clock_state/:
+    get:
+      operationId: clockStateTrial
+      description: "View to view datetimes for the specified trial as well as matching\
+        \ major (x.0.0), \nminor (x,y.0), and reported trial (x.y.z where x.y.z's\
+        \ reported flag is True)"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this trial.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: ''
+      tags:
+      - trials
+  /api/trials/{id}/event_count/:
+    get:
+      operationId: eventCountTrial
+      description: Provide a count of total events and number of events by event type
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this trial.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: ''
+      tags:
+      - trials
   /api/weather/:
     get:
       operationId: listWeathers
@@ -3356,26 +3301,6 @@ paths:
               $ref: '#/components/schemas/Weather'
       responses:
         '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Weather'
-          description: ''
-      tags:
-      - weather
-  /api/weather/current/:
-    get:
-      operationId: currentWeather
-      description: 'This endpoint represents weather.
-
-
-        The following query-type endpoints are defined:
-
-
-        * `weather/current/`: retrieve the current weather (if set)'
-      parameters: []
-      responses:
-        '200':
           content:
             application/json:
               schema:
