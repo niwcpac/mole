@@ -12,9 +12,9 @@ django.setup()
 from data_collection import models
 
 import factory
+from factory.django import DjangoModelFactory
 
-
-class UserFactory(factory.DjangoModelFactory):
+class UserFactory(DjangoModelFactory):
     class Meta:
         model = "auth.User"
         django_get_or_create = ("username",)
@@ -42,7 +42,7 @@ class UserFactory(factory.DjangoModelFactory):
         return obj
 
 
-class CapabilityFactory(factory.DjangoModelFactory):
+class CapabilityFactory(DjangoModelFactory):
     class Meta:
         model = models.Capability
         django_get_or_create = ("name",)
@@ -50,7 +50,7 @@ class CapabilityFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "capability_%d" % n)
 
 
-class ModFactory(factory.DjangoModelFactory):
+class ModFactory(DjangoModelFactory):
     class Meta:
         model = models.Mod
         django_get_or_create = ("name",)
@@ -68,7 +68,7 @@ class ModFactory(factory.DjangoModelFactory):
                 self.capabilities.add(capability)
 
 
-class PointStyleFactory(factory.DjangoModelFactory):
+class PointStyleFactory(DjangoModelFactory):
     class Meta:
         model = models.PointStyle
         django_get_or_create = ("name",)
@@ -76,7 +76,7 @@ class PointStyleFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "point_style_%d" % n)
 
 
-class EntityTypeFactory(factory.DjangoModelFactory):
+class EntityTypeFactory(DjangoModelFactory):
     class Meta:
         model = models.EntityType
         django_get_or_create = ("name",)
@@ -95,7 +95,7 @@ class EntityTypeFactory(factory.DjangoModelFactory):
                 self.capabilities.add(capability)
 
 
-class EntityStateFactory(factory.DjangoModelFactory):
+class EntityStateFactory(DjangoModelFactory):
     class Meta:
         model = models.EntityState
         django_get_or_create = ("name",)
@@ -103,7 +103,7 @@ class EntityStateFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "entitystate_%d" % n)
 
 
-class EntityFactory(factory.DjangoModelFactory):
+class EntityFactory(DjangoModelFactory):
     class Meta:
         model = models.Entity
         django_get_or_create = ("name",)
@@ -123,7 +123,7 @@ class EntityFactory(factory.DjangoModelFactory):
                 self.mods.add(mod)
 
 
-class EntityGroupFactory(factory.DjangoModelFactory):
+class EntityGroupFactory(DjangoModelFactory):
     class Meta:
         model = models.EntityGroup
         django_get_or_create = ("name",)
@@ -131,7 +131,7 @@ class EntityGroupFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "entityGroup_%d" % n)
 
 
-class QuerySetSpecificationFactory(factory.DjangoModelFactory):
+class QuerySetSpecificationFactory(DjangoModelFactory):
     class Meta:
         model = models.QuerySetSpecification
         django_get_or_create = ("name",)
@@ -139,7 +139,7 @@ class QuerySetSpecificationFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "querysetSpecification_%d" % n)
 
 
-class QuerySetMethodFactory(factory.DjangoModelFactory):
+class QuerySetMethodFactory(DjangoModelFactory):
     class Meta:
         model = models.QuerySetMethod
         django_get_or_create = ("name",)
@@ -147,7 +147,7 @@ class QuerySetMethodFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "querysetMethod_%d" % n)
 
 
-class ExtractionSpecificationFactory(factory.DjangoModelFactory):
+class ExtractionSpecificationFactory(DjangoModelFactory):
     class Meta:
         model = models.ExtractionSpecification
         django_get_or_create = ("name", "queryset")
@@ -166,7 +166,7 @@ class ExtractionSpecificationFactory(factory.DjangoModelFactory):
                 self.extraction_fields.add(extraction_field)
 
 
-class ExtractionFieldFactory(factory.DjangoModelFactory):
+class ExtractionFieldFactory(DjangoModelFactory):
     class Meta:
         model = models.ExtractionField
         django_get_or_create = ("name",)
@@ -174,7 +174,7 @@ class ExtractionFieldFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "extractionField_%d" % n)
 
 
-class DataManipulatorFactory(factory.DjangoModelFactory):
+class DataManipulatorFactory(DjangoModelFactory):
     class Meta:
         model = models.DataManipulator
         django_get_or_create = ("name",)
@@ -182,7 +182,7 @@ class DataManipulatorFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "dataManipulator_%d" % n)
 
 
-class IteratorFactory(factory.DjangoModelFactory):
+class IteratorFactory(DjangoModelFactory):
     class Meta:
         model = models.Iterator
         django_get_or_create = ("name",)
@@ -192,7 +192,7 @@ class IteratorFactory(factory.DjangoModelFactory):
     unique_field = factory.SubFactory(ExtractionFieldFactory)
 
 
-class IteratedExtractionSpecificationFactory(factory.DjangoModelFactory):
+class IteratedExtractionSpecificationFactory(DjangoModelFactory):
     class Meta:
         model = models.IteratedExtractionSpecification
         django_get_or_create = ("name",)
@@ -202,7 +202,7 @@ class IteratedExtractionSpecificationFactory(factory.DjangoModelFactory):
     extraction_spec = factory.SubFactory(ExtractionSpecificationFactory)
 
 
-class IteratedDataManipulatorFactory(factory.DjangoModelFactory):
+class IteratedDataManipulatorFactory(DjangoModelFactory):
     class Meta:
         model = models.IteratedDataManipulator
         django_get_or_create = ("name",)
@@ -212,7 +212,7 @@ class IteratedDataManipulatorFactory(factory.DjangoModelFactory):
     data_manipulator = factory.SubFactory(DataManipulatorFactory)
 
 
-class FigureFamilyFactory(factory.DjangoModelFactory):
+class FigureFamilyFactory(DjangoModelFactory):
     class Meta:
         model = models.FigureFamily
         django_get_or_create = ("name",)
@@ -222,7 +222,7 @@ class FigureFamilyFactory(factory.DjangoModelFactory):
     module = "figures"
 
 
-class FigureTypeFactory(factory.DjangoModelFactory):
+class FigureTypeFactory(DjangoModelFactory):
     class Meta:
         model = models.FigureType
         django_get_or_create = ("name",)
@@ -233,7 +233,7 @@ class FigureTypeFactory(factory.DjangoModelFactory):
     iterator = factory.SubFactory(IteratorFactory)
 
 
-class FigureFactory(factory.DjangoModelFactory):
+class FigureFactory(DjangoModelFactory):
     class Meta:
         model = models.Figure
         django_get_or_create = ("name",)
@@ -242,7 +242,7 @@ class FigureFactory(factory.DjangoModelFactory):
     figure_type = factory.SubFactory(FigureTypeFactory)
 
 
-class ReportFactory(factory.DjangoModelFactory):
+class ReportFactory(DjangoModelFactory):
     class Meta:
         model = models.Report
         django_get_or_create = ("name",)
@@ -295,7 +295,7 @@ class ReportFactory(factory.DjangoModelFactory):
                 self.iterated_data_manipulators.add(iterated_data_manipulator)
 
 
-class LocationFactory(factory.DjangoModelFactory):
+class LocationFactory(DjangoModelFactory):
     class Meta:
         model = models.Location
         django_get_or_create = ("name",)
@@ -303,7 +303,7 @@ class LocationFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "location_%d" % n)
 
 
-class ServerTypeFactory(factory.DjangoModelFactory):
+class ServerTypeFactory(DjangoModelFactory):
     class Meta:
         model = models.ServerType
         django_get_or_create = ("name",)
@@ -312,7 +312,7 @@ class ServerTypeFactory(factory.DjangoModelFactory):
     key = factory.Sequence(lambda n: "server_type_%d" % n)
 
 
-class ServerParamFactory(factory.DjangoModelFactory):
+class ServerParamFactory(DjangoModelFactory):
     class Meta:
         model = models.ServerParam
         django_get_or_create = ("name",)
@@ -322,7 +322,7 @@ class ServerParamFactory(factory.DjangoModelFactory):
     value = factory.Sequence(lambda n: "server_param_value_%d" % n)
 
 
-class ServerFactory(factory.DjangoModelFactory):
+class ServerFactory(DjangoModelFactory):
     class Meta:
         model = models.Server
         django_get_or_create = ("name",)
@@ -348,7 +348,7 @@ def get_visibility():
     return random.choice(visibility_choices)
 
 
-class EventLevelFactory(factory.DjangoModelFactory):
+class EventLevelFactory(DjangoModelFactory):
     class Meta:
         model = models.EventLevel
         django_get_or_create = ("name",)
@@ -358,7 +358,7 @@ class EventLevelFactory(factory.DjangoModelFactory):
     visibility = factory.LazyFunction(get_visibility)
 
 
-class EventTypeFactory(factory.DjangoModelFactory):
+class EventTypeFactory(DjangoModelFactory):
     class Meta:
         model = models.EventType
         django_get_or_create = ("name",)
@@ -390,7 +390,7 @@ class EventTypeFactory(factory.DjangoModelFactory):
                 self.resets_with.add(event_type)
 
 
-class CampaignFactory(factory.DjangoModelFactory):
+class CampaignFactory(DjangoModelFactory):
     class Meta:
         model = models.Campaign
         django_get_or_create = ("name",)
@@ -399,7 +399,7 @@ class CampaignFactory(factory.DjangoModelFactory):
     start_datetime = factory.LazyFunction(timezone.now)
 
 
-class TestMethodFactory(factory.DjangoModelFactory):
+class TestMethodFactory(DjangoModelFactory):
     class Meta:
         model = models.TestMethod
         django_get_or_create = ("name",)
@@ -410,7 +410,7 @@ class TestMethodFactory(factory.DjangoModelFactory):
     version_micro = factory.Sequence(lambda n: "%d" % n)
 
 
-class ScenarioFactory(factory.DjangoModelFactory):
+class ScenarioFactory(DjangoModelFactory):
     class Meta:
         model = models.Scenario
         django_get_or_create = ("name",)
@@ -430,7 +430,7 @@ class ScenarioFactory(factory.DjangoModelFactory):
                 self.scripts.add(script)
 
 
-class RoleFactory(factory.DjangoModelFactory):
+class RoleFactory(DjangoModelFactory):
     class Meta:
         model = models.Role
         django_get_or_create = ("name",)
@@ -438,7 +438,7 @@ class RoleFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "role_%d" % n)
 
 
-class TesterFactory(factory.DjangoModelFactory):
+class TesterFactory(DjangoModelFactory):
     class Meta:
         model = models.Tester
         django_get_or_create = ("user", "role")
@@ -447,7 +447,7 @@ class TesterFactory(factory.DjangoModelFactory):
     role = factory.SubFactory(RoleFactory)
 
 
-class WeatherFactory(factory.DjangoModelFactory):
+class WeatherFactory(DjangoModelFactory):
     class Meta:
         model = models.Weather
         django_get_or_create = ("name",)
@@ -455,7 +455,7 @@ class WeatherFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "weather_%d" % n)
 
 
-class TestConditionFactory(factory.DjangoModelFactory):
+class TestConditionFactory(DjangoModelFactory):
     class Meta:
         model = models.TestCondition
         django_get_or_create = ("weather",)
@@ -463,7 +463,7 @@ class TestConditionFactory(factory.DjangoModelFactory):
     weather = factory.SubFactory(WeatherFactory)
 
 
-class PerformerFactory(factory.DjangoModelFactory):
+class PerformerFactory(DjangoModelFactory):
     class Meta:
         model = models.Performer
         django_get_or_create = ("name",)
@@ -471,7 +471,7 @@ class PerformerFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "performer_%d" % n)
 
 
-class CapabilityUnderTestFactory(factory.DjangoModelFactory):
+class CapabilityUnderTestFactory(DjangoModelFactory):
     class Meta:
         model = models.CapabilityUnderTest
         django_get_or_create = ("name",)
@@ -480,7 +480,7 @@ class CapabilityUnderTestFactory(factory.DjangoModelFactory):
     performer = factory.SubFactory(PerformerFactory)
 
 
-class SystemConfigurationFactory(factory.DjangoModelFactory):
+class SystemConfigurationFactory(DjangoModelFactory):
     class Meta:
         model = models.SystemConfiguration
         django_get_or_create = ("name",)
@@ -499,7 +499,7 @@ class SystemConfigurationFactory(factory.DjangoModelFactory):
                 self.capabilities_under_test.add(capability_under_test)
 
 
-class TrialFactory(factory.DjangoModelFactory):
+class TrialFactory(DjangoModelFactory):
     class Meta:
         model = models.Trial
         django_get_or_create = ("id_major", "id_minor", "id_micro")
@@ -546,7 +546,7 @@ class TrialFactory(factory.DjangoModelFactory):
                 self.script_run_counts.add(count)
 
 
-class SegmentFactory(factory.DjangoModelFactory):
+class SegmentFactory(DjangoModelFactory):
     class Meta:
         model = models.Segment
         django_get_or_create = ("name",)
@@ -566,7 +566,7 @@ class SegmentFactory(factory.DjangoModelFactory):
                 self.scenarios.add(scenario)
 
 
-class PoseSourceFactory(factory.DjangoModelFactory):
+class PoseSourceFactory(DjangoModelFactory):
     class Meta:
         model = models.PoseSource
         django_get_or_create = ("name",)
@@ -584,7 +584,7 @@ def get_geom():
     return "POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))"
 
 
-class PoseFactory(factory.DjangoModelFactory):
+class PoseFactory(DjangoModelFactory):
     class Meta:
         model = models.Pose
         django_get_or_create = ("timestamp", "entity", "pose_source")
@@ -595,7 +595,7 @@ class PoseFactory(factory.DjangoModelFactory):
     entity = factory.SubFactory(EntityFactory)
 
 
-class UserProfileFactory(factory.DjangoModelFactory):
+class UserProfileFactory(DjangoModelFactory):
     class Meta:
         model = models.UserProfile
         django_get_or_create = ("user",)
@@ -604,7 +604,7 @@ class UserProfileFactory(factory.DjangoModelFactory):
     current_role = factory.SubFactory(RoleFactory)
 
 
-class ImageTypeFactory(factory.DjangoModelFactory):
+class ImageTypeFactory(DjangoModelFactory):
     class Meta:
         model = models.ImageType
         django_get_or_create = ("name",)
@@ -612,7 +612,7 @@ class ImageTypeFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "image_type_%d" % n)
 
 
-class ConditionVariableFactory(factory.DjangoModelFactory):
+class ConditionVariableFactory(DjangoModelFactory):
     class Meta:
         model = models.ConditionVariable
         django_get_or_create = ("name",)
@@ -621,7 +621,7 @@ class ConditionVariableFactory(factory.DjangoModelFactory):
     variable = factory.Sequence(lambda n: "condition_variable_variable_%d" % n)
 
 
-class RequestedDataFactory(factory.DjangoModelFactory):
+class RequestedDataFactory(DjangoModelFactory):
     class Meta:
         model = models.RequestedData
         django_get_or_create = ("name",)
@@ -630,7 +630,7 @@ class RequestedDataFactory(factory.DjangoModelFactory):
     destination_url = factory.Sequence(lambda n: "destination_url_%d" % n)
 
 
-class KeyValuePairFactory(factory.DjangoModelFactory):
+class KeyValuePairFactory(DjangoModelFactory):
     class Meta:
         model = models.KeyValuePair
 
@@ -638,7 +638,7 @@ class KeyValuePairFactory(factory.DjangoModelFactory):
     value = factory.Sequence(lambda n: "value_%d" % n)
 
 
-class TriggerResponseFactory(factory.DjangoModelFactory):
+class TriggerResponseFactory(DjangoModelFactory):
     class Meta:
         model = models.TriggerResponse
         django_get_or_create = ("name",)
@@ -655,13 +655,13 @@ class TriggerResponseFactory(factory.DjangoModelFactory):
                 self.parameters.add(parameter)
 
 
-class OrderedTriggerResponseFactory(factory.DjangoModelFactory):
+class OrderedTriggerResponseFactory(DjangoModelFactory):
     class Meta:
         model = models.OrderedTriggerResponse
         django_get_or_create = ("order", "trigger_response")
 
 
-class TriggerFactory(factory.DjangoModelFactory):
+class TriggerFactory(DjangoModelFactory):
     class Meta:
         model = models.Trigger
         django_get_or_create = ("key",)
@@ -697,7 +697,7 @@ class TriggerFactory(factory.DjangoModelFactory):
                 self.trigger_responses.add(response)
 
 
-class EventFactory(factory.DjangoModelFactory):
+class EventFactory(DjangoModelFactory):
     class Meta:
         model = models.Event
 
@@ -720,7 +720,7 @@ class EventFactory(factory.DjangoModelFactory):
                 self.entities.add(entity)
 
 
-class EntityEventRoleFactory(factory.DjangoModelFactory):
+class EntityEventRoleFactory(DjangoModelFactory):
     class Meta:
         model = models.EntityEventRole
         django_get_or_create = ("name",)
@@ -756,7 +756,7 @@ class EntityEventRoleFactory(factory.DjangoModelFactory):
                 self.valid_entity_groups.add(group)
 
 
-class EntityEventRelationFactory(factory.DjangoModelFactory):
+class EntityEventRelationFactory(DjangoModelFactory):
     class Meta:
         model = models.EntityEventRelation
 
@@ -771,7 +771,7 @@ class EventWithEntityFactory(EventFactory):
     )
 
 
-class NoteFactory(factory.DjangoModelFactory):
+class NoteFactory(DjangoModelFactory):
     class Meta:
         model = models.Note
 
@@ -780,7 +780,7 @@ class NoteFactory(factory.DjangoModelFactory):
     event = factory.SubFactory(EventFactory)
 
 
-class ClockConfigFactory(factory.DjangoModelFactory):
+class ClockConfigFactory(DjangoModelFactory):
     class Meta:
         model = models.ClockConfig
         django_get_or_create = ("name",)
@@ -799,12 +799,12 @@ class ClockConfigFactory(factory.DjangoModelFactory):
                 self.phases.add(phase)
 
 
-class ClockPhaseFactory(factory.DjangoModelFactory):
+class ClockPhaseFactory(DjangoModelFactory):
     class Meta:
         model = models.ClockPhase
 
 
-class RegionTypeFactory(factory.DjangoModelFactory):
+class RegionTypeFactory(DjangoModelFactory):
     class Meta:
         model = models.RegionType
         django_get_or_create = ("name",)
@@ -812,7 +812,7 @@ class RegionTypeFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "region_type_%d" % n)
 
 
-class RegionFactory(factory.DjangoModelFactory):
+class RegionFactory(DjangoModelFactory):
     class Meta:
         model = models.Region
 

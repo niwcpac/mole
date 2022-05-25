@@ -2,15 +2,15 @@ from automation import models
 from data_collection.factories import factories as dcf
 
 import factory
+from factory.django import DjangoModelFactory
 
 
 
-
-class ScriptConditionFactory(factory.DjangoModelFactory):
+class ScriptConditionFactory(DjangoModelFactory):
     class Meta:
         model = models.ScriptCondition
 
-class ScriptedEventFactory(factory.DjangoModelFactory):
+class ScriptedEventFactory(DjangoModelFactory):
     event_type = factory.SubFactory(dcf.EventTypeFactory)
 
     class Meta:
@@ -27,7 +27,7 @@ class ScriptedEventFactory(factory.DjangoModelFactory):
             for condition in extracted:
                 self.conditions.add(condition)
     
-class ScriptFactory(factory.DjangoModelFactory):
+class ScriptFactory(DjangoModelFactory):
     class Meta:
         model = models.Script
         django_get_or_create = ("name",)
@@ -57,7 +57,7 @@ class ScriptFactory(factory.DjangoModelFactory):
                 self.initiating_event_types.add(event_type)
 
 
-class ScriptRunCountFactory(factory.DjangoModelFactory):
+class ScriptRunCountFactory(DjangoModelFactory):
     trial = factory.SubFactory(dcf.TrialFactory)
     script = factory.SubFactory(ScriptFactory)
     

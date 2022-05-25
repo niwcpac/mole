@@ -1,5 +1,5 @@
 from django.contrib.gis.db import models
-from django.contrib.postgres.fields import JSONField
+from django.db.models import JSONField
 
 class ScriptedEvent(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, unique=False)
