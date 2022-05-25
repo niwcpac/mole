@@ -779,6 +779,9 @@ class TrialViewSet(viewsets.ModelViewSet):
 
     @action(detail=True)
     def event_count(self, request, pk=None):
+        """
+        Provide a count of total events and number of events by event type
+        """
         # Initialize dictionary with all event types
         type_counts = dict.fromkeys(
             dcm.EventType.objects.order_by("name")
@@ -804,6 +807,10 @@ class TrialViewSet(viewsets.ModelViewSet):
 
     @action(detail=True)
     def clock_state(self, request, pk=None):
+        """
+        View to view datetimes for the specified trial as well as matching major (x.0.0), 
+        minor (x,y.0), and reported trial (x.y.z where x.y.z's reported flag is True)
+        """
         # get current trial
         try:
             current_trial = dcm.Trial.objects.get(id=pk)
