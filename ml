@@ -103,6 +103,7 @@ def init(
     quiet=False,
     nomaps=False,
     lite=False,
+    deep_clean=False,
     profile=False,
     db_backup=False,
     pre_init_backup=True,
@@ -120,6 +121,16 @@ def init(
     if not os.path.isfile(CA_KEY_FILE):
         keys()
 
+    try:
+        short_hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+        long_hash = subprocess.check_output(["git", "rev-parse", "HEAD"])
+    except subprocess.CalledProcessError as e:
+        print("Error retrieving git hash, defaulting to 'latest'")
+        print(e)
+        short_hash = "latest"
+        long_hash = "latest"
+    short_hash = short_hash.strip()
+    long_hash = long_hash.strip()
     if build_only:
         print("Building container images...\n")
         cmd = [
@@ -144,6 +155,22 @@ def init(
         print("Backing up the database...")
         standalone_backup("pre-init&sync=true")
 
+    prompt = """
+    WARNING: You have requested to initialize Mole.
+    This will permanently overwrite your current database. Do you wish to proceed?
+
+    Do you wish to continue? [y/N]: """
+
+    sys.stdout.write(prompt)
+    if sys.version_info.major == 3:
+        choice = input().lower()
+    else:
+        choice = raw_input().lower()
+
+    yes = ("yes", "y", "ye")
+    if choice not in yes:
+        print("\n    Exiting...")
+        return
 
     print("Clearing containers and volumes...\n")
     cmd = [
@@ -154,17 +181,6 @@ def init(
     ]
     p = subprocess.call(cmd)
     print("Containers and volumes deleted...\n")
-
-    try:
-        short_hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
-        long_hash = subprocess.check_output(["git", "rev-parse", "HEAD"])
-    except subprocess.CalledProcessError as e:
-        print("Error retrieving git hash, defaulting to 'latest'")
-        print(e)
-        short_hash = "latest"
-        long_hash = "latest"
-    short_hash = short_hash.strip()
-    long_hash = long_hash.strip()
 
     # Verify configure_script exists
     print("Building containers and initializing Mole...")
@@ -183,104 +199,88 @@ def init(
         )
         return
 
-    prompt = """
-    WARNING: You have requested to initialize Mole.
-    This will permanently overwrite your current database. Do you wish to proceed?
 
-    Do you wish to continue? [y/N]: """
-
-    sys.stdout.write(prompt)
-    if sys.version_info.major == 3:
-        choice = input().lower()
-    else:
-        choice = raw_input().lower()
-
-    yes = ("yes", "y", "ye")
-    if choice in yes:
+    cmd = [
+        "docker-compose",
+        "up",
+        "--build",
+        "--force-recreate",
+        "--always-recreate-deps",
+    ]
+    if os.environ.get("UNLOCK_REDIS") or unlock_redis:
         cmd = [
             "docker-compose",
+            "-f",
+            "docker-compose.yml",
+            "-f",
+            "docker-compose-unlocked-redis.yml",
             "up",
             "--build",
             "--force-recreate",
             "--always-recreate-deps",
         ]
-        if os.environ.get("UNLOCK_REDIS") or unlock_redis:
-            cmd = [
-                "docker-compose",
-                "-f",
-                "docker-compose.yml",
-                "-f",
-                "docker-compose-unlocked-redis.yml",
-                "up",
-                "--build",
-                "--force-recreate",
-                "--always-recreate-deps",
-            ]
-        # Don't run portainer if "lite" flag is set
-        if lite:
-            SERVICES.discard("portainer")
-            SERVICES.discard("docs")
-            SERVICES.discard("event_generator")
-            SERVICES.discard("zookeeper1")
-            SERVICES.discard("zookeeper2")
-            SERVICES.discard("zookeeper3")
-            SERVICES.discard("bookkeeper1")
-            SERVICES.discard("bookkeeper2")
-            SERVICES.discard("bookkeeper3")
-            SERVICES.discard("pulsar")
-            SERVICES.discard("pulsar_proxy")
-        if not db_backup:
-            SERVICES.discard("db_backup")
-        if not angular or skip_static_build:
-            SERVICES.discard("angular")
+    # Don't run portainer if "lite" flag is set
+    if lite:
+        SERVICES.discard("portainer")
+        SERVICES.discard("docs")
+        SERVICES.discard("event_generator")
+        SERVICES.discard("zookeeper1")
+        SERVICES.discard("zookeeper2")
+        SERVICES.discard("zookeeper3")
+        SERVICES.discard("bookkeeper1")
+        SERVICES.discard("bookkeeper2")
+        SERVICES.discard("bookkeeper3")
+        SERVICES.discard("pulsar")
+        SERVICES.discard("pulsar_proxy")
+    if not db_backup:
+        SERVICES.discard("db_backup")
+    if not angular or skip_static_build:
+        SERVICES.discard("angular")
 
-        if make_migrations:
-            MAKE_MIGRATIONS_FLAG = "true"
-        else:
-            MAKE_MIGRATIONS_FLAG = "false"
-
-        # Don't run map tile server if there are no tile sets available
-        available_mbtiles = glob.glob(MAP_TILES_PATH + "*.mbtiles")
-
-        if not available_mbtiles:
-            print(
-                "No .mbtiles tile sets available.  Not starting maptiles service.  See Mole docs for more information."
-            )
-            nomaps = True
-
-        if nomaps:
-            SERVICES.discard("maptiles")
-
-        env = {
-            "PROFILE": str(profile).lower(),
-            "MAKE_MIGRATIONS": MAKE_MIGRATIONS_FLAG,
-            "POPULATE_DB": configure_script,
-            "NEWUSERID": str(os.getuid()),
-            "DEBUG_DJANGO": DEBUG_DJANGO,
-            "PATH": str(os.getenv("PATH")),
-            "BUILD_TAG": short_hash,
-            "LONG_BUILD_TAG": long_hash,
-        }
-
-        if not skip_static_build:
-            build_angular()
-        else:
-            print("Skipping static build...")
-
-        clear_images_cmd = ["find", "mole/media/images/", "-type", "f", "-not", "-name", "README", "-delete"]
-        subprocess.call(clear_images_cmd)
-
-        cmd.extend(SERVICES)
-        p = subprocess.Popen(cmd, preexec_fn=os.setpgrp, env=env)
-
-        try:
-            return p.wait()
-        except KeyboardInterrupt:
-            terminate_mole(p, db_backup)
-
+    if make_migrations:
+        MAKE_MIGRATIONS_FLAG = "true"
     else:
-        print("\n    Exiting...")
-        return
+        MAKE_MIGRATIONS_FLAG = "false"
+
+    # Don't run map tile server if there are no tile sets available
+    available_mbtiles = glob.glob(MAP_TILES_PATH + "*.mbtiles")
+
+    if not available_mbtiles:
+        print(
+            "No .mbtiles tile sets available.  Not starting maptiles service.  See Mole docs for more information."
+        )
+        nomaps = True
+
+    if nomaps:
+        SERVICES.discard("maptiles")
+
+    env = {
+        "PROFILE": str(profile).lower(),
+        "MAKE_MIGRATIONS": MAKE_MIGRATIONS_FLAG,
+        "POPULATE_DB": configure_script,
+        "NEWUSERID": str(os.getuid()),
+        "DEBUG_DJANGO": DEBUG_DJANGO,
+        "PATH": str(os.getenv("PATH")),
+        "BUILD_TAG": short_hash,
+        "LONG_BUILD_TAG": long_hash,
+    }
+
+    if not skip_static_build:
+        build_angular()
+    else:
+        print("Skipping static build...")
+
+    clear_images_cmd = ["find", "mole/media/images/", "-type", "f", "-not", "-name", "README", "-delete"]
+    subprocess.call(clear_images_cmd)
+
+    cmd.extend(SERVICES)
+    p = subprocess.Popen(cmd, preexec_fn=os.setpgrp, env=env)
+
+    try:
+        return p.wait()
+    except KeyboardInterrupt:
+        terminate_mole(p, db_backup)
+
 
 
 def run(
@@ -1138,6 +1138,12 @@ if __name__ == "__main__":
     init_parser.add_argument(
         "--lite",
         help="Do not run non-essential services (portainer, docs, proxy).",
+        action="store_true",
+    )
+
+    init_parser.add_argument(
+        "--deep-clean",
+        help="Deprecated, no longer need to specify this flag",
         action="store_true",
     )
 
