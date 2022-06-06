@@ -116,13 +116,34 @@ def init(
     else:
         DEBUG_DJANGO = "false"
 
+    # Generate https keys/certs if they don't exist
+    if not os.path.isfile(CA_KEY_FILE):
+        keys()
+
+    if build_only:
+        print("Building container images...\n")
+        cmd = [
+            "docker-compose",
+            "-f",
+            "docker-compose.yml",
+            "-f",
+            "docker-compose-e2e.yml",
+            "build",
+        ]
+
+        env = {
+            "PATH": str(os.getenv("PATH")),
+            "NEWUSERID": str(os.getuid()),
+            "BUILD_TAG": short_hash,
+            "LONG_BUILD_TAG": long_hash,
+        }
+        p = subprocess.call(cmd, env=env)
+        return
+
     if pre_init_backup:
         print("Backing up the database...")
         standalone_backup("pre-init&sync=true")
 
-    # Generate https keys/certs if they don't exist
-    if not os.path.isfile(CA_KEY_FILE):
-        keys()
 
     print("Clearing containers and volumes...\n")
     cmd = [
@@ -144,26 +165,6 @@ def init(
         long_hash = "latest"
     short_hash = short_hash.strip()
     long_hash = long_hash.strip()
-
-    if build_only:
-        print("Building container images...\n")
-        cmd = [
-            "docker-compose",
-            "-f",
-            "docker-compose.yml",
-            "-f",
-            "docker-compose-e2e.yml",
-            "build",
-        ]
-
-        env = {
-            "PATH": str(os.getenv("PATH")),
-            "NEWUSERID": str(os.getuid()),
-            "BUILD_TAG": short_hash,
-            "LONG_BUILD_TAG": long_hash,
-        }
-        p = subprocess.call(cmd, env=env)
-        return
 
     # Verify configure_script exists
     print("Building containers and initializing Mole...")
