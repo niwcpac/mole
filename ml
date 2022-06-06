@@ -619,8 +619,8 @@ def save_project_images(target, repos):
 
 def manage(
     target,
-    load="mole_project",
-    save=False,
+    load,
+    save=[],
     imp=False,
     exp=False,
 ):
@@ -646,11 +646,11 @@ def manage(
         print("Loading images from: %s" % load)
         subprocess.call(load_cmd)
     if save != None:
-        save_project_images(target[0], save)
-    if imp != None:
-        import_project_containers()
-    if exp != None:
-        export_project_containers()
+        save_project_images(target, save)
+    # if imp != None:
+    #     import_project_containers()
+    # if exp != None:
+    #     export_project_containers()
 
 
 def db(backup=False, load=False):
@@ -1358,16 +1358,15 @@ if __name__ == "__main__":
         "-s",
         "--save",
         nargs="*",
-        help="Save docker image/images to tarball onto host machine.",
+        help="Save specified docker image/images to tarball onto host machine. By default will save all the docker images",
     )
 
     management_parser.add_argument(
         "-t",
         "--target",
-        nargs=1,
         type=str,
-        default=["mole_project"],
-        help="Specify name for your archive.",
+        default="mole_project",
+        help="Specify name to save the archive as. (default: %(default)s)",
     )
 
     management_parser.add_argument(
@@ -1376,22 +1375,22 @@ if __name__ == "__main__":
         nargs="?",
         type=str,
         const="mole_project.tar.gz",
-        help="Load an archived images into local docker repo. Default name is mole_project.tar.gz if none is specified.",
+        help="Load archived images into local docker repo. (default: %(const)s)",
     )
 
-    management_parser.add_argument(
-        "-i",
-        "--imp",
-        nargs="*",
-        help="Load an archived containers or container into local docker repo. Default names are [container name].tar.gz if none are specified.",
-    )
+    # management_parser.add_argument(
+    #     "-i",
+    #     "--imp",
+    #     nargs="*",
+    #     help="Load an archived containers or container into local docker repo. Default names are [container name].tar.gz if none are specified.",
+    # )
 
-    management_parser.add_argument(
-        "-e",
-        "--exp",
-        nargs="*",
-        help="save an archived containers into local docker repos. Default names are [container name].tar.gz if none are specified.",
-    )
+    # management_parser.add_argument(
+    #     "-e",
+    #     "--exp",
+    #     nargs="*",
+    #     help="save an archived containers into local docker repos. Default names are [container name].tar.gz if none are specified.",
+    # )
 
 
     # https certs/keys
