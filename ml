@@ -624,7 +624,6 @@ def manage(
     save=False,
     imp=False,
     exp=False,
-    all=False,
 ):
     if load:
         yes = ("yes", "y", "ye")
@@ -1404,9 +1403,6 @@ if __name__ == "__main__":
         help="save an archived containers into local docker repos. Default names are [container name].tar.gz if none are specified.",
     )
 
-    management_parser.add_argument(
-        "-a", "--all", action="store_true", help="Does nothing at the moment"
-    )
 
     # https certs/keys
     key_parser = subparsers.add_parser(
