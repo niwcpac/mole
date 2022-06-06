@@ -1146,12 +1146,6 @@ if __name__ == "__main__":
     )
 
     init_parser.add_argument(
-        "--deep-clean",
-        help="Remove all existing containers and volumes prior to running Mole",
-        action="store_true",
-    )
-
-    init_parser.add_argument(
         "-d",
         "--debug",
         help="Debug the Django container",
