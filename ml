@@ -108,13 +108,8 @@ def init(
     pre_init_backup=True,
     unlock_redis=False,
     make_migrations=False,
-    deep_clean=False,
     debug=False,
 ):
-    if db_backup:
-        BACKUP_FLAG = "pre"
-    else:
-        BACKUP_FLAG = "false"
 
     if debug:
         DEBUG_DJANGO = "true"
@@ -129,32 +124,15 @@ def init(
     if not os.path.isfile(CA_KEY_FILE):
         keys()
 
-    yes = ("yes", "y", "ye")
-    if deep_clean:
-        prompt = """
-        WARNING: You have requested to delete containers and volumes.
-        No automatic database backup will be created prior to init.
-        Do you wish to proceed? [y/N]: """
-
-        sys.stdout.write(prompt)
-        if sys.version_info.major == 3:
-            choice = input().lower()
-        else:
-            choice = raw_input().lower()
-
-        if choice in yes:
-            print("Clearing containers and volumes...\n")
-            cmd = [
-                "docker-compose",
-                "down",
-                "--volumes",
-                "--remove-orphans",
-            ]
-            p = subprocess.call(cmd)
-            print("Containers and volumes deleted...\n")
-            BACKUP_FLAG = "false"
-        else:
-            print("Skipping, containers and volumes not deleted")
+    print("Clearing containers and volumes...\n")
+    cmd = [
+        "docker-compose",
+        "down",
+        "--volumes",
+        "--remove-orphans",
+    ]
+    p = subprocess.call(cmd)
+    print("Containers and volumes deleted...\n")
 
     try:
         short_hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
@@ -216,6 +194,7 @@ def init(
     else:
         choice = raw_input().lower()
 
+    yes = ("yes", "y", "ye")
     if choice in yes:
         cmd = [
             "docker-compose",
@@ -273,7 +252,6 @@ def init(
 
         env = {
             "PROFILE": str(profile).lower(),
-            "BACKUP_FLAG": BACKUP_FLAG,
             "MAKE_MIGRATIONS": MAKE_MIGRATIONS_FLAG,
             "POPULATE_DB": configure_script,
             "NEWUSERID": str(os.getuid()),
