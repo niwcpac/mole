@@ -620,7 +620,6 @@ def save_project_images(target, repos):
 def manage(
     target,
     load="mole_project",
-    build=False,
     save=False,
     imp=False,
     exp=False,
@@ -646,8 +645,6 @@ def manage(
         load_cmd = ["docker", "load", "-i", load]
         print("Loading images from: %s" % load)
         subprocess.call(load_cmd)
-    if build:
-        run()
     if save != None:
         save_project_images(target[0], save)
     if imp != None:
@@ -1355,13 +1352,6 @@ if __name__ == "__main__":
     management_parser = subparsers.add_parser(
         "manage",
         description="Manage container builds. Load, Store, Save, Containers/images",
-    )
-
-    management_parser.add_argument(
-        "-b",
-        "--build",
-        help="Build containers in local image repository. Will only build containers that exist for this project",
-        action="store_true",
     )
 
     management_parser.add_argument(
