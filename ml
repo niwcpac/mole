@@ -240,8 +240,6 @@ def init(
         if lite:
             SERVICES.discard("portainer")
             SERVICES.discard("docs")
-            # Should reverse-proxy always be included even under lite mode?
-            SERVICES.discard("proxy")
             SERVICES.discard("event_generator")
             SERVICES.discard("zookeeper1")
             SERVICES.discard("zookeeper2")
@@ -327,8 +325,6 @@ def run(
     if lite:
         SERVICES.discard("portainer")
         SERVICES.discard("docs")
-        # Should reverse-proxy always be included even under lite mode?
-        SERVICES.discard("proxy")
         SERVICES.discard("event_generator")
         SERVICES.discard("zookeeper1")
         SERVICES.discard("zookeeper2")
@@ -453,25 +449,6 @@ def test(dropdb=False, integration=False):
         return p.wait()
     except KeyboardInterrupt:
         terminate_mole(p, False)
-
-
-def shell():
-    print("Building container for shell. Mole is not running in this mode.")
-    cmd = ["cp", "docker-compose.yml", "compose_init_db.yml"]
-    subprocess.call(cmd)
-
-    cmd = ["sed", "-i", "-e", "s/init/init_shell/g", "compose_init_db.yml"]
-    subprocess.call(cmd)
-
-    cmd = ["docker-compose", "-f", "compose_init_db.yml", "up", "-d"]
-    subprocess.call(cmd)
-
-    try:
-        cmd = ["docker-compose", "exec", "django", "/bin/bash"]
-        subprocess.call(cmd)
-        stop()
-    except KeyboardInterrupt:
-        stop()
 
 
 def service_is_running(service_name, id=False):
@@ -1322,12 +1299,6 @@ if __name__ == "__main__":
         "--dropdb",
         help="Drop the test database.  Should only need to use if tests fail because test_mole database already exists.",
         action="store_true",
-    )
-
-    # SHELL
-    shell_parser = subparsers.add_parser(
-        "shell",
-        description="Brings up all containers and starts interactive shell. Note: Mole does not run in this mode.",
     )
 
     # DOCS
