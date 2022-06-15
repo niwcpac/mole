@@ -11,6 +11,15 @@ import { Observable } from 'rxjs';
 })
 export class EventDialogComponent implements OnInit, OnDestroy {
 
+  ELEMENT_DATA: any[] = [
+    { key: 'Hydrogen', value: 1.0079, isEditable: false},
+    { key: 'Helium', value: 4.0026, isEditable: false},
+    { key: 'Lithium', value: 6.941, isEditable: false},
+    { key: 'Beryllium', value: 9.0122, isEditable: false},
+  ];
+  displayedColumns: string[] = ['key', 'value'];
+  dataSource = this.ELEMENT_DATA;
+
   eventTypesObservable: Observable<EventType[]>;
   imagesToUpload: File[] = null;
   order: string = "name";
@@ -35,6 +44,7 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     Object.keys(this.event.metadata).forEach(key => {
       this.metadataKeys.push(key);
     });
+    console.log("im in init");
   }
 
   addMetadata(key: string, value: string) {
@@ -106,6 +116,8 @@ export class EventDialogComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  addRow() {}
 
   ngOnDestroy(): void {
     delete this.localImages;
