@@ -27,7 +27,7 @@
               <div *ngIf="element.isEditable; then thenBlock else elseBlock"></div>
               <ng-template #thenBlock>
                 <mat-form-field appearance="fill">
-                  <mat-label>Input</mat-label>
+                  <mat-label>Key</mat-label>
                   <input matInput [(ngModel)]="element.key">
                 </mat-form-field>
               </ng-template>
@@ -42,7 +42,7 @@
               <div *ngIf="element.isEditable; then thenBlock else elseBlock"></div>
               <ng-template #thenBlock>
                 <mat-form-field appearance="fill">
-                  <mat-label>Input</mat-label>
+                  <mat-label>Value</mat-label>
                   <input matInput [(ngModel)]="element.value">
                 </mat-form-field>
               </ng-template>
