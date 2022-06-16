@@ -11,14 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class EventDialogComponent implements OnInit, OnDestroy {
 
-  ELEMENT_DATA: any[] = [
-    { key: 'Hydrogen', value: 1.0079, isEditable: false, actions: ''},
-    { key: 'Helium', value: 4.0026, isEditable: false, actions: ''},
-    { key: 'Lithium', value: 6.941, isEditable: false, actions: ''},
-    { key: 'Beryllium', value: 9.0122, isEditable: false, actions: ''},
-  ];
   displayedColumns: string[] = ['key', 'value', 'actions'];
-  dataSource = this.ELEMENT_DATA;
+  dataSource:any[] = [];
 
   eventTypesObservable: Observable<EventType[]>;
   imagesToUpload: File[] = null;
@@ -117,11 +111,15 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  addRow() {}
+  addRow() {
+    if(!this.dataSource.map((obj) => obj.key).includes('')) {
+      const newRow = { key: '', value: '', isEditable: true, actions: ''};
+      this.dataSource = [...this.dataSource, newRow];
+    }
+  }
 
   ngOnDestroy(): void {
     delete this.localImages;
     delete this.localNotes;
   }
-
 }
