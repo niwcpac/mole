@@ -35,10 +35,10 @@ export class EventDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.eventTypesObservable = this._eventTypeService.getEventTypes();
-    Object.keys(this.event.metadata).forEach(key => {
-      this.metadataKeys.push(key);
-    });
-    console.log("im in init");
+    Object.entries(this.event.metadata).forEach(function([key, value]) {
+      const newRow = { key: key, value: value, isEditable: false, actions: ''};
+      this.dataSource = [...this.dataSource, newRow];
+    }, this);
   }
 
   addMetadata(key: string, value: string) {
@@ -74,19 +74,19 @@ export class EventDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(event: Event) {
+    event.metadata = {};
+    this.dataSource.forEach(function (element) {
+      event.metadata[element.key] = element.value;
+    });
+ 
     // updating existing event
     if(event.url) {
       this._eventApiService.updateEvent(event);
     }
-
     // creating new event
     else {
-      this.dataSource.forEach(function (element) {
-        event.metadata[element.key] = element.value;
-      }); 
       this._eventApiService.createEvent(event, this.localNotes, this.localImages);
     }
-
     this.dialogRef.close();
   }
 
