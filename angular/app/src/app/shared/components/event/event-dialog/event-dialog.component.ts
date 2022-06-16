@@ -81,6 +81,9 @@ export class EventDialogComponent implements OnInit, OnDestroy {
 
     // creating new event
     else {
+      this.dataSource.forEach(function (element) {
+        event.metadata[element.key] = element.value;
+      }); 
       this._eventApiService.createEvent(event, this.localNotes, this.localImages);
     }
 
