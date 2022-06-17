@@ -118,10 +118,8 @@ export class EventDialogComponent implements OnInit, OnDestroy {
   }
 
   addRow() {
-    if(!this.dataSource.map((obj) => obj.key).includes('')) {
-      const newRow = { key: '', value: '', isEditable: true, actions: ''};
-      this.dataSource = [...this.dataSource, newRow];
-    }
+    const newRow = { key: '', value: '', isEditable: true, actions: ''};
+    this.dataSource = [...this.dataSource, newRow];
   }
 
   deleteRow(row) {
