@@ -76,7 +76,10 @@ export class EventDialogComponent implements OnInit, OnDestroy {
   onSubmit(event: Event) {
     event.metadata = {};
     this.dataSource.forEach(function (element) {
-      event.metadata[element.key] = element.value;
+      let trimmed_key = element.key.trim();
+      if(trimmed_key) {
+        event.metadata[trimmed_key] = element.value;
+      }
     });
  
     // updating existing event
