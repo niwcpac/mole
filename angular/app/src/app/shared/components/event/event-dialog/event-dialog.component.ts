@@ -121,6 +121,10 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     }
   }
 
+  deleteRow(row) {
+    this.dataSource = this.dataSource.filter(i => i.key !== row.key);
+  }
+
   ngOnDestroy(): void {
     delete this.localImages;
     delete this.localNotes;
