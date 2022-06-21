@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class EventDialogComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['key', 'value', 'actions'];
+  displayedColumns: string[] = ['edit', 'key', 'value', 'actions'];
   dataSource:any[] = [];
 
   eventTypesObservable: Observable<EventType[]>;
@@ -118,7 +118,7 @@ export class EventDialogComponent implements OnInit, OnDestroy {
   }
 
   addRow() {
-    const newRow = { key: '', value: '', isEditable: true, actions: ''};
+    const newRow = { edit:'', key: '', value: '', isEditable: true, actions: ''};
     this.dataSource = [...this.dataSource, newRow];
   }
 
