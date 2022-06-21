@@ -39,6 +39,10 @@ export class EventDialogComponent implements OnInit, OnDestroy {
       const newRow = { key: key, value: value, isEditable: false, actions: ''};
       this.dataSource = [...this.dataSource, newRow];
     }, this);
+    console.log(this.dataSource.length);
+    if(this.dataSource.length == 0){
+      this.addRow();
+    }
   }
 
   addMetadata(key: string, value: string) {
