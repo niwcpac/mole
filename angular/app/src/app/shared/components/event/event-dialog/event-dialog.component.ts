@@ -45,13 +45,6 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  addMetadata(key: string, value: string) {
-    this.event.metadata[key] = value;
-    this.metadataKeys.push(key);
-    this.metaKeyInput = '';
-    this.metaValueInput = '';
-  }
-
   addPose(pose: Pose) {
     this.event.startPose = pose;
   }
@@ -70,11 +63,6 @@ export class EventDialogComponent implements OnInit, OnDestroy {
 
   addNewImages(images: FileList) {
     this.localImages = images;
-  }
-
-  removeMetadata(key: string) {
-    delete this.event.metadata[key];
-    this.metadataKeys.splice(this.metadataKeys.indexOf(key), 1);
   }
 
   onSubmit(event: Event) {
