@@ -122,10 +122,6 @@ export class MapsComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateMapType(val){
-    this.useCesium = val;
-  }
-
   setMapFocus(style: MapSettings){
     let zoom: number = style.zoom;
     if( this.cookie.check("map_zoom")) {
