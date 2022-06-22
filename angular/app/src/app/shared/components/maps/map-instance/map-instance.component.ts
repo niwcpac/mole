@@ -76,6 +76,8 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   @Input() showTitle: boolean = true;
   @Input() allowMarkerMovement: boolean = true;
 
+  @Input() posesByPoseSource: Object;
+
   // Map is centered on this point
   currentFocus: MapFocus = {zoom: 0, center: [0,0], pitch: 0, bearing: 0, mapFocus: ""};
   @Input() set focus(value: MapFocus){

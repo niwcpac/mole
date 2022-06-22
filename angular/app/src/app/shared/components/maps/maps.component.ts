@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 
 import { Subscription } from 'rxjs';
 
-import {MapMarkerService, EventApiService, TrialApiService} from '../../services';
+import {MapMarkerService, EventApiService, TrialApiService, PoseApiService } from '../../services';
 import { Marker, MapFocus, Event, Trial, Entity, Pose } from "../../models";
 import { MatDialog } from '@angular/material/dialog';
 import { EventDialogComponent } from '../event/event-dialog/event-dialog.component';
@@ -43,15 +43,17 @@ export class MapsComponent implements OnInit, OnDestroy {
   eventMarker: Marker;
   createPose: boolean = false;
   trial: Trial;
+  posesByPoseSource: Object;
 
   constructor(
     private _mapMarkerService: MapMarkerService,
     private _eventApiService: EventApiService,
     private _trialApiService: TrialApiService,
+    private _poseApiService: PoseApiService,
     public dialog: MatDialog,
     private cookie: CookieService
   ) {
-
+    this.posesByPoseSource = {};
     let mapsNotInitialized: boolean = true;
 
     if(cookie.check("map_name") ){
@@ -59,9 +61,23 @@ export class MapsComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.add(_trialApiService.getSelectedTrial().subscribe(
-      trial => this.trial = trial
+      trial => {
+        this.trial = trial;
+        this.posesByPoseSource = {};
+      }
     ));
 
+    this.subscriptions.add(_poseApiService.getPoses().subscribe(
+      many_poses =>  {
+        Object.keys(many_poses).forEach(element => {
+          if(!this.posesByPoseSource.hasOwnProperty(element)) {
+            this.posesByPoseSource[element] = [];
+          }
+          this.posesByPoseSource[element] = [...this.posesByPoseSource[element], ...many_poses[element]];
+        }, this);
+        console.log(this.posesByPoseSource);
+      }
+    ));
 
     this.subscriptions.add(_mapMarkerService.getTrialStyles().subscribe(
       (trialStyles: MapSettings[]) =>

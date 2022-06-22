@@ -14,7 +14,6 @@ import { PoseAdapters } from './pose.adapter'
 export class PoseApiService implements OnDestroy {
   private subscriptions = new Subscription();
   
-  private posesSubject: Subject<Pose[]>;
   private posesByPoseSourceSubject: Subject<Object>;
 
 
@@ -22,7 +21,6 @@ export class PoseApiService implements OnDestroy {
   private INTERVAL_TIME: number = 2000; // 2 second
 
   constructor(private http: HttpClient, private _trialApiService: TrialApiService) { 
-    this.posesSubject = new Subject();
     this.posesByPoseSourceSubject = new Subject();
 
 
@@ -65,8 +63,8 @@ export class PoseApiService implements OnDestroy {
     this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
-  getPoses(): Observable<Pose[]>{
-    return this.posesSubject.asObservable();
+  getPoses(): Observable<Object>{
+    return this.posesByPoseSourceSubject.asObservable();
   }
 
   // break this out to clean up functions
@@ -90,7 +88,6 @@ export class PoseApiService implements OnDestroy {
     })
 
     this.posesByPoseSourceSubject.next(main_object);
-    this.posesSubject.next(page.results);
 
     if(page.next){
       this.getPosesContinued(page.next);
