@@ -7,3 +7,4 @@ export { TesterApiService } from './tester/tester-api.service';
 export { CampaignApiService } from './campaign/campaign-api.service';
 export { ThemeService } from './theme/theme.service';
 export { EntityApiService } from './entity/entity-api.service';
+export { PoseApiService } from './map/pose-api.service';
