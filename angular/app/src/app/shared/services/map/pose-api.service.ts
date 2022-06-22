@@ -57,52 +57,12 @@ export class PoseApiService implements OnDestroy {
 
   private getPosesInitial(): void {
     let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.selectedTrialId)
-    this.subscriptions.add(posesRequest.subscribe(
-      (page: PosePageResult) => {
-        let main_object = Object();
-        page.results.forEach((pose) => {
-          if (pose.pose_source && pose.pose_source.name) {
-            if (!main_object.hasOwnProperty(pose.pose_source.name)) {
-              main_object[pose.pose_source.name] = [];
-            }
-            main_object[pose.pose_source.name] = [...main_object[pose.pose_source.name], pose];
-          }
-        })
-        this.posesByPoseSourceSubject.next(main_object);
-        console.log(main_object);
-
-        this.posesSubject.next(page.results);
-        if(page.next){
-          this.testing(page.next);
-        }
-
-      }
-    ));
+    this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
-  testing(url: string) {
+  private getPosesContinued(url: string) {
     let posesRequest: Observable<PosePageResult> = this.performSearch(url)
-
-    this.subscriptions.add(posesRequest.subscribe(
-      (page: PosePageResult) => {
-        let main_object = Object();
-        page.results.forEach((pose) => {
-          if (pose.pose_source && pose.pose_source.name) {
-            if (!main_object.hasOwnProperty(pose.pose_source.name)) {
-              main_object[pose.pose_source.name] = [];
-            }
-            main_object[pose.pose_source.name] = [...main_object[pose.pose_source.name], pose];
-          }
-        })
-        this.posesByPoseSourceSubject.next(main_object);
-        console.log(main_object);
-
-        this.posesSubject.next(page.results);
-        if(page.next){
-          this.testing(page.next);
-        }
-      }
-    ));
+    this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
   getPoses(): Observable<Pose[]>{
@@ -117,6 +77,24 @@ export class PoseApiService implements OnDestroy {
     return this.http.get(url, options).pipe(
       map((data: any) => PoseAdapters.posePageResultAdapter(data) ),
     );
+  }
+  catagorizePoses(page: PosePageResult) {
+    let main_object = Object();
+    page.results.forEach((pose) => {
+      if (pose.pose_source && pose.pose_source.name) {
+        if (!main_object.hasOwnProperty(pose.pose_source.name)) {
+          main_object[pose.pose_source.name] = [];
+        }
+        main_object[pose.pose_source.name] = [...main_object[pose.pose_source.name], pose];
+      }
+    })
+
+    this.posesByPoseSourceSubject.next(main_object);
+    this.posesSubject.next(page.results);
+
+    if(page.next){
+      this.getPosesContinued(page.next);
+    }
   }
 
   // clean up
