@@ -71,11 +71,15 @@ export class MapsComponent implements OnInit, OnDestroy {
       many_poses =>  {
         Object.keys(many_poses).forEach(element => {
           if(!this.posesByPoseSource.hasOwnProperty(element)) {
-            this.posesByPoseSource[element] = [];
+            this.posesByPoseSource[element] = {};
           }
-          this.posesByPoseSource[element] = [...this.posesByPoseSource[element], ...many_poses[element]];
+          Object.keys(many_poses[element]).forEach(inner_element => {
+            if(!this.posesByPoseSource[element][inner_element]) {
+              this.posesByPoseSource[element][inner_element] = [];
+            }
+            this.posesByPoseSource[element][inner_element] = [...this.posesByPoseSource[element][inner_element], ...many_poses[element][inner_element]];
+          }, this);
         }, this);
-        console.log(this.posesByPoseSource);
       }
     ));
 

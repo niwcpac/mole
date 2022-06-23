@@ -81,9 +81,12 @@ export class PoseApiService implements OnDestroy {
     page.results.forEach((pose) => {
       if (pose.pose_source && pose.pose_source.name) {
         if (!main_object.hasOwnProperty(pose.pose_source.name)) {
-          main_object[pose.pose_source.name] = [];
+          main_object[pose.pose_source.name] = {};
         }
-        main_object[pose.pose_source.name] = [...main_object[pose.pose_source.name], pose];
+        if(!main_object[pose.pose_source.name].hasOwnProperty(pose.entity.name)) {
+          main_object[pose.pose_source.name][pose.entity.name] = [];
+        }
+        main_object[pose.pose_source.name][pose.entity.name] = [...main_object[pose.pose_source.name][pose.entity.name], pose];
       }
     })
 
