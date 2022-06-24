@@ -47,7 +47,7 @@ export class PoseApiService implements OnDestroy {
     this.subscriptions.add(interval(this.INTERVAL_TIME).subscribe(
       x =>
         {
-          console.log("nothing here");
+          // console.log("nothing here");
           // some way to refresh poses
         }
       ));
@@ -77,7 +77,7 @@ export class PoseApiService implements OnDestroy {
     );
   }
   catagorizePoses(page: PosePageResult) {
-    let main_object = Object();
+    let main_object = {};
     page.results.forEach((pose) => {
       if (pose.pose_source && pose.pose_source.name) {
         if (!main_object.hasOwnProperty(pose.pose_source.name)) {
@@ -91,7 +91,6 @@ export class PoseApiService implements OnDestroy {
     })
 
     this.posesByPoseSourceSubject.next(main_object);
-
     if(page.next){
       this.getPosesContinued(page.next);
     }
