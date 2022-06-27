@@ -604,34 +604,16 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     }
 
 
-  //   if(!this.map.getLayer('posesLayer')){
-  //     this.map.addLayer({
-  //       'id': 'posesLayer',
-  //       'type': 'line',
-  //       'source': 'posesByPoseSource',
-  //       'layout': {
-  //         'line-join': 'round',
-  //         'line-cap': 'round',
-  //         'visibility': 'visible',
-  //       },
-  //       'paint': {
-  //         'line-color': 'red',
-  //         'line-width': 8
-  //       }
-  //     });
-  //   }
-  // }
-  // if(!this.map.getLayer('posesLayer')){
-  //   this.map.addImage("testimage", FontAwesomeUnicode.map["address-book"])
-  //   this.map.addLayer({
-  //     'id': 'posesLayer',
-  //     'type': 'symbol',
-  //     'source': 'posesByPoseSource',
-  //     layout: {
-  //       'icon-image': "testimage",
-  //     },
-  //   });
-  // }
+  if(!this.map.getLayer('posesLayer')){
+    this.map.addLayer({
+      'id': 'posesLayer',
+      'type': 'circle',
+      'source': 'posesByPoseSource',
+      paint: {
+        'circle-radius': 5,
+      },
+    });
+  }
   }
 
   loadEntities(){
