@@ -25,7 +25,7 @@ export class PoseApiService implements OnDestroy {
 
 
     // Subscribe to the Trial
-    // Whenever the trial changes, this.getInitialEvents will be called
+    // Whenever the trial changes, retrieve new poses
     this.subscriptions.add(this._trialApiService.getSelectedTrial().subscribe(
       data=>{
         if (!data) {
@@ -48,7 +48,7 @@ export class PoseApiService implements OnDestroy {
       x =>
         {
           // console.log("nothing here");
-          // some way to refresh poses
+          // TODO: some way to refresh poses
         }
       ));
   }
@@ -62,16 +62,19 @@ export class PoseApiService implements OnDestroy {
     );
   }
 
+  // retrieve poses using trial id
   private getPosesInitial(): void {
     let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.selectedTrialId)
     this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
+  // retrieve poses using django cursor pagination url
   private getPosesContinued(url: string) {
     let posesRequest: Observable<PosePageResult> = this.performSearch(url)
     this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
+  // sort poses by pose source, then by entity
   catagorizePoses(page: PosePageResult) {
     let main_object = {};
     page.results.forEach((pose) => {

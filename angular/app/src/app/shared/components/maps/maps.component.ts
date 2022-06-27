@@ -63,6 +63,7 @@ export class MapsComponent implements OnInit, OnDestroy {
     this.subscriptions.add(_trialApiService.getSelectedTrial().subscribe(
       trial => {
         this.trial = trial;
+        // Clear poses in preparation for a different trial
         this.posesByPoseSource = {};
       }
     ));
