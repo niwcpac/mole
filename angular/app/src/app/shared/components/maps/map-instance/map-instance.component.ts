@@ -217,6 +217,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   mapClickCreateMarkerEvents(){
     this.map.on('mousedown', (e) => {
       this.mouseButtons.push(e.originalEvent.button);
+      console.log(this.map.getStyle().sources);
     });
     this.map.on('mouseup', (e) => {
       if(this.mouseButtons.length > 1 || this.mouseButtons[0] != 2 || this.eventMarker){
@@ -570,24 +571,27 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
         "features": listOfFeatures,
       },
     }
-    
+
     Object.keys(newPoses).forEach((pose_source_type) => {
       Object.keys(newPoses[pose_source_type]).forEach(entity => {
-        let result = newPoses[pose_source_type][entity].map(a => a.coordinates);
-        let asdf = {
-          'type': 'Feature',
-          'properties': {
-            'pose_source': pose_source_type,
-            'entity': entity,
-          },
-          'geometry': {
-            'type': 'MultiPoint',
-            'coordinates': result,
+        // let result = newPoses[pose_source_type][entity].map(a => a.coordinates);
+        newPoses[pose_source_type][entity].forEach(single_pose => {
+          let asdf = {
+            'type': 'Feature',
+            'properties': {
+              'pose_source': pose_source_type,
+              'entity': single_pose.entity.name,
+              'draggable': false
+            },
+            'geometry': {
+              'type': 'Point',
+              'coordinates': single_pose.coordinates,
+            },
           }
-        }
-        listOfFeatures.push(asdf);
-      }, this);
-    }, this);
+          listOfFeatures.push(asdf);
+        });
+      });
+    });
 
     if(!this.map.getSource("posesByPoseSource")) {
       this.map.addSource("posesByPoseSource", my_collection);
@@ -618,23 +622,14 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   //   }
   // }
   // if(!this.map.getLayer('posesLayer')){
+  //   this.map.addImage("testimage", FontAwesomeUnicode.map["address-book"])
   //   this.map.addLayer({
   //     'id': 'posesLayer',
-  //     'type': 'circle',
+  //     'type': 'symbol',
   //     'source': 'posesByPoseSource',
-  //     'paint': {
-  //       'circle-radius': 10,
-  //       'circle-color': '#007cbf',
-  //       'circle-opacity': [
-  //         'interpolate',
-  //         ['linear'],
-  //         ['get', 'mag'],
-  //         0,
-  //         0,
-  //         6,
-  //         1
-  //         ],
-  //     }
+  //     layout: {
+  //       'icon-image': "testimage",
+  //     },
   //   });
   // }
   }
