@@ -217,7 +217,6 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   mapClickCreateMarkerEvents(){
     this.map.on('mousedown', (e) => {
       this.mouseButtons.push(e.originalEvent.button);
-      console.log(this.map.getStyle().sources);
     });
     this.map.on('mouseup', (e) => {
       if(this.mouseButtons.length > 1 || this.mouseButtons[0] != 2 || this.eventMarker){
