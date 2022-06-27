@@ -557,6 +557,86 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     // reload markers as the filter may have changed
     this.loadEventMarker();
 
+    this.loadPosesSource();
+
+  }
+
+  loadPosesSource(newPoses:Object = {}){
+    let listOfFeatures = [];
+    let my_collection = {
+      "type": "geojson",
+      "data": {
+        "type": "FeatureCollection",
+        "features": listOfFeatures,
+      },
+    }
+    
+    Object.keys(newPoses).forEach((pose_source_type) => {
+      Object.keys(newPoses[pose_source_type]).forEach(entity => {
+        let result = newPoses[pose_source_type][entity].map(a => a.coordinates);
+        let asdf = {
+          'type': 'Feature',
+          'properties': {
+            'pose_source': pose_source_type,
+            'entity': entity,
+          },
+          'geometry': {
+            'type': 'MultiPoint',
+            'coordinates': result,
+          }
+        }
+        listOfFeatures.push(asdf);
+      }, this);
+    }, this);
+
+    if(!this.map.getSource("posesByPoseSource")) {
+      this.map.addSource("posesByPoseSource", my_collection);
+    }
+    else{
+      this.map.getSource("posesByPoseSource").setData({
+        "type": "FeatureCollection",
+        "features": listOfFeatures,
+      });
+    }
+
+
+  //   if(!this.map.getLayer('posesLayer')){
+  //     this.map.addLayer({
+  //       'id': 'posesLayer',
+  //       'type': 'line',
+  //       'source': 'posesByPoseSource',
+  //       'layout': {
+  //         'line-join': 'round',
+  //         'line-cap': 'round',
+  //         'visibility': 'visible',
+  //       },
+  //       'paint': {
+  //         'line-color': 'red',
+  //         'line-width': 8
+  //       }
+  //     });
+  //   }
+  // }
+  // if(!this.map.getLayer('posesLayer')){
+  //   this.map.addLayer({
+  //     'id': 'posesLayer',
+  //     'type': 'circle',
+  //     'source': 'posesByPoseSource',
+  //     'paint': {
+  //       'circle-radius': 10,
+  //       'circle-color': '#007cbf',
+  //       'circle-opacity': [
+  //         'interpolate',
+  //         ['linear'],
+  //         ['get', 'mag'],
+  //         0,
+  //         0,
+  //         6,
+  //         1
+  //         ],
+  //     }
+  //   });
+  // }
   }
 
   loadEntities(){
@@ -689,6 +769,14 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if(changes.posesByPoseSource && this.posesByPoseSource){
+      setTimeout(() => {this.loadPosesSource(changes.posesByPoseSource.currentValue);}, 1000);
+      // console.log(changes );
+      // console.log(changes['posesByPoseSource']);
+      // console.log(changes['posesByPoseSource'].currentValue);
+      
+      // this.loadPosesSource(changes.posesByPoseSource.currentValue);
+    }
     if(changes.markers && this.markers){
       this.loadMarkers()
     }
