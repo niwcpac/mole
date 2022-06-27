@@ -52,6 +52,15 @@ export class PoseApiService implements OnDestroy {
         }
       ));
   }
+  // break this out to clean up functions
+  private performSearch = (url, some_id?) => {
+    const options = { 
+      params: some_id ? new HttpParams().set('trial', some_id) : {}
+    };
+    return this.http.get(url, options).pipe(
+      map((data: any) => PoseAdapters.posePageResultAdapter(data) ),
+    );
+  }
 
   private getPosesInitial(): void {
     let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.selectedTrialId)
@@ -63,19 +72,6 @@ export class PoseApiService implements OnDestroy {
     this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
-  getPoses(): Observable<Object>{
-    return this.posesByPoseSourceSubject.asObservable();
-  }
-
-  // break this out to clean up functions
-  performSearch = (url, some_id?) => {
-    const options = { 
-      params: some_id ? new HttpParams().set('trial', some_id) : {}
-    };
-    return this.http.get(url, options).pipe(
-      map((data: any) => PoseAdapters.posePageResultAdapter(data) ),
-    );
-  }
   catagorizePoses(page: PosePageResult) {
     let main_object = {};
     page.results.forEach((pose) => {
@@ -94,6 +90,10 @@ export class PoseApiService implements OnDestroy {
     if(page.next){
       this.getPosesContinued(page.next);
     }
+  }
+
+  getPoses(): Observable<Object>{
+    return this.posesByPoseSourceSubject.asObservable();
   }
 
   // clean up
