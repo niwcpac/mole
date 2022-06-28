@@ -100,7 +100,7 @@ def test_event_gen_multiple_cond_vars():
 
 def test_event_gen_create_event():
     """
-    Check if a passing condition on a trigger creates an event 
+    Check if a passing condition on a trigger creates an event
     if it's configured to
     """
 
@@ -137,7 +137,7 @@ def test_event_gen_create_event():
 
 def test_event_gen_dont_create_event():
     """
-    Check if a passing condition on a trigger doesn't creates an event 
+    Check if a passing condition on a trigger doesn't creates an event
     if it's not configured to
     """
     data = {

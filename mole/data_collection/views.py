@@ -415,13 +415,15 @@ class EntityViewSet(AllowPUTAsCreateMixin, viewsets.ModelViewSet):
             _lat = float(_lat)
         except (ValueError):
             return Response(
-                f"latitude is not a valid float", status=status.HTTP_400_BAD_REQUEST,
+                f"latitude is not a valid float",
+                status=status.HTTP_400_BAD_REQUEST,
             )
         try:
             _long = float(_long)
         except (ValueError):
             return Response(
-                f"longitude is not a valid float", status=status.HTTP_400_BAD_REQUEST,
+                f"longitude is not a valid float",
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         point_of_origin = Point(_long, _lat, srid=4326)
@@ -731,7 +733,8 @@ class TrialViewSet(viewsets.ModelViewSet):
         ]
 
         trial_producer.send_async(
-            json.dumps(new_payload).encode("utf-8"), None,
+            json.dumps(new_payload).encode("utf-8"),
+            None,
         )
         trial_producer.close()
 
@@ -760,7 +763,8 @@ class TrialViewSet(viewsets.ModelViewSet):
         ]
 
         trial_producer.send_async(
-            json.dumps(new_payload).encode("utf-8"), None,
+            json.dumps(new_payload).encode("utf-8"),
+            None,
         )
         trial_producer.close()
 
@@ -1007,10 +1011,13 @@ class PoseFilter(filters.FilterSet):
     max_datetime = filters.IsoDateTimeFilter(field_name="timestamp", lookup_expr="lte")
     min_datetime = filters.IsoDateTimeFilter(field_name="timestamp", lookup_expr="gte")
     entity_name = filters.ModelChoiceFilter(
-        field_name="entity", queryset=dcm.Entity.objects.all(),
+        field_name="entity",
+        queryset=dcm.Entity.objects.all(),
     )
     trial = filters.ModelChoiceFilter(
-        field_name="trial", queryset=dcm.Trial.objects.all(), null_label="No trial",
+        field_name="trial",
+        queryset=dcm.Trial.objects.all(),
+        null_label="No trial",
     )
 
     class Meta:
@@ -1175,10 +1182,10 @@ class EventFilter(filters.FilterSet):
 class EntityEventRoleViewSet(viewsets.ModelViewSet):
     """
     This endpoint represents Entity roles within Events. The metadata_key is used to match entities submitted in
-    Event metadata to the associated roles. Roles may optionally define an Entity State that should apply to the 
-    entity being related. The associations may also be restricted by Event Type, Entity Type, and Entity Group 
-    using the `valid_event_types`, `valid_entity_types`, and `valid_entity_groups` fields respectively; when 
-    these fields are set, the association will only be created if the event/entity type and entity group is in 
+    Event metadata to the associated roles. Roles may optionally define an Entity State that should apply to the
+    entity being related. The associations may also be restricted by Event Type, Entity Type, and Entity Group
+    using the `valid_event_types`, `valid_entity_types`, and `valid_entity_groups` fields respectively; when
+    these fields are set, the association will only be created if the event/entity type and entity group is in
     the defined set. For example, assume the following EntityEventRole and Entity exist:
 
     **EntityEventRole**
@@ -1208,8 +1215,8 @@ class EntityEventRoleViewSet(viewsets.ModelViewSet):
             "metadata_key_1": "entity_1"
         }
 
-    the event would include a relation to entity_1 with "Entity Event Role 1" (assuming 
-    event type, entity type, and entity group requirements were met). These objects 
+    the event would include a relation to entity_1 with "Entity Event Role 1" (assuming
+    event type, entity type, and entity group requirements were met). These objects
     would be serialized within the Event detail view.
 
     Entities can also be submitted as a list. E.g.,
@@ -1230,7 +1237,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     """
     This endpoint represents triggered events.
 
-    list: Events can be query string filtered based on `trial`, `performer`, `event_type`, `event_type_name`, 
+    list: Events can be query string filtered based on `trial`, `performer`, `event_type`, `event_type_name`,
     `event_level`, `weather`, `modified_since`, and `exclude_related_entities`.
     The `event_level_gte` query string returns all events that have an event level greater than or equal to the input value.
     The `metadata_contains` query string returns all events that contain the input value in either the key or the value (not case sensitive).
@@ -1239,7 +1246,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         modified_datetime exactly matches the query string parameter.)
     The `exclude_related_entities` query string returns all events that are not related to the specified entities (referenced by entity name).
         If the input value is null, the query will return all events that have related entities.
-    
+
     * e.g. `events/?trial=1`
     * e.g. `events/?event_level_gte=3`
     * e.g. `events/?metadata_contains=vehicle`
@@ -1247,7 +1254,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     * e.g. `events/?exclude_related_entities=example_entity`
 
     The `performer`, `event_type`, `event_id`, and `exclude_related_entities` querystrings can accept a tethered list of values.
-    
+
     * e.g. `events/?event_type=Unassigned&event_type=Safety+Stop`
 
     Events can also be query string ordered based on *start_datetime* and *modified_datetime*.  Prepending with `-` sorts
@@ -1259,15 +1266,15 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     For example, `/api/events.json` or `/api/events/?format=json` will provide the events in a json encoded output.
 
     The list of possible formats for events include `json`, `csv` file download, and in-browser `txt` format.
-    The `csv` and `txt` formats share the same serialization and differ from the default `json` format. 
+    The `csv` and `txt` formats share the same serialization and differ from the default `json` format.
     It is intended to provide a flat serialization for Pandas DataFrame manipulation.
 
     retrieve: Retrieve an event
 
     update: If the metadata is updated (via PUT/PATCH), the `related_entities` will be re-created. This may result in
-    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with 
-    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity 
-    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See 
+    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with
+    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity
+    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See
     `/api/entity_event_roles` for additional information.
 
     create: If a new event is submitted without an associated *start_datetime*, it will be assigned as `datetime.now()`.
@@ -1280,18 +1287,18 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     (if no triggers exist).
 
     Entities can be associated with events by including them in previously-configured (via entity_event_roles) metadata fields.
-    The metadata key in the event must match the `metadata_key` set in `entity_event_roles` for the desired role. The metadata 
-    value must match an entity name (or list of entity names). If both metadata key and value match, and the event type, entity 
-    type, and entity group requirements on the role are met, the relation will be created and the entities and respective roles 
-    will be serialized within the event. 
+    The metadata key in the event must match the `metadata_key` set in `entity_event_roles` for the desired role. The metadata
+    value must match an entity name (or list of entity names). If both metadata key and value match, and the event type, entity
+    type, and entity group requirements on the role are met, the relation will be created and the entities and respective roles
+    will be serialized within the event.
 
     Events can be created with a single json object or through a list of json objects.
     This will create one event or multiple events respectively.
 
     partial_update: If the metadata is updated (via PUT/PATCH), the `related_entities` will be re-created. This may result in
-    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with 
-    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity 
-    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See 
+    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with
+    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity
+    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See
     `/api/entity_event_roles` for additional information.
 
     destroy: Delete an event
@@ -1405,7 +1412,8 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             data["start_pose_z"] = saved.start_pose.elevation
 
         event_producer.send_async(
-            json.dumps(data).encode("utf-8"), None,
+            json.dumps(data).encode("utf-8"),
+            None,
         )
         event_producer.close()
         ss.schedule_events(saved)
@@ -1458,7 +1466,8 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             data["start_pose_z"] = saved.start_pose.elevation
 
         event_producer.send_async(
-            json.dumps(data).encode("utf-8"), None,
+            json.dumps(data).encode("utf-8"),
+            None,
         )
         event_producer.close()
         ss.schedule_events(saved)
@@ -1476,7 +1485,9 @@ class EventDataViewSet(rest_pandas.PandasViewSet):
 
 class EntityDataViewSet(rest_pandas.PandasViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = dcm.Entity.objects.all().select_related("entity_type",)
+    queryset = dcm.Entity.objects.all().select_related(
+        "entity_type",
+    )
     serializer_class = dcs.EntityDataSerializer
     filter_class = EntityFilter
     schema = None
@@ -1484,7 +1495,9 @@ class EntityDataViewSet(rest_pandas.PandasViewSet):
 
 class EntityGroupDataViewSet(rest_pandas.PandasViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = dcm.EntityGroup.objects.all().select_related("related_entities",)
+    queryset = dcm.EntityGroup.objects.all().select_related(
+        "related_entities",
+    )
 
     def get_queryset(self):
         name = self.request.query_params.get("name", None)
@@ -1502,7 +1515,9 @@ class EntityGroupDataViewSet(rest_pandas.PandasViewSet):
 
 class TrialDataViewSet(rest_pandas.PandasViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = dcm.Trial.objects.all().select_related("system_configuration",)
+    queryset = dcm.Trial.objects.all().select_related(
+        "system_configuration",
+    )
     serializer_class = dcs.TrialDataSerializer
     schema = None
 
@@ -1566,7 +1581,9 @@ class OrderedTriggerResponseViewSet(viewsets.ModelViewSet):
 
 class TriggerFilter(filters.FilterSet):
     key = filters.ModelMultipleChoiceFilter(
-        queryset=dcm.Trigger.objects.all(), field_name="key", to_field_name="key",
+        queryset=dcm.Trigger.objects.all(),
+        field_name="key",
+        to_field_name="key",
     )
 
     class Meta:
@@ -1641,7 +1658,8 @@ class ClockConfigViewSet(viewsets.ModelViewSet):
         }
 
         clock_config_producer.send_async(
-            json.dumps(data).encode("utf-8"), None,
+            json.dumps(data).encode("utf-8"),
+            None,
         )
         clock_config_producer.close()
 
@@ -1663,7 +1681,8 @@ class ClockConfigViewSet(viewsets.ModelViewSet):
         }
 
         clock_config_producer.send_async(
-            json.dumps(data).encode("utf-8"), None,
+            json.dumps(data).encode("utf-8"),
+            None,
         )
         clock_config_producer.close()
 
@@ -1693,7 +1712,8 @@ class ClockPhaseViewSet(viewsets.ModelViewSet):
         }
 
         clock_phase_producer.send_async(
-            json.dumps(data).encode("utf-8"), None,
+            json.dumps(data).encode("utf-8"),
+            None,
         )
         clock_phase_producer.close()
 
@@ -1713,7 +1733,8 @@ class ClockPhaseViewSet(viewsets.ModelViewSet):
         }
 
         clock_phase_producer.send_async(
-            json.dumps(data).encode("utf-8"), None,
+            json.dumps(data).encode("utf-8"),
+            None,
         )
         clock_phase_producer.close()
 

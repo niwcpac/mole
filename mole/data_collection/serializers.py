@@ -93,7 +93,9 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
                     queryset=dcm.Role.objects.all(),
                 )
                 self.fields["user"] = serializers.HyperlinkedRelatedField(
-                    view_name="user-detail", label="User", queryset=User.objects.all(),
+                    view_name="user-detail",
+                    label="User",
+                    queryset=User.objects.all(),
                 )
         except (KeyError, AttributeError):
             pass
@@ -348,7 +350,13 @@ class CampaignSerializer(serializers.HyperlinkedModelSerializer):
         request = self.context.get("request", None)
         entities = dcm.Entity.objects.filter(trials__campaign=obj).distinct()
         serialized_entities = EntitySerializer(
-            entities, context={"request": request}, many=True, fields=("url", "name",),
+            entities,
+            context={"request": request},
+            many=True,
+            fields=(
+                "url",
+                "name",
+            ),
         ).data
         return serialized_entities
 
@@ -741,7 +749,9 @@ class PoseSerializer(gis_serializers.GeoModelSerializer):
     )
     pose_source = PoseSourceSerializer()
     events = serializers.HyperlinkedRelatedField(
-        view_name="event-detail", many=True, read_only=True,
+        view_name="event-detail",
+        many=True,
+        read_only=True,
     )
 
     class Meta:
@@ -1299,7 +1309,10 @@ class TriggerSerializer(serializers.HyperlinkedModelSerializer):
 
     converted_cond_vars = serializers.SerializerMethodField()
     cond_vars = serializers.SlugRelatedField(
-        slug_field="variable", source="condition_variables", read_only=True, many=True,
+        slug_field="variable",
+        source="condition_variables",
+        read_only=True,
+        many=True,
     )
     req_data = RequestedDataSerializer(
         read_only=True, many=True, source="requested_dataset"
@@ -1551,10 +1564,12 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
                                         == 0
                                     )
                                 ):
-                                    entity_event_relation = dcm.EntityEventRelation.objects.create(
-                                        entity_event_role=entity_role,
-                                        event=instance,
-                                        entity=entity,
+                                    entity_event_relation = (
+                                        dcm.EntityEventRelation.objects.create(
+                                            entity_event_role=entity_role,
+                                            event=instance,
+                                            entity=entity,
+                                        )
                                     )
                                     valid_entities.append(entity.name)
                                 else:
@@ -1682,10 +1697,12 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
                                     or len(entity_role.valid_entity_groups.all()) == 0
                                 )
                             ):
-                                entity_event_relation = dcm.EntityEventRelation.objects.create(
-                                    entity_event_role=entity_role,
-                                    event=instance,
-                                    entity=entity,
+                                entity_event_relation = (
+                                    dcm.EntityEventRelation.objects.create(
+                                        entity_event_role=entity_role,
+                                        event=instance,
+                                        entity=entity,
+                                    )
                                 )
                                 valid_entities.append(entity.name)
                             else:
@@ -1812,12 +1829,14 @@ def get_entity_state_point_style(request, relation):
             # MARKER COLOR
             if state.point_style_marker_color_transform:
                 if point_style.marker_color:
-                    point_style.marker_color = state.point_style_marker_color_transform.format(
-                        marker_color=point_style.marker_color
+                    point_style.marker_color = (
+                        state.point_style_marker_color_transform.format(
+                            marker_color=point_style.marker_color
+                        )
                     )
                 else:
-                    point_style.marker_color = state.point_style_marker_color_transform.format(
-                        marker_color=""
+                    point_style.marker_color = (
+                        state.point_style_marker_color_transform.format(marker_color="")
                     )
 
             # SCALE FACTOR
@@ -1827,12 +1846,14 @@ def get_entity_state_point_style(request, relation):
             # ANIMATION
             if state.point_style_animation_transform:
                 if point_style.animation:
-                    point_style.animation = state.point_style_animation_transform.format(
-                        animation=point_style.animation
+                    point_style.animation = (
+                        state.point_style_animation_transform.format(
+                            animation=point_style.animation
+                        )
                     )
                 else:
-                    point_style.animation = state.point_style_animation_transform.format(
-                        animation=""
+                    point_style.animation = (
+                        state.point_style_animation_transform.format(animation="")
                     )
 
             # RENDER AS SYMBOL

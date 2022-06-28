@@ -35,7 +35,11 @@ def control_inidicator_layout(endpoint_url, print=False):
                 dcc.Store(id="endpoint-session", storage_type="session"),
                 dbc.Modal(
                     [
-                        dbc.ModalHeader([dbc.ModalTitle("Event Generator "),],),
+                        dbc.ModalHeader(
+                            [
+                                dbc.ModalTitle("Event Generator "),
+                            ],
+                        ),
                         dbc.ModalBody(id="event-gen-modal"),
                         dbc.ModalBody(
                             [
@@ -57,7 +61,10 @@ def control_inidicator_layout(endpoint_url, print=False):
                         ),
                         dbc.ModalFooter(
                             [
-                                dbc.Spinner(id="generator-output", color="primary",),
+                                dbc.Spinner(
+                                    id="generator-output",
+                                    color="primary",
+                                ),
                                 rm.button(
                                     name="Generate Events",
                                     id="generate-events",
@@ -74,7 +81,8 @@ def control_inidicator_layout(endpoint_url, print=False):
                     centered=True,
                 ),
                 rm.indicator(
-                    "Data Endpoint Polling Interval (s)", "request-interval-indicator",
+                    "Data Endpoint Polling Interval (s)",
+                    "request-interval-indicator",
                 ),
                 rm.indicator(
                     "Entity Data Endpoint Retrieval Time (s)", "entity-retrieval-time"

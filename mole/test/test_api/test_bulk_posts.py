@@ -9,10 +9,13 @@ from data_collection.factories import factories
 
 class BulkPostTests(APITestCase):
     def setUp(self):
-        factories.PoseSourceFactory(name="Pose source test",)
+        factories.PoseSourceFactory(
+            name="Pose source test",
+        )
         factories.UserFactory(username="test_user", password="test_pass")
         test_entity_type = factories.EntityTypeFactory(
-            name="test_entity_type", description="test entity type",
+            name="test_entity_type",
+            description="test entity type",
         )
         test_entity = factories.EntityFactory(
             entity_type=test_entity_type,

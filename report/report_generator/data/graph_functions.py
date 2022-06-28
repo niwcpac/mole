@@ -105,12 +105,18 @@ def api_event_bar(endpoint, trial, font_color, plot_color, height, width):
         fig = go.Figure()
 
         fig.add_trace(
-            go.Bar(x=list(eventTotal["event_type"]), y=list(eventTotal["total"]),)
+            go.Bar(
+                x=list(eventTotal["event_type"]),
+                y=list(eventTotal["total"]),
+            )
         )
 
         fig.update_layout(
             title=dict(text=title, font=dict(size=28)),
-            xaxis={"gridcolor": "rgba(177 190, 202, 0.5)", "showgrid": False,},
+            xaxis={
+                "gridcolor": "rgba(177 190, 202, 0.5)",
+                "showgrid": False,
+            },
             yaxis={
                 "title": "",
                 "automargin": True,
@@ -157,12 +163,19 @@ def api_event_timeline(endpoint, trial, font_color, plot_color, height, width):
 
     if not event.empty:
         fig = px.scatter(
-            event, x="start_datetime", y="event_type", opacity=1, color="event_type",
+            event,
+            x="start_datetime",
+            y="event_type",
+            opacity=1,
+            color="event_type",
         )
 
         fig.update_layout(
             title=dict(text=title, font=dict(color=font_color, size=28)),
-            xaxis={"gridcolor": "rgba(177 190, 202, 0.5)", "showgrid": True,},
+            xaxis={
+                "gridcolor": "rgba(177 190, 202, 0.5)",
+                "showgrid": True,
+            },
             yaxis={
                 "automargin": True,
                 "gridcolor": "rgba(177 190, 202, 0.5)",
@@ -199,7 +212,9 @@ def empty_figure(font_color, plot_color, height, width, title):
                 "xref": "paper",
                 "yref": "paper",
                 "showarrow": False,
-                "font": {"size": 28,},
+                "font": {
+                    "size": 28,
+                },
             }
         ],
     )
@@ -208,7 +223,15 @@ def empty_figure(font_color, plot_color, height, width, title):
 
 
 def export_figures(
-    source, endpoint, trial, csv, filename, font_color, plot_color, height, width,
+    source,
+    endpoint,
+    trial,
+    csv,
+    filename,
+    font_color,
+    plot_color,
+    height,
+    width,
 ):
     """Export all figures."""
     figDirectory = "exported_figures/"

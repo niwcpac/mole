@@ -52,7 +52,7 @@ class MessageProcesser(object):
                     f"http://{django_ip}:{django_port}/api/triggers/"
                 )
             except requests.RequestException as e:
-                n = min(64, (2 ** n))
+                n = min(64, (2**n))
                 print(f"Django web server not up yet, waiting {n} seconds")
                 time.sleep(n)
             if triggers and triggers.ok:

@@ -28,7 +28,10 @@ def register_component_callbacks(app):
     """Callbacks for interactive user interfaces."""
     # URL Routing Component
     @app.callback(
-        Output("page-content", "children"), [Input("url", "pathname"),],
+        Output("page-content", "children"),
+        [
+            Input("url", "pathname"),
+        ],
     )
     def display_page(pathname):
         """Return the selected view:
@@ -45,8 +48,14 @@ def register_component_callbacks(app):
 
     # Trial Selector Component
     @app.callback(
-        [Output("trial-selector", "options"), Output("trial-selector", "value"),],
-        [Input("interval-component", "n_intervals"), Input("trial-selector", "value"),],
+        [
+            Output("trial-selector", "options"),
+            Output("trial-selector", "value"),
+        ],
+        [
+            Input("interval-component", "n_intervals"),
+            Input("trial-selector", "value"),
+        ],
         State("endpoint-session", "data"),
     )
     def trial_request(n, dropdown_value, endpoint):
@@ -81,7 +90,10 @@ def register_component_callbacks(app):
             Output("event-retrieval-time", "children"),
             Output("event-retrieval-time", "value"),
         ],
-        [Input("interval-component", "n_intervals"), Input("trial-selector", "value"),],
+        [
+            Input("interval-component", "n_intervals"),
+            Input("trial-selector", "value"),
+        ],
         State("endpoint-session", "data"),
     )
     def endpoint_request(n, trial, endpoint_session):
@@ -346,7 +358,10 @@ def register_component_callbacks(app):
 
     # Export Componenet
     @app.callback(
-        [Output("export_output", "color"), Output("export", "n_clicks"),],
+        [
+            Output("export_output", "color"),
+            Output("export", "n_clicks"),
+        ],
         [
             Input("export", "n_clicks"),
             Input("interval-component", "n_intervals"),

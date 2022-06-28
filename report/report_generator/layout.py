@@ -44,7 +44,9 @@ def create_report():
                                         className="g-0 ms",
                                     )
                                 ],
-                                style={"margin-left": "1rem",},
+                                style={
+                                    "margin-left": "1rem",
+                                },
                             ),
                             dbc.Row(
                                 [
@@ -53,7 +55,9 @@ def create_report():
                                             label="Menu",
                                             children=[
                                                 dbc.DropdownMenuItem(
-                                                    x, href=x, external_link=True,
+                                                    x,
+                                                    href=x,
+                                                    external_link=True,
                                                 )
                                                 for x in cfg["dash_app"]["views"]
                                             ],
@@ -109,7 +113,9 @@ def create_report():
                             dcc.Tab(
                                 label="CSV Upload",
                                 selected_className="custom__tab--selected",
-                                children=[csv_upload.layout(),],
+                                children=[
+                                    csv_upload.layout(),
+                                ],
                             ),
                         ],
                         className="custom__tab",
@@ -127,7 +133,9 @@ def create_printable_report():
     report = html.Div(
         children=[
             html.Div(
-                [dbc.Button("Export to PDF", color="primary", id="js", n_clicks=0),],
+                [
+                    dbc.Button("Export to PDF", color="primary", id="js", n_clicks=0),
+                ],
                 className="d-md-flex justify-content-md-end page_header",
             ),
             # Page 1

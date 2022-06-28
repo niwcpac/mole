@@ -89,7 +89,9 @@ class ScenarioScripts:
     def init_trial_script_run_count(self, trial, scripts):
         for script in scripts.all():
             factories.ScriptRunCountFactory(
-                trial=trial, script=script, count=0,
+                trial=trial,
+                script=script,
+                count=0,
             )
 
         return

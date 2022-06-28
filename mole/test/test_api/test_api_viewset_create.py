@@ -203,7 +203,10 @@ test_method_create_info = (
 
 region_type_create_info = (
     "regiontype",
-    {"name": "region_type_name", "description": "region type description",},
+    {
+        "name": "region_type_name",
+        "description": "region type description",
+    },
 )
 
 region_create_info = (
@@ -669,7 +672,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_types.add(entity_1_instance.entity_type)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -686,7 +691,9 @@ class ComplexCreateTests(APITestCase):
 
         # confirm invalid entity type
         data = {
-            "metadata": {"test_role_1_key": entity_2_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_2_instance.name,
+            },
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -703,7 +710,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -719,7 +728,9 @@ class ComplexCreateTests(APITestCase):
         entity_1_instance.groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -739,7 +750,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_event_types.add(event_type_1_instance)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -759,7 +772,9 @@ class ComplexCreateTests(APITestCase):
         event_role_2_instance.valid_event_types.add(event_type_2_instance)
 
         data = {
-            "metadata": {"test_role_2_key": entity_2_instance.name,},
+            "metadata": {
+                "test_role_2_key": entity_2_instance.name,
+            },
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -772,7 +787,7 @@ class ComplexCreateTests(APITestCase):
         self.assertEqual(entity_2_instance.name, event_entity_2_name, msg=msg)
 
     def testUpdateEntityOnEvent(self):
-        """Test updating event metadata via HTTP PATCH. 
+        """Test updating event metadata via HTTP PATCH.
         1. Update with valid related entities in metadata. Entity relations should be created.
         2. Update again with invalid related entities in metadata. Entity relations should be removed without error. Unfound_entities should be populated.
         3. Update with valid related entities as a list in metadata. Entity relations should be created.
@@ -894,7 +909,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_types.add(entity_1_instance.entity_type)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -911,7 +928,9 @@ class ComplexCreateTests(APITestCase):
 
         # confirm invalid entity type
         data = {
-            "metadata": {"test_role_1_key": entity_2_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_2_instance.name,
+            },
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -928,7 +947,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -944,7 +965,9 @@ class ComplexCreateTests(APITestCase):
         entity_1_instance.groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -964,7 +987,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_event_types.add(event_type_1_instance)
 
         data = {
-            "metadata": {"test_role_1_key": entity_1_instance.name,},
+            "metadata": {
+                "test_role_1_key": entity_1_instance.name,
+            },
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -984,7 +1009,9 @@ class ComplexCreateTests(APITestCase):
         event_role_2_instance.valid_event_types.add(event_type_2_instance)
 
         data = {
-            "metadata": {"test_role_2_key": entity_2_instance.name,},
+            "metadata": {
+                "test_role_2_key": entity_2_instance.name,
+            },
         }
 
         response = self.client.patch(event_instance_url, data, format="json")

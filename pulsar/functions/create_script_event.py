@@ -13,7 +13,9 @@ body = {
     "fqfn": "public/default/create_script_event",
     "py": "/pulsar/functions/create_script_event.py",
     "className": "create_script_event.CreateScriptEvent",
-    "inputs": ["persistent://public/default/_create_script_event",],
+    "inputs": [
+        "persistent://public/default/_create_script_event",
+    ],
     # "output": "persistent://public/default/output",
     "logTopic": "persistent://public/default/create_script_event_log",
 }

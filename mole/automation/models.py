@@ -95,7 +95,9 @@ class ScriptRunCount(models.Model):
 class Script(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, unique=True)
     initiating_event_types = models.ManyToManyField(
-        "data_collection.EventType", blank=False, related_name="initiating_types",
+        "data_collection.EventType",
+        blank=False,
+        related_name="initiating_types",
     )
     conditions = models.ManyToManyField(
         "ScriptCondition", blank=True, related_name="script_conditions"
