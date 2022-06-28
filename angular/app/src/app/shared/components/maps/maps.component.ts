@@ -265,7 +265,7 @@ export class MapsComponent implements OnInit, OnDestroy {
 
   openEventDialog(event): void {
     const dialogRef = this.dialog.open(EventDialogComponent, {
-      width: '33vw',
+      width: '66vw',
       data: event
     });
   }
