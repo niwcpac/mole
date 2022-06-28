@@ -176,7 +176,7 @@ export class TimelineCardComponent implements OnInit, AfterViewInit {
   // opens event dialog - used for editing the event
   openEventDialog(event): void {
     const dialogRef = this.dialog.open(EventDialogComponent, {
-      width: '33vw',
+      width: '66vw',
       data: event
     });
 

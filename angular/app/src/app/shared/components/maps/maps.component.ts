@@ -122,10 +122,6 @@ export class MapsComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateMapType(val){
-    this.useCesium = val;
-  }
-
   setMapFocus(style: MapSettings){
     let zoom: number = style.zoom;
     if( this.cookie.check("map_zoom")) {
@@ -269,7 +265,7 @@ export class MapsComponent implements OnInit, OnDestroy {
 
   openEventDialog(event): void {
     const dialogRef = this.dialog.open(EventDialogComponent, {
-      width: '33vw',
+      width: '66vw',
       data: event
     });
   }

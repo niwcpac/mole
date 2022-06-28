@@ -31,7 +31,7 @@ export class EventCreatorComponent implements OnInit {
   }
   createNewDialog(eventType) {
     const dialogRef = this.dialog.open(EventDialogComponent, {
-      width: '33vw',
+      width: '66vw',
       data: this.eventService.getEventObject(eventType)
     });
   }
