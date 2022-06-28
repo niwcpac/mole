@@ -1,6 +1,7 @@
 from rest_framework import serializers
 import automation.models as amm
 
+
 class ScriptConditionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = amm.ScriptCondition
@@ -32,15 +33,12 @@ class ScriptedEventSerializer(serializers.HyperlinkedModelSerializer):
             "next_scripted_event",
         ]
 
+
 class ScriptRunCountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = amm.ScriptRunCount
-        fields = [
-            "url",
-            "trial",
-            "script",
-            "count"
-        ]
+        fields = ["url", "trial", "script", "count"]
+
 
 class ScriptSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -54,5 +52,5 @@ class ScriptSerializer(serializers.HyperlinkedModelSerializer):
             "auto_repeat_count",
             "conditions_pass_if_any",
             "cancelling_event_type",
-            "scripted_event_head"
+            "scripted_event_head",
         ]

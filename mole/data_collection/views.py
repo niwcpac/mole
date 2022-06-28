@@ -42,6 +42,7 @@ import pulsar
 import redis
 
 from automation.scenario_scripts.scenario_scripts import ScenarioScripts
+
 ss = ScenarioScripts()
 
 pulsar_client = pulsar.Client("pulsar://pulsar:6650")
@@ -64,12 +65,11 @@ class EntityPagination(CursorPagination):
     cursor_query_param = "cursor"  # default value = 'cursor'
 
 
-
 class PosePagination(CursorPagination):
     page_size = 100
     page_size_query_param = "page_size"
     max_page_size = 1000
-    ordering = "-id"
+    ordering = "timestamp"
     cursor_query_param = "cursor"  # default value = 'cursor'
 
 
@@ -718,12 +718,19 @@ class TrialViewSet(viewsets.ModelViewSet):
             return
 
         new_payload = dict(serializer.data)
-        
+
         new_payload["update"] = True
         new_payload["name"] = str(saved)
-        new_payload["scenario"] = dcs.ScenarioSerializer(saved.scenario, context={'request': self.request}).data
-        new_payload["test_condition"] = dcs.TestConditionSerializer(saved.test_condition, context={'request': self.request}).data
-        new_payload["testers"] = [reverse("tester-detail", args=[t.id], request=self.request) for t in saved.testers.all()]
+        new_payload["scenario"] = dcs.ScenarioSerializer(
+            saved.scenario, context={"request": self.request}
+        ).data
+        new_payload["test_condition"] = dcs.TestConditionSerializer(
+            saved.test_condition, context={"request": self.request}
+        ).data
+        new_payload["testers"] = [
+            reverse("tester-detail", args=[t.id], request=self.request)
+            for t in saved.testers.all()
+        ]
 
         trial_producer.send_async(
             json.dumps(new_payload).encode("utf-8"),
@@ -741,12 +748,19 @@ class TrialViewSet(viewsets.ModelViewSet):
             return
 
         new_payload = dict(serializer.data)
-        
+
         new_payload["update"] = False
         new_payload["name"] = str(saved)
-        new_payload["scenario"] = dcs.ScenarioSerializer(saved.scenario, context={'request': self.request}).data
-        new_payload["test_condition"] = dcs.TestConditionSerializer(saved.test_condition, context={'request': self.request}).data
-        new_payload["testers"] = [reverse("tester-detail", args=[t.id], request=self.request) for t in saved.testers.all()]
+        new_payload["scenario"] = dcs.ScenarioSerializer(
+            saved.scenario, context={"request": self.request}
+        ).data
+        new_payload["test_condition"] = dcs.TestConditionSerializer(
+            saved.test_condition, context={"request": self.request}
+        ).data
+        new_payload["testers"] = [
+            reverse("tester-detail", args=[t.id], request=self.request)
+            for t in saved.testers.all()
+        ]
 
         trial_producer.send_async(
             json.dumps(new_payload).encode("utf-8"),
@@ -825,8 +839,8 @@ class TrialViewSet(viewsets.ModelViewSet):
 
         # get reported trial related to current trial
         reported_trial = dcm.Trial.objects.filter(
-            Q(id_major=current_trial.id_major) 
-            & Q(id_minor=current_trial.id_minor) 
+            Q(id_major=current_trial.id_major)
+            & Q(id_minor=current_trial.id_minor)
             & Q(reported=True)
         ).first()
 
@@ -837,7 +851,9 @@ class TrialViewSet(viewsets.ModelViewSet):
         reported_phase, reported_next = dcm.get_clock_phase(reported_trial)
 
         next_time = [
-            dt for dt in [current_next, minor_next, major_next, reported_next] if dt is not None
+            dt
+            for dt in [current_next, minor_next, major_next, reported_next]
+            if dt is not None
         ]
 
         content = buildClockState(current_trial, current_phase)
@@ -1166,10 +1182,10 @@ class EventFilter(filters.FilterSet):
 class EntityEventRoleViewSet(viewsets.ModelViewSet):
     """
     This endpoint represents Entity roles within Events. The metadata_key is used to match entities submitted in
-    Event metadata to the associated roles. Roles may optionally define an Entity State that should apply to the 
-    entity being related. The associations may also be restricted by Event Type, Entity Type, and Entity Group 
-    using the `valid_event_types`, `valid_entity_types`, and `valid_entity_groups` fields respectively; when 
-    these fields are set, the association will only be created if the event/entity type and entity group is in 
+    Event metadata to the associated roles. Roles may optionally define an Entity State that should apply to the
+    entity being related. The associations may also be restricted by Event Type, Entity Type, and Entity Group
+    using the `valid_event_types`, `valid_entity_types`, and `valid_entity_groups` fields respectively; when
+    these fields are set, the association will only be created if the event/entity type and entity group is in
     the defined set. For example, assume the following EntityEventRole and Entity exist:
 
     **EntityEventRole**
@@ -1199,8 +1215,8 @@ class EntityEventRoleViewSet(viewsets.ModelViewSet):
             "metadata_key_1": "entity_1"
         }
 
-    the event would include a relation to entity_1 with "Entity Event Role 1" (assuming 
-    event type, entity type, and entity group requirements were met). These objects 
+    the event would include a relation to entity_1 with "Entity Event Role 1" (assuming
+    event type, entity type, and entity group requirements were met). These objects
     would be serialized within the Event detail view.
 
     Entities can also be submitted as a list. E.g.,
@@ -1221,7 +1237,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     """
     This endpoint represents triggered events.
 
-    list: Events can be query string filtered based on `trial`, `performer`, `event_type`, `event_type_name`, 
+    list: Events can be query string filtered based on `trial`, `performer`, `event_type`, `event_type_name`,
     `event_level`, `weather`, `modified_since`, and `exclude_related_entities`.
     The `event_level_gte` query string returns all events that have an event level greater than or equal to the input value.
     The `metadata_contains` query string returns all events that contain the input value in either the key or the value (not case sensitive).
@@ -1230,7 +1246,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         modified_datetime exactly matches the query string parameter.)
     The `exclude_related_entities` query string returns all events that are not related to the specified entities (referenced by entity name).
         If the input value is null, the query will return all events that have related entities.
-    
+
     * e.g. `events/?trial=1`
     * e.g. `events/?event_level_gte=3`
     * e.g. `events/?metadata_contains=vehicle`
@@ -1238,7 +1254,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     * e.g. `events/?exclude_related_entities=example_entity`
 
     The `performer`, `event_type`, `event_id`, and `exclude_related_entities` querystrings can accept a tethered list of values.
-    
+
     * e.g. `events/?event_type=Unassigned&event_type=Safety+Stop`
 
     Events can also be query string ordered based on *start_datetime* and *modified_datetime*.  Prepending with `-` sorts
@@ -1250,15 +1266,15 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     For example, `/api/events.json` or `/api/events/?format=json` will provide the events in a json encoded output.
 
     The list of possible formats for events include `json`, `csv` file download, and in-browser `txt` format.
-    The `csv` and `txt` formats share the same serialization and differ from the default `json` format. 
+    The `csv` and `txt` formats share the same serialization and differ from the default `json` format.
     It is intended to provide a flat serialization for Pandas DataFrame manipulation.
 
     retrieve: Retrieve an event
 
     update: If the metadata is updated (via PUT/PATCH), the `related_entities` will be re-created. This may result in
-    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with 
-    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity 
-    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See 
+    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with
+    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity
+    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See
     `/api/entity_event_roles` for additional information.
 
     create: If a new event is submitted without an associated *start_datetime*, it will be assigned as `datetime.now()`.
@@ -1271,18 +1287,18 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     (if no triggers exist).
 
     Entities can be associated with events by including them in previously-configured (via entity_event_roles) metadata fields.
-    The metadata key in the event must match the `metadata_key` set in `entity_event_roles` for the desired role. The metadata 
-    value must match an entity name (or list of entity names). If both metadata key and value match, and the event type, entity 
-    type, and entity group requirements on the role are met, the relation will be created and the entities and respective roles 
-    will be serialized within the event. 
+    The metadata key in the event must match the `metadata_key` set in `entity_event_roles` for the desired role. The metadata
+    value must match an entity name (or list of entity names). If both metadata key and value match, and the event type, entity
+    type, and entity group requirements on the role are met, the relation will be created and the entities and respective roles
+    will be serialized within the event.
 
     Events can be created with a single json object or through a list of json objects.
     This will create one event or multiple events respectively.
 
     partial_update: If the metadata is updated (via PUT/PATCH), the `related_entities` will be re-created. This may result in
-    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with 
-    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity 
-    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See 
+    removal of entity relations if either the key or value no longer match valid options. Any entity names that are associated with
+    a matching `metadata_key`, but are not found in entity lookup will be added to the `unfound_entities` list. If the entity
+    exists, but role requirements are not met, the entity name will be added to the `invalid_entities` list. See
     `/api/entity_event_roles` for additional information.
 
     destroy: Delete an event
@@ -1312,7 +1328,6 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         rest_pandas.PandasCSVRenderer,
         rest_pandas.PandasTextRenderer,
     ]
-    
 
     def list(self, request, *args, **kwargs):
         # We need a custom list function
@@ -1363,7 +1378,9 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             # abort the pulsar message if pulsar is not available
             return
 
-        point_style = dcs.PointStyleSerializer(saved.event_type.point_style, context={'request': None})
+        point_style = dcs.PointStyleSerializer(
+            saved.event_type.point_style, context={"request": None}
+        )
         related_entity_names = []
         for related_entity in saved.entities.all():
             related_entity_names.append(related_entity.name)
@@ -1387,7 +1404,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             "metadata": saved.metadata if saved.metadata else {},
             "update": False,
             "point_style": point_style.data,
-            "related_entities": related_entity_names
+            "related_entities": related_entity_names,
         }
         if saved.start_pose:
             data["start_pose_x"] = saved.start_pose.point[0]
@@ -1414,8 +1431,10 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             # abort the pulsar message if pulsar is not available
             return
 
-        point_style = dcs.PointStyleSerializer(saved.event_type.point_style, context={'request': None})
-        
+        point_style = dcs.PointStyleSerializer(
+            saved.event_type.point_style, context={"request": None}
+        )
+
         related_entity_names = []
         for related_entity in saved.entities.all():
             related_entity_names.append(related_entity.name)
@@ -1439,7 +1458,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             "metadata": saved.metadata if saved.metadata else {},
             "update": True,
             "point_style": point_style.data,
-            "related_entities": related_entity_names
+            "related_entities": related_entity_names,
         }
         if saved.start_pose:
             data["start_pose_x"] = saved.start_pose.point[0]

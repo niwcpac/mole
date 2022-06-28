@@ -62,7 +62,9 @@ class TriggerEvaluator(Function):
                 m = pattern.match(cv)
                 topic = m.group("topic").replace("/", "_")
                 cached_msgs = self.r.xrevrange(
-                    name=f"event_gen:{topic}:cache", max=publish_timestamp, count=1,
+                    name=f"event_gen:{topic}:cache",
+                    max=publish_timestamp,
+                    count=1,
                 )
                 if not cached_msgs:
                     error_msg = f"No cached messages for topic: {topic}"

@@ -4,11 +4,10 @@ from data_collection.factories import factories as dcf
 import factory
 
 
-
-
 class ScriptConditionFactory(factory.DjangoModelFactory):
     class Meta:
         model = models.ScriptCondition
+
 
 class ScriptedEventFactory(factory.DjangoModelFactory):
     event_type = factory.SubFactory(dcf.EventTypeFactory)
@@ -26,7 +25,8 @@ class ScriptedEventFactory(factory.DjangoModelFactory):
             # A list of scenarios was passed in, use them
             for condition in extracted:
                 self.conditions.add(condition)
-    
+
+
 class ScriptFactory(factory.DjangoModelFactory):
     class Meta:
         model = models.Script
@@ -60,6 +60,6 @@ class ScriptFactory(factory.DjangoModelFactory):
 class ScriptRunCountFactory(factory.DjangoModelFactory):
     trial = factory.SubFactory(dcf.TrialFactory)
     script = factory.SubFactory(ScriptFactory)
-    
+
     class Meta:
         model = models.ScriptRunCount

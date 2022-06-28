@@ -435,7 +435,7 @@ class Command(BaseCommand):
             description="Requires that the trial has a trial init event.",
             trial_has_event=trial_init_event_type,
         )
-        
+
         trial_start_script = auto_factories.ScriptFactory(
             name="On Trial Start Script",
             initiating_event_types=[trial_start_event_type],
@@ -446,9 +446,9 @@ class Command(BaseCommand):
                 conditions=[],
                 delay_seconds=0,
                 event_type=other_event_type,
-                add_event_metadata={"note":"Created by script."},
-                next_scripted_event=None
-            )
+                add_event_metadata={"note": "Created by script."},
+                next_scripted_event=None,
+            ),
         )
 
         # Scenarios
@@ -464,7 +464,7 @@ class Command(BaseCommand):
             description="Example Scripted Scenario",
             location=test_location,
             test_method=test_method,
-            scripts=[trial_start_script]
+            scripts=[trial_start_script],
         )
 
         # Campaigns

@@ -11,14 +11,21 @@ from data_collection.factories import factories
 class ProximalEntitiesTests(APITestCase):
     def setUp(self):
         factories.UserFactory(username="test_user", password="test_pass")
-        test_entity_type = factories.EntityTypeFactory(name="test_entity_type",)
+        test_entity_type = factories.EntityTypeFactory(
+            name="test_entity_type",
+        )
         type_2 = factories.EntityTypeFactory()
         entity_1 = factories.EntityFactory(
-            entity_type=test_entity_type, name="entity_1",
+            entity_type=test_entity_type,
+            name="entity_1",
         )
-        entity_2 = factories.EntityFactory(entity_type=type_2, name="entity_2",)
+        entity_2 = factories.EntityFactory(
+            entity_type=type_2,
+            name="entity_2",
+        )
         entity_3 = factories.EntityFactory(
-            entity_type=test_entity_type, name="entity_3",
+            entity_type=test_entity_type,
+            name="entity_3",
         )
         factories.PoseFactory(entity=entity_1, point="POINT(32.7341 -117.1933)")
         factories.PoseFactory(entity=entity_2, point="POINT(32.7340 -117.1930)")

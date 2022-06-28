@@ -71,9 +71,7 @@ class PointStyle(models.Model):
 
 
 class EntityState(models.Model):
-    name = models.CharField(
-        max_length=100, blank=False, null=False, primary_key=True
-    )
+    name = models.CharField(max_length=100, blank=False, null=False, primary_key=True)
     description = models.TextField(blank=True, default="")
     point_style_icon_transform = models.CharField(max_length=100, blank=True, null=True)
     point_style_color_transform = models.CharField(
@@ -769,10 +767,6 @@ def get_clock_base_time(trial, clock_phase):
             return None
 
 
-
-
-
-
 class PoseSource(models.Model):
     name = models.CharField(max_length=100, blank=False, null=False, unique=True)
     description = models.TextField(blank=True, default="")
@@ -796,9 +790,8 @@ class Pose(models.Model):
         Trial, blank=True, null=True, related_name="poses", on_delete=models.CASCADE
     )
     speed = models.FloatField(blank=True, null=True)
-    velocity = ArrayField(
-        models.FloatField(), blank=True, null=False, default=list
-    )
+    velocity = ArrayField(models.FloatField(), blank=True, null=False, default=list)
+
     def __str__(self):
         return "{}/{} ({})".format(self.entity, self.pose_source, self.timestamp)
 

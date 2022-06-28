@@ -203,7 +203,10 @@ LOGGING = {
         },
     },
     "handlers": {
-        "null": {"level": "DEBUG", "class": "logging.NullHandler",},
+        "null": {
+            "level": "DEBUG",
+            "class": "logging.NullHandler",
+        },
         "logfile": {
             "level": "DEBUG",
             "class": "logging.handlers.RotatingFileHandler",
@@ -219,13 +222,20 @@ LOGGING = {
         },
     },
     "loggers": {
-        "django": {"handlers": ["console"], "propagate": True, "level": "WARN",},
+        "django": {
+            "handlers": ["console"],
+            "propagate": True,
+            "level": "WARN",
+        },
         "django.db.backends": {
             "handlers": ["console"],
             "level": "DEBUG",
             "propagate": False,
         },
-        "mole": {"handlers": ["console", "logfile"], "level": "DEBUG",},
+        "mole": {
+            "handlers": ["console", "logfile"],
+            "level": "DEBUG",
+        },
     },
 }
 
