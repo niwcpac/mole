@@ -32,11 +32,7 @@ def csv_upload_instruction(id):
     csvInstruction = lay.card(
         html.Div(
             [
-                html.Div(
-                    children=dcc.Graph(
-                        id=id,
-                    ),
-                ),
+                html.Div(children=dcc.Graph(id=id,),),
                 dcc.Markdown(
                     """Sample datas are found in `/report/report_generator/data/csv/.`"""
                 ),

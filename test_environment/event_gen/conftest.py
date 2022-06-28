@@ -6,6 +6,7 @@ import requests
 PULSAR_IP = os.environ.get("PULSAR_IP", "pulsar")
 PULSAR_PORT = os.environ.get("PULSAR_PORT", 8080)
 
+
 def pytest_configure(config):
     print("Waiting for pulsar event generator to set up")
     while True:

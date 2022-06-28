@@ -86,13 +86,7 @@ def button(name, id, style, className):
     :param style: A string, the style property.
     :param className: A string, the style class key.
     """
-    return dbc.Button(
-        name,
-        id=id,
-        n_clicks=0,
-        style=style,
-        className=className,
-    )
+    return dbc.Button(name, id=id, n_clicks=0, style=style, className=className,)
 
 
 def input(id, debounce, placeholder, style, className):

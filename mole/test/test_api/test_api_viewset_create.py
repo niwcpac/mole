@@ -76,14 +76,14 @@ entity_event_role_info = (
 entity_state = (
     "entitystate",
     {
-        "name":"entity_state_name",
-        "point_style_icon_transform":"{icon}_0",
-        "point_style_color_transform":"{color}55",
-        "point_style_use_marker_pin_override":True,
-        "point_style_marker_color_transform":"{marker_color}33",
-        "point_style_scale_factor_override":7,
-        "point_style_animation_transform":"{animation} test_animation",
-        "point_style_render_as_symbol_override":True,
+        "name": "entity_state_name",
+        "point_style_icon_transform": "{icon}_0",
+        "point_style_color_transform": "{color}55",
+        "point_style_use_marker_pin_override": True,
+        "point_style_marker_color_transform": "{marker_color}33",
+        "point_style_scale_factor_override": 7,
+        "point_style_animation_transform": "{animation} test_animation",
+        "point_style_render_as_symbol_override": True,
     },
 )
 
@@ -229,7 +229,7 @@ script_create_info = (
         "conditions_pass_if_any": True,
         "cancelling_event_type": ("eventtype",),
         "scripted_event_head": ("scriptedevent",),
-    }
+    },
 )
 
 scripted_event_create_info = (
@@ -240,10 +240,10 @@ scripted_event_create_info = (
         "conditions_pass_if_any": True,
         "delay_seconds": 10,
         "event_type": ("eventtype",),
-        "add_event_metadata": {"test":"metadata"},
+        "add_event_metadata": {"test": "metadata"},
         "copy_trigger_metadata": True,
         "next_scripted_event": ("scriptedevent",),
-    }
+    },
 )
 
 script_condition_create_info = (
@@ -257,7 +257,7 @@ script_condition_create_info = (
         "event_metadata_excludes": "event_metadata_excludes",
         "trigger_metadata_contains": "trigger_metadata_contains",
         "trigger_metadata_excludes": "trigger_metadata_excludes",
-    }
+    },
 )
 
 scenario_create_info = (
@@ -269,7 +269,7 @@ scenario_create_info = (
         "test_method": ("testmethod",),
         "location": ("location",),
         "regions": [],
-        "scripts": (["script"],)
+        "scripts": (["script"],),
     },
 )
 
@@ -441,8 +441,8 @@ clock_phase_create_info = (
         "message": "clock phase create message",
         "countdown": True,
         "duration_seconds": 600,
-        "starts_with_trial_start": True
-    }
+        "starts_with_trial_start": True,
+    },
 )
 
 clock_config_create_info = (
@@ -450,8 +450,8 @@ clock_config_create_info = (
     {
         "name": "clock_config_name",
         "timezone": "America/Los_Angeles",
-        "phases": (["clockphase"],)
-    }
+        "phases": (["clockphase"],),
+    },
 )
 
 create_test_list = (
@@ -600,7 +600,9 @@ class ComplexCreateTests(APITestCase):
         }
 
         # response should still be ok even with bad entity name/key. It should simply remove the unfound entity relation from the related_entities list.
-        response = self.client.post(event_instance_url, bad_entity_name_data, format="json")
+        response = self.client.post(
+            event_instance_url, bad_entity_name_data, format="json"
+        )
         msg = "POST bad event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, msg=msg)
 
@@ -659,7 +661,6 @@ class ComplexCreateTests(APITestCase):
         event_type_1_instance = event_instance.event_type
         event_type_2_instance = factories.EventTypeFactory()
 
-
         entity_group_2_instance = factories.EntityGroupFactory()
         entity_2_instance.groups.add(entity_group_2_instance)
         event_role_2_instance.valid_entity_types.add(entity_2_instance.entity_type)
@@ -668,11 +669,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_types.add(entity_1_instance.entity_type)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
-        
+
         response = self.client.post(event_instance_url, data, format="json")
         msg = "POST event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, msg=msg)
@@ -687,9 +686,7 @@ class ComplexCreateTests(APITestCase):
 
         # confirm invalid entity type
         data = {
-            "metadata": {
-                "test_role_1_key": entity_2_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_2_instance.name,},
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -706,11 +703,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
-        
+
         response = self.client.post(event_instance_url, data, format="json")
         msg = "POST event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, msg=msg)
@@ -724,11 +719,9 @@ class ComplexCreateTests(APITestCase):
         entity_1_instance.groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
-        
+
         response = self.client.post(event_instance_url, data, format="json")
         msg = "POST event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, msg=msg)
@@ -741,15 +734,12 @@ class ComplexCreateTests(APITestCase):
         msg = "POST: Failed to confirm valid entity group."
         self.assertEqual(event_entity_1_path, entity_1_path, msg=msg)
 
-
         # confirm valid event type
         event_type_1_instance = event_instance.event_type
         event_role_1_instance.valid_event_types.add(event_type_1_instance)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -764,15 +754,12 @@ class ComplexCreateTests(APITestCase):
         msg = "POST: Failed to confirm valid event type."
         self.assertEqual(event_entity_1_path, entity_1_path, msg=msg)
 
-
         # confirm invalid event type
         event_type_2_instance = factories.EventTypeFactory()
         event_role_2_instance.valid_event_types.add(event_type_2_instance)
 
         data = {
-            "metadata": {
-                "test_role_2_key": entity_2_instance.name,
-            },
+            "metadata": {"test_role_2_key": entity_2_instance.name,},
         }
 
         response = self.client.post(event_instance_url, data, format="json")
@@ -783,14 +770,6 @@ class ComplexCreateTests(APITestCase):
 
         msg = "POST: Failed to confirm invalid event type."
         self.assertEqual(entity_2_instance.name, event_entity_2_name, msg=msg)
-
-        
-
-
-
-
-
-
 
     def testUpdateEntityOnEvent(self):
         """Test updating event metadata via HTTP PATCH. 
@@ -846,7 +825,9 @@ class ComplexCreateTests(APITestCase):
         }
 
         # response should still be ok even with bad entity name/key. It should simply remove the unfound entity relation from the related_entities list.
-        response = self.client.patch(event_instance_url, bad_entity_name_data, format="json")
+        response = self.client.patch(
+            event_instance_url, bad_entity_name_data, format="json"
+        )
         msg = "PATCH bad event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_200_OK, msg=msg)
 
@@ -901,7 +882,6 @@ class ComplexCreateTests(APITestCase):
             response.data["unfound_entities"], ["unfound_entity_name"], msg=msg
         )
 
-
         # test entity type, entity group, and event type validations
         event_type_1_instance = event_instance.event_type
         event_type_2_instance = factories.EventTypeFactory()
@@ -914,11 +894,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_types.add(entity_1_instance.entity_type)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
-        
+
         response = self.client.patch(event_instance_url, data, format="json")
         msg = "PATCH event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_200_OK, msg=msg)
@@ -933,9 +911,7 @@ class ComplexCreateTests(APITestCase):
 
         # confirm invalid entity type
         data = {
-            "metadata": {
-                "test_role_1_key": entity_2_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_2_instance.name,},
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -952,11 +928,9 @@ class ComplexCreateTests(APITestCase):
         event_role_1_instance.valid_entity_groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
-        
+
         response = self.client.patch(event_instance_url, data, format="json")
         msg = "PATCH event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_200_OK, msg=msg)
@@ -970,11 +944,9 @@ class ComplexCreateTests(APITestCase):
         entity_1_instance.groups.add(entity_group_1_instance)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
-        
+
         response = self.client.patch(event_instance_url, data, format="json")
         msg = "PATCH event metadata entities failed"
         self.assertEqual(response.status_code, status.HTTP_200_OK, msg=msg)
@@ -987,15 +959,12 @@ class ComplexCreateTests(APITestCase):
         msg = "PATCH: Failed to confirm valid entity group."
         self.assertEqual(event_entity_1_path, entity_1_path, msg=msg)
 
-
         # confirm valid event type
         event_type_1_instance = event_instance.event_type
         event_role_1_instance.valid_event_types.add(event_type_1_instance)
 
         data = {
-            "metadata": {
-                "test_role_1_key": entity_1_instance.name,
-            },
+            "metadata": {"test_role_1_key": entity_1_instance.name,},
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -1010,15 +979,12 @@ class ComplexCreateTests(APITestCase):
         msg = "PATCH: Failed to confirm valid event type."
         self.assertEqual(event_entity_1_path, entity_1_path, msg=msg)
 
-
         # confirm invalid event type
         event_type_2_instance = factories.EventTypeFactory()
         event_role_2_instance.valid_event_types.add(event_type_2_instance)
 
         data = {
-            "metadata": {
-                "test_role_2_key": entity_2_instance.name,
-            },
+            "metadata": {"test_role_2_key": entity_2_instance.name,},
         }
 
         response = self.client.patch(event_instance_url, data, format="json")
@@ -1029,4 +995,3 @@ class ComplexCreateTests(APITestCase):
 
         msg = "PATCH: Failed to confirm invalid event type."
         self.assertEqual(entity_2_instance.name, event_entity_2_name, msg=msg)
-

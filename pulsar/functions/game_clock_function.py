@@ -56,9 +56,7 @@ class GameClock(Function):
         data_obj["calltime"] = str(self.calltime)
         data = json.dumps(data_obj)
         context.get_logger().info(data)
-        context.publish(
-            "persistent://public/default/game_clock", data
-        )
+        context.publish("persistent://public/default/game_clock", data)
 
     def process(self, input, context):
         logger = context.get_logger()

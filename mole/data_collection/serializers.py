@@ -1846,6 +1846,7 @@ def get_entity_state_point_style(request, relation):
 
 ### deprecated
 
+
 class UnicodeAsSerialized:
     def __init__(self, model, context=None):
         self.data = {"Unicode": model.__str__()}

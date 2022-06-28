@@ -16,12 +16,7 @@ if not os.path.exists("log"):
 
 class baseApp(object):
     def __init__(
-        self,
-        app,
-        server,
-        title,
-        loglevel=logging.ERROR,
-        use_cache=False,
+        self, app, server, title, loglevel=logging.ERROR, use_cache=False,
     ):
         self.app = app
         self.server = server
@@ -95,12 +90,7 @@ class baseApp(object):
         return callback
 
     def define_callback(
-        self,
-        output,
-        input,
-        func=None,
-        state=None,
-        event=None,
+        self, output, input, func=None, state=None, event=None,
     ):
         return (
             Output(self.get_component_id(output[0]), output[1]),

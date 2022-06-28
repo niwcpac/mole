@@ -42,6 +42,7 @@ import pulsar
 import redis
 
 from automation.scenario_scripts.scenario_scripts import ScenarioScripts
+
 ss = ScenarioScripts()
 
 pulsar_client = pulsar.Client("pulsar://pulsar:6650")
@@ -64,12 +65,11 @@ class EntityPagination(CursorPagination):
     cursor_query_param = "cursor"  # default value = 'cursor'
 
 
-
 class PosePagination(CursorPagination):
     page_size = 100
     page_size_query_param = "page_size"
     max_page_size = 1000
-    ordering = "-id"
+    ordering = "timestamp"
     cursor_query_param = "cursor"  # default value = 'cursor'
 
 
@@ -415,15 +415,13 @@ class EntityViewSet(AllowPUTAsCreateMixin, viewsets.ModelViewSet):
             _lat = float(_lat)
         except (ValueError):
             return Response(
-                f"latitude is not a valid float",
-                status=status.HTTP_400_BAD_REQUEST,
+                f"latitude is not a valid float", status=status.HTTP_400_BAD_REQUEST,
             )
         try:
             _long = float(_long)
         except (ValueError):
             return Response(
-                f"longitude is not a valid float",
-                status=status.HTTP_400_BAD_REQUEST,
+                f"longitude is not a valid float", status=status.HTTP_400_BAD_REQUEST,
             )
 
         point_of_origin = Point(_long, _lat, srid=4326)
@@ -718,16 +716,22 @@ class TrialViewSet(viewsets.ModelViewSet):
             return
 
         new_payload = dict(serializer.data)
-        
+
         new_payload["update"] = True
         new_payload["name"] = str(saved)
-        new_payload["scenario"] = dcs.ScenarioSerializer(saved.scenario, context={'request': self.request}).data
-        new_payload["test_condition"] = dcs.TestConditionSerializer(saved.test_condition, context={'request': self.request}).data
-        new_payload["testers"] = [reverse("tester-detail", args=[t.id], request=self.request) for t in saved.testers.all()]
+        new_payload["scenario"] = dcs.ScenarioSerializer(
+            saved.scenario, context={"request": self.request}
+        ).data
+        new_payload["test_condition"] = dcs.TestConditionSerializer(
+            saved.test_condition, context={"request": self.request}
+        ).data
+        new_payload["testers"] = [
+            reverse("tester-detail", args=[t.id], request=self.request)
+            for t in saved.testers.all()
+        ]
 
         trial_producer.send_async(
-            json.dumps(new_payload).encode("utf-8"),
-            None,
+            json.dumps(new_payload).encode("utf-8"), None,
         )
         trial_producer.close()
 
@@ -741,16 +745,22 @@ class TrialViewSet(viewsets.ModelViewSet):
             return
 
         new_payload = dict(serializer.data)
-        
+
         new_payload["update"] = False
         new_payload["name"] = str(saved)
-        new_payload["scenario"] = dcs.ScenarioSerializer(saved.scenario, context={'request': self.request}).data
-        new_payload["test_condition"] = dcs.TestConditionSerializer(saved.test_condition, context={'request': self.request}).data
-        new_payload["testers"] = [reverse("tester-detail", args=[t.id], request=self.request) for t in saved.testers.all()]
+        new_payload["scenario"] = dcs.ScenarioSerializer(
+            saved.scenario, context={"request": self.request}
+        ).data
+        new_payload["test_condition"] = dcs.TestConditionSerializer(
+            saved.test_condition, context={"request": self.request}
+        ).data
+        new_payload["testers"] = [
+            reverse("tester-detail", args=[t.id], request=self.request)
+            for t in saved.testers.all()
+        ]
 
         trial_producer.send_async(
-            json.dumps(new_payload).encode("utf-8"),
-            None,
+            json.dumps(new_payload).encode("utf-8"), None,
         )
         trial_producer.close()
 
@@ -825,8 +835,8 @@ class TrialViewSet(viewsets.ModelViewSet):
 
         # get reported trial related to current trial
         reported_trial = dcm.Trial.objects.filter(
-            Q(id_major=current_trial.id_major) 
-            & Q(id_minor=current_trial.id_minor) 
+            Q(id_major=current_trial.id_major)
+            & Q(id_minor=current_trial.id_minor)
             & Q(reported=True)
         ).first()
 
@@ -837,7 +847,9 @@ class TrialViewSet(viewsets.ModelViewSet):
         reported_phase, reported_next = dcm.get_clock_phase(reported_trial)
 
         next_time = [
-            dt for dt in [current_next, minor_next, major_next, reported_next] if dt is not None
+            dt
+            for dt in [current_next, minor_next, major_next, reported_next]
+            if dt is not None
         ]
 
         content = buildClockState(current_trial, current_phase)
@@ -995,13 +1007,10 @@ class PoseFilter(filters.FilterSet):
     max_datetime = filters.IsoDateTimeFilter(field_name="timestamp", lookup_expr="lte")
     min_datetime = filters.IsoDateTimeFilter(field_name="timestamp", lookup_expr="gte")
     entity_name = filters.ModelChoiceFilter(
-        field_name="entity",
-        queryset=dcm.Entity.objects.all(),
+        field_name="entity", queryset=dcm.Entity.objects.all(),
     )
     trial = filters.ModelChoiceFilter(
-        field_name="trial",
-        queryset=dcm.Trial.objects.all(),
-        null_label="No trial",
+        field_name="trial", queryset=dcm.Trial.objects.all(), null_label="No trial",
     )
 
     class Meta:
@@ -1312,7 +1321,6 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         rest_pandas.PandasCSVRenderer,
         rest_pandas.PandasTextRenderer,
     ]
-    
 
     def list(self, request, *args, **kwargs):
         # We need a custom list function
@@ -1363,7 +1371,9 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             # abort the pulsar message if pulsar is not available
             return
 
-        point_style = dcs.PointStyleSerializer(saved.event_type.point_style, context={'request': None})
+        point_style = dcs.PointStyleSerializer(
+            saved.event_type.point_style, context={"request": None}
+        )
         related_entity_names = []
         for related_entity in saved.entities.all():
             related_entity_names.append(related_entity.name)
@@ -1387,7 +1397,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             "metadata": saved.metadata if saved.metadata else {},
             "update": False,
             "point_style": point_style.data,
-            "related_entities": related_entity_names
+            "related_entities": related_entity_names,
         }
         if saved.start_pose:
             data["start_pose_x"] = saved.start_pose.point[0]
@@ -1395,8 +1405,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             data["start_pose_z"] = saved.start_pose.elevation
 
         event_producer.send_async(
-            json.dumps(data).encode("utf-8"),
-            None,
+            json.dumps(data).encode("utf-8"), None,
         )
         event_producer.close()
         ss.schedule_events(saved)
@@ -1414,8 +1423,10 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             # abort the pulsar message if pulsar is not available
             return
 
-        point_style = dcs.PointStyleSerializer(saved.event_type.point_style, context={'request': None})
-        
+        point_style = dcs.PointStyleSerializer(
+            saved.event_type.point_style, context={"request": None}
+        )
+
         related_entity_names = []
         for related_entity in saved.entities.all():
             related_entity_names.append(related_entity.name)
@@ -1439,7 +1450,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             "metadata": saved.metadata if saved.metadata else {},
             "update": True,
             "point_style": point_style.data,
-            "related_entities": related_entity_names
+            "related_entities": related_entity_names,
         }
         if saved.start_pose:
             data["start_pose_x"] = saved.start_pose.point[0]
@@ -1447,8 +1458,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             data["start_pose_z"] = saved.start_pose.elevation
 
         event_producer.send_async(
-            json.dumps(data).encode("utf-8"),
-            None,
+            json.dumps(data).encode("utf-8"), None,
         )
         event_producer.close()
         ss.schedule_events(saved)
@@ -1466,9 +1476,7 @@ class EventDataViewSet(rest_pandas.PandasViewSet):
 
 class EntityDataViewSet(rest_pandas.PandasViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = dcm.Entity.objects.all().select_related(
-        "entity_type",
-    )
+    queryset = dcm.Entity.objects.all().select_related("entity_type",)
     serializer_class = dcs.EntityDataSerializer
     filter_class = EntityFilter
     schema = None
@@ -1476,9 +1484,7 @@ class EntityDataViewSet(rest_pandas.PandasViewSet):
 
 class EntityGroupDataViewSet(rest_pandas.PandasViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = dcm.EntityGroup.objects.all().select_related(
-        "related_entities",
-    )
+    queryset = dcm.EntityGroup.objects.all().select_related("related_entities",)
 
     def get_queryset(self):
         name = self.request.query_params.get("name", None)
@@ -1496,9 +1502,7 @@ class EntityGroupDataViewSet(rest_pandas.PandasViewSet):
 
 class TrialDataViewSet(rest_pandas.PandasViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = dcm.Trial.objects.all().select_related(
-        "system_configuration",
-    )
+    queryset = dcm.Trial.objects.all().select_related("system_configuration",)
     serializer_class = dcs.TrialDataSerializer
     schema = None
 
@@ -1562,9 +1566,7 @@ class OrderedTriggerResponseViewSet(viewsets.ModelViewSet):
 
 class TriggerFilter(filters.FilterSet):
     key = filters.ModelMultipleChoiceFilter(
-        queryset=dcm.Trigger.objects.all(),
-        field_name="key",
-        to_field_name="key",
+        queryset=dcm.Trigger.objects.all(), field_name="key", to_field_name="key",
     )
 
     class Meta:
@@ -1639,8 +1641,7 @@ class ClockConfigViewSet(viewsets.ModelViewSet):
         }
 
         clock_config_producer.send_async(
-            json.dumps(data).encode("utf-8"),
-            None,
+            json.dumps(data).encode("utf-8"), None,
         )
         clock_config_producer.close()
 
@@ -1662,8 +1663,7 @@ class ClockConfigViewSet(viewsets.ModelViewSet):
         }
 
         clock_config_producer.send_async(
-            json.dumps(data).encode("utf-8"),
-            None,
+            json.dumps(data).encode("utf-8"), None,
         )
         clock_config_producer.close()
 
@@ -1693,8 +1693,7 @@ class ClockPhaseViewSet(viewsets.ModelViewSet):
         }
 
         clock_phase_producer.send_async(
-            json.dumps(data).encode("utf-8"),
-            None,
+            json.dumps(data).encode("utf-8"), None,
         )
         clock_phase_producer.close()
 
@@ -1714,8 +1713,7 @@ class ClockPhaseViewSet(viewsets.ModelViewSet):
         }
 
         clock_phase_producer.send_async(
-            json.dumps(data).encode("utf-8"),
-            None,
+            json.dumps(data).encode("utf-8"), None,
         )
         clock_phase_producer.close()
 

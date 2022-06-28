@@ -11,10 +11,12 @@ class ScriptConditionViewSet(viewsets.ModelViewSet):
     queryset = amm.ScriptCondition.objects.all()
     serializer_class = serializers.ScriptConditionSerializer
 
+
 class ScriptedEventViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = amm.ScriptedEvent.objects.all()
     serializer_class = serializers.ScriptedEventSerializer
+
 
 class ScriptViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

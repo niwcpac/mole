@@ -12,7 +12,7 @@ from data_collection import models as dcm
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        i=0
+        i = 0
         all_poses = dcm.Pose.objects.all()
         for pose in all_poses:
             i = i + 1

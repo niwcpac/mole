@@ -5,10 +5,11 @@ import time
 
 # setup django triggers
 # Send pulsar message
-# check results 
+# check results
 
 django_ip = "django"
 django_port = 8000
+
 
 def test_event_gen_requested_data():
     """
@@ -56,6 +57,7 @@ def test_event_gen_requested_data():
 
     client.close()
 
+
 def test_event_gen_multiple_cond_vars():
     """
     Check if a condition with multiple condition variables is checked correctly
@@ -71,7 +73,9 @@ def test_event_gen_multiple_cond_vars():
     producer1 = client.create_producer("public/default/random_topic")
     producer2 = client.create_producer("public/default/other_random_topic")
 
-    current_trial = requests.get(f"http://{django_ip}:{django_port}/api/trials/current/")
+    current_trial = requests.get(
+        f"http://{django_ip}:{django_port}/api/trials/current/"
+    )
     current_trial = current_trial.json()["url"]
 
     event_count_before = requests.get(f"{current_trial}event_count")
@@ -93,6 +97,7 @@ def test_event_gen_multiple_cond_vars():
 
     client.close()
 
+
 def test_event_gen_create_event():
     """
     Check if a passing condition on a trigger creates an event 
@@ -106,7 +111,9 @@ def test_event_gen_create_event():
     client = pulsar.Client("pulsar://pulsar:6650")
     producer1 = client.create_producer("public/default/testtopic")
 
-    current_trial = requests.get(f"http://{django_ip}:{django_port}/api/trials/current/")
+    current_trial = requests.get(
+        f"http://{django_ip}:{django_port}/api/trials/current/"
+    )
     current_trial = current_trial.json()["url"]
 
     event_count_before = requests.get(f"{current_trial}event_count")
@@ -127,6 +134,7 @@ def test_event_gen_create_event():
 
     client.close()
 
+
 def test_event_gen_dont_create_event():
     """
     Check if a passing condition on a trigger doesn't creates an event 
@@ -139,7 +147,9 @@ def test_event_gen_dont_create_event():
     client = pulsar.Client("pulsar://pulsar:6650")
     producer1 = client.create_producer("public/default/testtopic")
 
-    current_trial = requests.get(f"http://{django_ip}:{django_port}/api/trials/current/")
+    current_trial = requests.get(
+        f"http://{django_ip}:{django_port}/api/trials/current/"
+    )
     current_trial = current_trial.json()["url"]
 
     event_count_before = requests.get(f"{current_trial}event_count")
@@ -151,5 +161,5 @@ def test_event_gen_dont_create_event():
     event_count_after = requests.get(f"{current_trial}event_count")
     event_count_after = event_count_after.json()["total_events"]
 
-    assert event_count_after == event_count_before 
+    assert event_count_after == event_count_before
     client.close()
