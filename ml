@@ -89,7 +89,7 @@ def build_angular():
             "--configuration",
             "production",
             "--base-href",
-            "static/"
+            "static/",
         ]
     )
     print("Angular container finished building files")
@@ -199,7 +199,6 @@ def init(
         )
         return
 
-
     cmd = [
         "docker-compose",
         "up",
@@ -270,7 +269,16 @@ def init(
     else:
         print("Skipping static build...")
 
-    clear_images_cmd = ["find", "mole/media/images/", "-type", "f", "-not", "-name", "README", "-delete"]
+    clear_images_cmd = [
+        "find",
+        "mole/media/images/",
+        "-type",
+        "f",
+        "-not",
+        "-name",
+        "README",
+        "-delete",
+    ]
     subprocess.call(clear_images_cmd)
 
     cmd.extend(SERVICES)
@@ -280,7 +288,6 @@ def init(
         return p.wait()
     except KeyboardInterrupt:
         terminate_mole(p, db_backup)
-
 
 
 def run(
@@ -296,7 +303,14 @@ def run(
     # Need recreate on so new environment variable get set. (BACKUP_FLAG, etc.)
     cmd = ["docker-compose", "up"]
     if os.environ.get("UNLOCK_REDIS") or unlock_redis:
-        cmd =  ["docker-compose", "-f", "docker-compose.yml", "-f", "docker-compose-unlocked-redis.yml", "up"]
+        cmd = [
+            "docker-compose",
+            "-f",
+            "docker-compose.yml",
+            "-f",
+            "docker-compose-unlocked-redis.yml",
+            "up",
+        ]
     if quiet:
         cmd.append("-d")
 
@@ -618,11 +632,7 @@ def save_project_images(target, repos):
 
 
 def manage(
-    target,
-    load,
-    save=[],
-    imp=False,
-    exp=False,
+    target, load, save=[], imp=False, exp=False,
 ):
     if load:
         yes = ("yes", "y", "ye")
@@ -675,7 +685,7 @@ def db(backup=False, load=False):
             subprocess.call(cmd, env=env)
 
         backup_db(name_string="pre_load&sync=true")
-        
+
         perform_backup = True
         is_archive = False
 
@@ -692,32 +702,31 @@ def db(backup=False, load=False):
             file_name = file_path_split[-1]
 
         # check if valid backup file & update file paths
-        if file_path[0] == "/": # check if the file path is explicit
+        if file_path[0] == "/":  # check if the file path is explicit
 
             # if not a valid file path, don't try to load it
-            if not os.path.isfile(file_path): 
+            if not os.path.isfile(file_path):
                 print("Not a valid file path.")
                 perform_backup = False
 
-            else: # file path is verified
-                # if not an archive, only need to copy sql to postgres 
+            else:  # file path is verified
+                # if not an archive, only need to copy sql to postgres
                 # (archives are extracted by default later, no need to copy here)
-                if not is_archive: 
+                if not is_archive:
                     # copy sql to backups directory
-                    cmd = [ "cp", file_path, "db_backup/backups/%s.sql" % (file_name) ]
+                    cmd = ["cp", file_path, "db_backup/backups/%s.sql" % (file_name)]
                     subprocess.call(cmd, env=env)
 
-        else: # only database name was provided, construct file path and validate
+        else:  # only database name was provided, construct file path and validate
             file_path = "db_backup/backups/%s.tar.gz" % (file_name)
             is_archive = True
-            if not os.path.isfile(file_path): # test if it's an archive
+            if not os.path.isfile(file_path):  # test if it's an archive
                 file_path = "db_backup/backups/%s.sql" % (file_name)
                 is_archive = False
 
-                if not os.path.isfile(file_path): # test if it's sql
+                if not os.path.isfile(file_path):  # test if it's sql
                     print("Not a valid file path.")
                     perform_backup = False
-
 
         # Drop old DB & perform backup
         if perform_backup:
@@ -725,35 +734,43 @@ def db(backup=False, load=False):
 
                 # make directory to extract zip archive into
                 backup_dir_path = "db_backup/backups/%s" % (file_name)
-                cmd = [ "mkdir", "-p", backup_dir_path ]
+                cmd = ["mkdir", "-p", backup_dir_path]
                 subprocess.call(cmd, env=env)
 
                 # unzip the archive
-                cmd = [ "tar", "-zxvf", "%s" % file_path, "-C", backup_dir_path ]
+                cmd = ["tar", "-zxvf", "%s" % file_path, "-C", backup_dir_path]
                 subprocess.call(cmd, env=env)
 
                 # Copy images over
-                cmd = ["rsync", "-a", "--delete", "%s/mole_media/images/" % (backup_dir_path), "mole/media/images"]
+                cmd = [
+                    "rsync",
+                    "-a",
+                    "--delete",
+                    "%s/mole_media/images/" % (backup_dir_path),
+                    "mole/media/images",
+                ]
                 subprocess.call(cmd, env=env)
 
                 # it's assumed the sql has the same name as the archive name
                 postgres_sql_path = "/backups/%s/%s.sql" % (file_name, file_name)
 
                 # handle case where the sql in archive doesn't match the name of the archive
-                if not os.path.isfile("db_backup/backups/%s/%s.sql" % (file_name, file_name)):
+                if not os.path.isfile(
+                    "db_backup/backups/%s/%s.sql" % (file_name, file_name)
+                ):
                     sql_glob = glob.glob("db_backup/backups/%s/*.sql" % (file_name))
 
                     if len(sql_glob) >= 1:
-                        sql_path = sql_glob[0] # take first sql file found
+                        sql_path = sql_glob[0]  # take first sql file found
                         sql_path_split = sql_path.split("/")
-                        sql_name = sql_path_split[len(sql_path_split)-1][:-4]
+                        sql_name = sql_path_split[len(sql_path_split) - 1][:-4]
                         postgres_sql_path = "/backups/%s/%s.sql" % (file_name, sql_name)
 
-                    else: # uh oh..
+                    else:  # uh oh..
                         print("No sql backup found in archive!")
                         postgres_sql_path = None
 
-            else: # no archive, sql should be directly under backups
+            else:  # no archive, sql should be directly under backups
                 postgres_sql_path = "/backups/%s.sql" % (file_name)
 
             if postgres_sql_path:
@@ -782,9 +799,20 @@ def db(backup=False, load=False):
                 subprocess.call(cmd, shell=True)
 
                 print("Loading backup from %s" % (postgres_sql_path))
-                cmd = [ "docker-compose", "exec", "postgres", "psql", "--quiet", "-U", "mole_user", "-d", "postgres", "-f", postgres_sql_path ]
+                cmd = [
+                    "docker-compose",
+                    "exec",
+                    "postgres",
+                    "psql",
+                    "--quiet",
+                    "-U",
+                    "mole_user",
+                    "-d",
+                    "postgres",
+                    "-f",
+                    postgres_sql_path,
+                ]
                 subprocess.call(cmd, env=env)
-
 
         # Stop services that were not previously running.
         if not postgres_running:
@@ -938,27 +966,29 @@ def ang(build=False):
             if not django_running:
                 print("Django service not running, starting Django...")
                 subprocess.call(["docker-compose", "up", "-d", "django"])
-            
+
             # build angular files
             build_angular()
 
             # collect static
             print("Collecting front-end static files...")
-            subprocess.call([
-                "docker-compose", 
-                "exec",
-                "django",
-                "./manage.py",
-                "collectstatic",
-                "--no-input"
-            ])
+            subprocess.call(
+                [
+                    "docker-compose",
+                    "exec",
+                    "django",
+                    "./manage.py",
+                    "collectstatic",
+                    "--no-input",
+                ]
+            )
 
             # if django wasn't originally running, stop django
             if not django_running:
                 subprocess.call(
                     ["docker-compose", "stop", "django", "postgres", "redis"]
                 )
-                
+
         else:
             print("Spinning up angular development container ...")
             subprocess.call(["docker-compose", "up", "angular"])
@@ -1093,7 +1123,7 @@ def keys(skip_server=False, skip_ca=False):
                 "Unable to generate https certificates. Do you have openssl installed?"
             )
 
-            
+
 def report():
     cmd = ["docker-compose", "up", "report"]
     try:
@@ -1397,7 +1427,6 @@ if __name__ == "__main__":
     #     nargs="*",
     #     help="save an archived containers into local docker repos. Default names are [container name].tar.gz if none are specified.",
     # )
-
 
     # https certs/keys
     key_parser = subparsers.add_parser(
