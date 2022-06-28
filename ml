@@ -234,7 +234,7 @@ def init(
         SERVICES.discard("pulsar_proxy")
     if not db_backup:
         SERVICES.discard("db_backup")
-    if not angular or skip_static_build:
+    if not angular:
         SERVICES.discard("angular")
 
     if make_migrations:
