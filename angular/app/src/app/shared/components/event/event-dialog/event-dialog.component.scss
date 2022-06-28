@@ -19,11 +19,17 @@ mat-tab {
     padding-top: 2em;
 }
 
-table {
-    width: 100%;
-  }
-
-  .mat-column-edit {
+.mat-column-edit, .mat-column-actions {
     width:1%;
     padding:0px;
 }
+
+// :host ::ng-deep .mat-form-field {
+//     width:100%;
+//     .mat-form-field-wrapper {
+//         padding-bottom: 0;
+//     }
+//     .mat-form-field-underline {
+//         bottom: 0;
+//     }
+// }
