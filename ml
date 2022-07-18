@@ -1252,6 +1252,7 @@ if __name__ == "__main__":
     )
 
     run_parser.add_argument(
+        "-l",
         "--lite",
         help="Do not run non-essential services (portainer, docs, proxy).",
         action="store_true",
@@ -1273,7 +1274,7 @@ if __name__ == "__main__":
     )
 
     run_parser.add_argument(
-        "-db",
+        "-i",
         "--db-backup",
         help="Backup database automatically.",
         action="store_true",
