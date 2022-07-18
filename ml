@@ -1187,21 +1187,21 @@ if __name__ == "__main__":
 
     init_parser.add_argument(
         "-db",
-        "--db_backup",
+        "--db-backup",
         help="Backup database automatically.",
         action="store_true",
     )
 
     init_parser.add_argument(
         "-nb",
-        "--pre_init_backup",
+        "--pre-init-backup",
         help="Do not backup the database prior to init.",
         action="store_false",
     )
 
     init_parser.add_argument(
         "-mm",
-        "--make_migrations",
+        "--make-migrations",
         help="Make Django migrations.",
         action="store_true",
         dest="make_migrations",
@@ -1209,7 +1209,7 @@ if __name__ == "__main__":
 
     init_parser.add_argument(
         "-s",
-        "--skip_static_build",
+        "--skip-static-build",
         help="Skip the angular build process.",
         action="store_true",
     )
@@ -1273,7 +1273,7 @@ if __name__ == "__main__":
 
     run_parser.add_argument(
         "-db",
-        "--db_backup",
+        "--db-backup",
         help="Backup database automatically.",
         action="store_true",
     )
@@ -1313,7 +1313,7 @@ if __name__ == "__main__":
 
     docs_parser.add_argument(
         "-b",
-        "--build_only",
+        "--build-only",
         help="Build only. Do not serve documentation.",
         action="store_false",
         dest="serve",
@@ -1379,7 +1379,7 @@ if __name__ == "__main__":
 
     django_parser.add_argument(
         "-mm",
-        "--make_migrations",
+        "--make-migrations",
         help="Make Django migrations. If there are migrations to be made, they will be saved in mole/data_collection/migrations",
         action="store_true",
     )
