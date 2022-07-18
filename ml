@@ -1166,6 +1166,7 @@ if __name__ == "__main__":
     )
 
     init_parser.add_argument(
+        "-l",
         "--lite",
         help="Do not run non-essential services (portainer, docs, proxy).",
         action="store_true",
@@ -1186,21 +1187,21 @@ if __name__ == "__main__":
     )
 
     init_parser.add_argument(
-        "-db",
+        "-i",
         "--db-backup",
         help="Backup database automatically.",
         action="store_true",
     )
 
     init_parser.add_argument(
-        "-nb",
+        "-u",
         "--pre-init-backup",
         help="Do not backup the database prior to init.",
         action="store_false",
     )
 
     init_parser.add_argument(
-        "-mm",
+        "-m",
         "--make-migrations",
         help="Make Django migrations.",
         action="store_true",
