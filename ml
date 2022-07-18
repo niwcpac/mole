@@ -89,7 +89,7 @@ def build_angular():
             "--configuration",
             "production",
             "--base-href",
-            "static/"
+            "static/",
         ]
     )
     print("Angular container finished building files")
@@ -103,58 +103,23 @@ def init(
     quiet=False,
     nomaps=False,
     lite=False,
+    deep_clean=False,
     profile=False,
     db_backup=False,
     pre_init_backup=True,
     unlock_redis=False,
     make_migrations=False,
-    deep_clean=False,
     debug=False,
 ):
-    if db_backup:
-        BACKUP_FLAG = "pre"
-    else:
-        BACKUP_FLAG = "false"
 
     if debug:
         DEBUG_DJANGO = "true"
     else:
         DEBUG_DJANGO = "false"
 
-    if pre_init_backup:
-        print("Backing up the database...")
-        standalone_backup("pre-init&sync=true")
-
     # Generate https keys/certs if they don't exist
     if not os.path.isfile(CA_KEY_FILE):
         keys()
-
-    yes = ("yes", "y", "ye")
-    if deep_clean:
-        prompt = """
-        WARNING: You have requested to delete containers and volumes.
-        No automatic database backup will be created prior to init.
-        Do you wish to proceed? [y/N]: """
-
-        sys.stdout.write(prompt)
-        if sys.version_info.major == 3:
-            choice = input().lower()
-        else:
-            choice = raw_input().lower()
-
-        if choice in yes:
-            print("Clearing containers and volumes...\n")
-            cmd = [
-                "docker-compose",
-                "down",
-                "--volumes",
-                "--remove-orphans",
-            ]
-            p = subprocess.call(cmd)
-            print("Containers and volumes deleted...\n")
-            BACKUP_FLAG = "false"
-        else:
-            print("Skipping, containers and volumes not deleted")
 
     try:
         short_hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
@@ -166,7 +131,6 @@ def init(
         long_hash = "latest"
     short_hash = short_hash.strip()
     long_hash = long_hash.strip()
-
     if build_only:
         print("Building container images...\n")
         cmd = [
@@ -187,6 +151,37 @@ def init(
         p = subprocess.call(cmd, env=env)
         return
 
+    if pre_init_backup:
+        print("Backing up the database...")
+        standalone_backup("pre-init&sync=true")
+
+    prompt = """
+    WARNING: You have requested to initialize Mole.
+    This will permanently overwrite your current database. Do you wish to proceed?
+
+    Do you wish to continue? [y/N]: """
+
+    sys.stdout.write(prompt)
+    if sys.version_info.major == 3:
+        choice = input().lower()
+    else:
+        choice = raw_input().lower()
+
+    yes = ("yes", "y", "ye")
+    if choice not in yes:
+        print("\n    Exiting...")
+        return
+
+    print("Clearing containers and volumes...\n")
+    cmd = [
+        "docker-compose",
+        "down",
+        "--volumes",
+        "--remove-orphans",
+    ]
+    p = subprocess.call(cmd)
+    print("Containers and volumes deleted...\n")
+
     # Verify configure_script exists
     print("Building containers and initializing Mole...")
     configure_script_file = os.path.join(
@@ -204,106 +199,95 @@ def init(
         )
         return
 
-    prompt = """
-    WARNING: You have requested to initialize Mole.
-    This will permanently overwrite your current database. Do you wish to proceed?
-
-    Do you wish to continue? [y/N]: """
-
-    sys.stdout.write(prompt)
-    if sys.version_info.major == 3:
-        choice = input().lower()
-    else:
-        choice = raw_input().lower()
-
-    if choice in yes:
+    cmd = [
+        "docker-compose",
+        "up",
+        "--build",
+        "--force-recreate",
+        "--always-recreate-deps",
+    ]
+    if os.environ.get("UNLOCK_REDIS") or unlock_redis:
         cmd = [
             "docker-compose",
+            "-f",
+            "docker-compose.yml",
+            "-f",
+            "docker-compose-unlocked-redis.yml",
             "up",
             "--build",
             "--force-recreate",
             "--always-recreate-deps",
         ]
-        if os.environ.get("UNLOCK_REDIS") or unlock_redis:
-            cmd = [
-                "docker-compose",
-                "-f",
-                "docker-compose.yml",
-                "-f",
-                "docker-compose-unlocked-redis.yml",
-                "up",
-                "--build",
-                "--force-recreate",
-                "--always-recreate-deps",
-            ]
-        # Don't run portainer if "lite" flag is set
-        if lite:
-            SERVICES.discard("portainer")
-            SERVICES.discard("docs")
-            # Should reverse-proxy always be included even under lite mode?
-            SERVICES.discard("proxy")
-            SERVICES.discard("event_generator")
-            SERVICES.discard("zookeeper1")
-            SERVICES.discard("zookeeper2")
-            SERVICES.discard("zookeeper3")
-            SERVICES.discard("bookkeeper1")
-            SERVICES.discard("bookkeeper2")
-            SERVICES.discard("bookkeeper3")
-            SERVICES.discard("pulsar")
-            SERVICES.discard("pulsar_proxy")
-        if not db_backup:
-            SERVICES.discard("db_backup")
-        if not angular or skip_static_build:
-            SERVICES.discard("angular")
+    # Don't run portainer if "lite" flag is set
+    if lite:
+        SERVICES.discard("portainer")
+        SERVICES.discard("docs")
+        SERVICES.discard("event_generator")
+        SERVICES.discard("zookeeper1")
+        SERVICES.discard("zookeeper2")
+        SERVICES.discard("zookeeper3")
+        SERVICES.discard("bookkeeper1")
+        SERVICES.discard("bookkeeper2")
+        SERVICES.discard("bookkeeper3")
+        SERVICES.discard("pulsar")
+        SERVICES.discard("pulsar_proxy")
+    if not db_backup:
+        SERVICES.discard("db_backup")
+    if not angular:
+        SERVICES.discard("angular")
 
-        if make_migrations:
-            MAKE_MIGRATIONS_FLAG = "true"
-        else:
-            MAKE_MIGRATIONS_FLAG = "false"
-
-        # Don't run map tile server if there are no tile sets available
-        available_mbtiles = glob.glob(MAP_TILES_PATH + "*.mbtiles")
-
-        if not available_mbtiles:
-            print(
-                "No .mbtiles tile sets available.  Not starting maptiles service.  See Mole docs for more information."
-            )
-            nomaps = True
-
-        if nomaps:
-            SERVICES.discard("maptiles")
-
-        env = {
-            "PROFILE": str(profile).lower(),
-            "BACKUP_FLAG": BACKUP_FLAG,
-            "MAKE_MIGRATIONS": MAKE_MIGRATIONS_FLAG,
-            "POPULATE_DB": configure_script,
-            "NEWUSERID": str(os.getuid()),
-            "DEBUG_DJANGO": DEBUG_DJANGO,
-            "PATH": str(os.getenv("PATH")),
-            "BUILD_TAG": short_hash,
-            "LONG_BUILD_TAG": long_hash,
-        }
-
-        if not skip_static_build:
-            build_angular()
-        else:
-            print("Skipping static build...")
-
-        clear_images_cmd = ["find", "mole/media/images/", "-type", "f", "-not", "-name", "README", "-delete"]
-        subprocess.call(clear_images_cmd)
-
-        cmd.extend(SERVICES)
-        p = subprocess.Popen(cmd, preexec_fn=os.setpgrp, env=env)
-
-        try:
-            return p.wait()
-        except KeyboardInterrupt:
-            terminate_mole(p, db_backup)
-
+    if make_migrations:
+        MAKE_MIGRATIONS_FLAG = "true"
     else:
-        print("\n    Exiting...")
-        return
+        MAKE_MIGRATIONS_FLAG = "false"
+
+    # Don't run map tile server if there are no tile sets available
+    available_mbtiles = glob.glob(MAP_TILES_PATH + "*.mbtiles")
+
+    if not available_mbtiles:
+        print(
+            "No .mbtiles tile sets available.  Not starting maptiles service.  See Mole docs for more information."
+        )
+        nomaps = True
+
+    if nomaps:
+        SERVICES.discard("maptiles")
+
+    env = {
+        "PROFILE": str(profile).lower(),
+        "MAKE_MIGRATIONS": MAKE_MIGRATIONS_FLAG,
+        "POPULATE_DB": configure_script,
+        "NEWUSERID": str(os.getuid()),
+        "DEBUG_DJANGO": DEBUG_DJANGO,
+        "PATH": str(os.getenv("PATH")),
+        "BUILD_TAG": short_hash,
+        "LONG_BUILD_TAG": long_hash,
+    }
+
+    if not skip_static_build:
+        build_angular()
+    else:
+        print("Skipping static build...")
+
+    clear_images_cmd = [
+        "find",
+        "mole/media/images/",
+        "-type",
+        "f",
+        "-not",
+        "-name",
+        "README",
+        "-delete",
+    ]
+    subprocess.call(clear_images_cmd)
+
+    cmd.extend(SERVICES)
+    p = subprocess.Popen(cmd, preexec_fn=os.setpgrp, env=env)
+
+    try:
+        return p.wait()
+    except KeyboardInterrupt:
+        terminate_mole(p, db_backup)
 
 
 def run(
@@ -319,7 +303,14 @@ def run(
     # Need recreate on so new environment variable get set. (BACKUP_FLAG, etc.)
     cmd = ["docker-compose", "up"]
     if os.environ.get("UNLOCK_REDIS") or unlock_redis:
-        cmd =  ["docker-compose", "-f", "docker-compose.yml", "-f", "docker-compose-unlocked-redis.yml", "up"]
+        cmd = [
+            "docker-compose",
+            "-f",
+            "docker-compose.yml",
+            "-f",
+            "docker-compose-unlocked-redis.yml",
+            "up",
+        ]
     if quiet:
         cmd.append("-d")
 
@@ -327,8 +318,6 @@ def run(
     if lite:
         SERVICES.discard("portainer")
         SERVICES.discard("docs")
-        # Should reverse-proxy always be included even under lite mode?
-        SERVICES.discard("proxy")
         SERVICES.discard("event_generator")
         SERVICES.discard("zookeeper1")
         SERVICES.discard("zookeeper2")
@@ -453,25 +442,6 @@ def test(dropdb=False, integration=False):
         return p.wait()
     except KeyboardInterrupt:
         terminate_mole(p, False)
-
-
-def shell():
-    print("Building container for shell. Mole is not running in this mode.")
-    cmd = ["cp", "docker-compose.yml", "compose_init_db.yml"]
-    subprocess.call(cmd)
-
-    cmd = ["sed", "-i", "-e", "s/init/init_shell/g", "compose_init_db.yml"]
-    subprocess.call(cmd)
-
-    cmd = ["docker-compose", "-f", "compose_init_db.yml", "up", "-d"]
-    subprocess.call(cmd)
-
-    try:
-        cmd = ["docker-compose", "exec", "django", "/bin/bash"]
-        subprocess.call(cmd)
-        stop()
-    except KeyboardInterrupt:
-        stop()
 
 
 def service_is_running(service_name, id=False):
@@ -662,13 +632,7 @@ def save_project_images(target, repos):
 
 
 def manage(
-    target,
-    load="mole_project",
-    build=False,
-    save=False,
-    imp=False,
-    exp=False,
-    all=False,
+    target, load, save=[], imp=False, exp=False,
 ):
     if load:
         yes = ("yes", "y", "ye")
@@ -691,14 +655,12 @@ def manage(
         load_cmd = ["docker", "load", "-i", load]
         print("Loading images from: %s" % load)
         subprocess.call(load_cmd)
-    if build:
-        run()
     if save != None:
-        save_project_images(target[0], save)
-    if imp != None:
-        import_project_containers()
-    if exp != None:
-        export_project_containers()
+        save_project_images(target, save)
+    # if imp != None:
+    #     import_project_containers()
+    # if exp != None:
+    #     export_project_containers()
 
 
 def db(backup=False, load=False):
@@ -723,7 +685,7 @@ def db(backup=False, load=False):
             subprocess.call(cmd, env=env)
 
         backup_db(name_string="pre_load&sync=true")
-        
+
         perform_backup = True
         is_archive = False
 
@@ -740,32 +702,31 @@ def db(backup=False, load=False):
             file_name = file_path_split[-1]
 
         # check if valid backup file & update file paths
-        if file_path[0] == "/": # check if the file path is explicit
+        if file_path[0] == "/":  # check if the file path is explicit
 
             # if not a valid file path, don't try to load it
-            if not os.path.isfile(file_path): 
+            if not os.path.isfile(file_path):
                 print("Not a valid file path.")
                 perform_backup = False
 
-            else: # file path is verified
-                # if not an archive, only need to copy sql to postgres 
+            else:  # file path is verified
+                # if not an archive, only need to copy sql to postgres
                 # (archives are extracted by default later, no need to copy here)
-                if not is_archive: 
+                if not is_archive:
                     # copy sql to backups directory
-                    cmd = [ "cp", file_path, "db_backup/backups/%s.sql" % (file_name) ]
+                    cmd = ["cp", file_path, "db_backup/backups/%s.sql" % (file_name)]
                     subprocess.call(cmd, env=env)
 
-        else: # only database name was provided, construct file path and validate
+        else:  # only database name was provided, construct file path and validate
             file_path = "db_backup/backups/%s.tar.gz" % (file_name)
             is_archive = True
-            if not os.path.isfile(file_path): # test if it's an archive
+            if not os.path.isfile(file_path):  # test if it's an archive
                 file_path = "db_backup/backups/%s.sql" % (file_name)
                 is_archive = False
 
-                if not os.path.isfile(file_path): # test if it's sql
+                if not os.path.isfile(file_path):  # test if it's sql
                     print("Not a valid file path.")
                     perform_backup = False
-
 
         # Drop old DB & perform backup
         if perform_backup:
@@ -773,35 +734,43 @@ def db(backup=False, load=False):
 
                 # make directory to extract zip archive into
                 backup_dir_path = "db_backup/backups/%s" % (file_name)
-                cmd = [ "mkdir", "-p", backup_dir_path ]
+                cmd = ["mkdir", "-p", backup_dir_path]
                 subprocess.call(cmd, env=env)
 
                 # unzip the archive
-                cmd = [ "tar", "-zxvf", "%s" % file_path, "-C", backup_dir_path ]
+                cmd = ["tar", "-zxvf", "%s" % file_path, "-C", backup_dir_path]
                 subprocess.call(cmd, env=env)
 
                 # Copy images over
-                cmd = ["rsync", "-a", "--delete", "%s/mole_media/images/" % (backup_dir_path), "mole/media/images"]
+                cmd = [
+                    "rsync",
+                    "-a",
+                    "--delete",
+                    "%s/mole_media/images/" % (backup_dir_path),
+                    "mole/media/images",
+                ]
                 subprocess.call(cmd, env=env)
 
                 # it's assumed the sql has the same name as the archive name
                 postgres_sql_path = "/backups/%s/%s.sql" % (file_name, file_name)
 
                 # handle case where the sql in archive doesn't match the name of the archive
-                if not os.path.isfile("db_backup/backups/%s/%s.sql" % (file_name, file_name)):
+                if not os.path.isfile(
+                    "db_backup/backups/%s/%s.sql" % (file_name, file_name)
+                ):
                     sql_glob = glob.glob("db_backup/backups/%s/*.sql" % (file_name))
 
                     if len(sql_glob) >= 1:
-                        sql_path = sql_glob[0] # take first sql file found
+                        sql_path = sql_glob[0]  # take first sql file found
                         sql_path_split = sql_path.split("/")
-                        sql_name = sql_path_split[len(sql_path_split)-1][:-4]
+                        sql_name = sql_path_split[len(sql_path_split) - 1][:-4]
                         postgres_sql_path = "/backups/%s/%s.sql" % (file_name, sql_name)
 
-                    else: # uh oh..
+                    else:  # uh oh..
                         print("No sql backup found in archive!")
                         postgres_sql_path = None
 
-            else: # no archive, sql should be directly under backups
+            else:  # no archive, sql should be directly under backups
                 postgres_sql_path = "/backups/%s.sql" % (file_name)
 
             if postgres_sql_path:
@@ -830,9 +799,20 @@ def db(backup=False, load=False):
                 subprocess.call(cmd, shell=True)
 
                 print("Loading backup from %s" % (postgres_sql_path))
-                cmd = [ "docker-compose", "exec", "postgres", "psql", "--quiet", "-U", "mole_user", "-d", "postgres", "-f", postgres_sql_path ]
+                cmd = [
+                    "docker-compose",
+                    "exec",
+                    "postgres",
+                    "psql",
+                    "--quiet",
+                    "-U",
+                    "mole_user",
+                    "-d",
+                    "postgres",
+                    "-f",
+                    postgres_sql_path,
+                ]
                 subprocess.call(cmd, env=env)
-
 
         # Stop services that were not previously running.
         if not postgres_running:
@@ -986,27 +966,29 @@ def ang(build=False):
             if not django_running:
                 print("Django service not running, starting Django...")
                 subprocess.call(["docker-compose", "up", "-d", "django"])
-            
+
             # build angular files
             build_angular()
 
             # collect static
             print("Collecting front-end static files...")
-            subprocess.call([
-                "docker-compose", 
-                "exec",
-                "django",
-                "./manage.py",
-                "collectstatic",
-                "--no-input"
-            ])
+            subprocess.call(
+                [
+                    "docker-compose",
+                    "exec",
+                    "django",
+                    "./manage.py",
+                    "collectstatic",
+                    "--no-input",
+                ]
+            )
 
             # if django wasn't originally running, stop django
             if not django_running:
                 subprocess.call(
                     ["docker-compose", "stop", "django", "postgres", "redis"]
                 )
-                
+
         else:
             print("Spinning up angular development container ...")
             subprocess.call(["docker-compose", "up", "angular"])
@@ -1141,7 +1123,7 @@ def keys(skip_server=False, skip_ca=False):
                 "Unable to generate https certificates. Do you have openssl installed?"
             )
 
-            
+
 def report():
     cmd = ["docker-compose", "up", "report"]
     try:
@@ -1184,6 +1166,7 @@ if __name__ == "__main__":
     )
 
     init_parser.add_argument(
+        "-l",
         "--lite",
         help="Do not run non-essential services (portainer, docs, proxy).",
         action="store_true",
@@ -1191,7 +1174,7 @@ if __name__ == "__main__":
 
     init_parser.add_argument(
         "--deep-clean",
-        help="Remove all existing containers and volumes prior to running Mole",
+        help="Deprecated, no longer need to specify this flag",
         action="store_true",
     )
 
@@ -1204,22 +1187,22 @@ if __name__ == "__main__":
     )
 
     init_parser.add_argument(
-        "-db",
-        "--db_backup",
+        "-i",
+        "--db-backup",
         help="Backup database automatically.",
         action="store_true",
     )
 
     init_parser.add_argument(
-        "-nb",
-        "--pre_init_backup",
+        "-u",
+        "--pre-init-backup",
         help="Do not backup the database prior to init.",
         action="store_false",
     )
 
     init_parser.add_argument(
-        "-mm",
-        "--make_migrations",
+        "-m",
+        "--make-migrations",
         help="Make Django migrations.",
         action="store_true",
         dest="make_migrations",
@@ -1227,7 +1210,7 @@ if __name__ == "__main__":
 
     init_parser.add_argument(
         "-s",
-        "--skip_static_build",
+        "--skip-static-build",
         help="Skip the angular build process.",
         action="store_true",
     )
@@ -1269,6 +1252,7 @@ if __name__ == "__main__":
     )
 
     run_parser.add_argument(
+        "-l",
         "--lite",
         help="Do not run non-essential services (portainer, docs, proxy).",
         action="store_true",
@@ -1290,8 +1274,8 @@ if __name__ == "__main__":
     )
 
     run_parser.add_argument(
-        "-db",
-        "--db_backup",
+        "-i",
+        "--db-backup",
         help="Backup database automatically.",
         action="store_true",
     )
@@ -1324,12 +1308,6 @@ if __name__ == "__main__":
         action="store_true",
     )
 
-    # SHELL
-    shell_parser = subparsers.add_parser(
-        "shell",
-        description="Brings up all containers and starts interactive shell. Note: Mole does not run in this mode.",
-    )
-
     # DOCS
     docs_parser = subparsers.add_parser(
         "docs", description="Build and serve documentation at http://localhost:8001"
@@ -1337,7 +1315,7 @@ if __name__ == "__main__":
 
     docs_parser.add_argument(
         "-b",
-        "--build_only",
+        "--build-only",
         help="Build only. Do not serve documentation.",
         action="store_false",
         dest="serve",
@@ -1402,8 +1380,8 @@ if __name__ == "__main__":
     django_parser = subparsers.add_parser("django", description="Manage Django.")
 
     django_parser.add_argument(
-        "-mm",
-        "--make_migrations",
+        "-m",
+        "--make-migrations",
         help="Make Django migrations. If there are migrations to be made, they will be saved in mole/data_collection/migrations",
         action="store_true",
     )
@@ -1415,26 +1393,18 @@ if __name__ == "__main__":
     )
 
     management_parser.add_argument(
-        "-b",
-        "--build",
-        help="Build containers in local image repository. Will only build containers that exist for this project",
-        action="store_true",
-    )
-
-    management_parser.add_argument(
         "-s",
         "--save",
         nargs="*",
-        help="Save docker image/images to tarball onto host machine.",
+        help="Save specified docker image/images to tarball onto host machine. By default will save all the docker images",
     )
 
     management_parser.add_argument(
         "-t",
         "--target",
-        nargs=1,
         type=str,
-        default=["mole_project"],
-        help="Specify name for your archive.",
+        default="mole_project",
+        help="Specify name to save the archive as. (default: %(default)s)",
     )
 
     management_parser.add_argument(
@@ -1443,26 +1413,22 @@ if __name__ == "__main__":
         nargs="?",
         type=str,
         const="mole_project.tar.gz",
-        help="Load an archived images into local docker repo. Default name is mole_project.tar.gz if none is specified.",
+        help="Load archived images into local docker repo. (default: %(const)s)",
     )
 
-    management_parser.add_argument(
-        "-i",
-        "--imp",
-        nargs="*",
-        help="Load an archived containers or container into local docker repo. Default names are [container name].tar.gz if none are specified.",
-    )
+    # management_parser.add_argument(
+    #     "-i",
+    #     "--imp",
+    #     nargs="*",
+    #     help="Load an archived containers or container into local docker repo. Default names are [container name].tar.gz if none are specified.",
+    # )
 
-    management_parser.add_argument(
-        "-e",
-        "--exp",
-        nargs="*",
-        help="save an archived containers into local docker repos. Default names are [container name].tar.gz if none are specified.",
-    )
-
-    management_parser.add_argument(
-        "-a", "--all", action="store_true", help="Does nothing at the moment"
-    )
+    # management_parser.add_argument(
+    #     "-e",
+    #     "--exp",
+    #     nargs="*",
+    #     help="save an archived containers into local docker repos. Default names are [container name].tar.gz if none are specified.",
+    # )
 
     # https certs/keys
     key_parser = subparsers.add_parser(
