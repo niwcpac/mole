@@ -1380,7 +1380,7 @@ if __name__ == "__main__":
     django_parser = subparsers.add_parser("django", description="Manage Django.")
 
     django_parser.add_argument(
-        "-mm",
+        "-m",
         "--make-migrations",
         help="Make Django migrations. If there are migrations to be made, they will be saved in mole/data_collection/migrations",
         action="store_true",
