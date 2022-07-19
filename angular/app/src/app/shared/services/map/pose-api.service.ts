@@ -43,14 +43,6 @@ export class PoseApiService implements OnDestroy {
       },
       err => console.error(err),
     ));
-
-    this.subscriptions.add(interval(this.INTERVAL_TIME).subscribe(
-      x =>
-        {
-          // console.log("nothing here");
-          // TODO: some way to refresh poses
-        }
-      ));
   }
   // break this out to clean up functions
   private performSearch = (url, poseID?:number , some_id?:number) => {
@@ -102,6 +94,14 @@ export class PoseApiService implements OnDestroy {
     this.posesByPoseSourceSubject.next(main_object);
     if(page.next){
       this.getPosesContinued(page.next);
+    }
+    else {
+      // set timer for next API call
+      this.subscriptions.add(timer(this.INTERVAL_TIME).subscribe(
+        x => {
+          this.getPosesInitial();
+        }
+      ));
     }
   }
 

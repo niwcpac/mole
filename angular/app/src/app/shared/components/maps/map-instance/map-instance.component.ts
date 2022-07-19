@@ -746,11 +746,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes.posesByPoseSource && this.posesByPoseSource){
-      // this.loadPosesSource(changes.posesByPoseSource.currentValue);
-      // For some reason, changes.posesByPoseSource isn't populated until after some period of time
-      // Using a timeout to get around this issue
-      setTimeout(() => {this.loadPosesSource(changes.posesByPoseSource.currentValue);}, 1000);
-      
+      this.loadPosesSource(changes.posesByPoseSource.currentValue);      
     }
     if(changes.markers && this.markers){
       this.loadMarkers()
