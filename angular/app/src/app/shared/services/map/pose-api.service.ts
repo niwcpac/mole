@@ -37,7 +37,7 @@ export class PoseApiService implements OnDestroy {
           this.selectedTrialId = data.id;
           
           // some way to retrieve initial poses
-          this.getPosesInitial();
+          this.getPosesBase();
 
         }
       },
@@ -62,7 +62,7 @@ export class PoseApiService implements OnDestroy {
   }
 
   // retrieve poses using trial id
-  private getPosesInitial(): void {
+  private getPosesBase(): void {
     let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.mostRecentPoseID, this.selectedTrialId)
     this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
@@ -99,7 +99,7 @@ export class PoseApiService implements OnDestroy {
       // set timer for next API call
       this.subscriptions.add(timer(this.INTERVAL_TIME).subscribe(
         x => {
-          this.getPosesInitial();
+          this.getPosesBase();
         }
       ));
     }
