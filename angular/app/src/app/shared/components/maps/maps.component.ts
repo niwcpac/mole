@@ -70,17 +70,26 @@ export class MapsComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(_poseApiService.getPoses().subscribe(
       many_poses =>  {
-        Object.keys(many_poses).forEach(element => {
-          if(!this.posesByPoseSource.hasOwnProperty(element)) {
-            this.posesByPoseSource[element] = {};
-          }
-          Object.keys(many_poses[element]).forEach(inner_element => {
-            if(!this.posesByPoseSource[element][inner_element]) {
-              this.posesByPoseSource[element][inner_element] = [];
+        let new_mapping = {};
+        Object.keys(many_poses).forEach(pose_source => {
+          let pose_source_mapping = {};
+          Object.keys(many_poses[pose_source]).forEach(entity => {
+            let new_list;
+            if(this.posesByPoseSource.hasOwnProperty(pose_source) && this.posesByPoseSource[pose_source][entity]) {
+              new_list =  [...this.posesByPoseSource[pose_source][entity], ...many_poses[pose_source][entity]];
             }
-            this.posesByPoseSource[element][inner_element] = [...this.posesByPoseSource[element][inner_element], ...many_poses[element][inner_element]];
+            else {
+              new_list = [...many_poses[pose_source][entity]];
+            }
+            pose_source_mapping[entity] = new_list;
           }, this);
+          new_mapping[pose_source] = pose_source_mapping;
         }, this);
+
+        // make sure that the new object isn't empty or our poses will be removed from map
+        if (Object.keys(new_mapping).length !== 0) {
+          this.posesByPoseSource = new_mapping;
+        }
       }
     ));
 
