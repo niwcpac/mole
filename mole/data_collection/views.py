@@ -1003,7 +1003,7 @@ class PoseFilter(filters.FilterSet):
         queryset=dcm.Trial.objects.all(),
         null_label="No trial",
     )
-    id = filters.NumberFilter(field_name="id", lookup_expr="gt")
+    id_gt = filters.NumberFilter(field_name="id", lookup_expr="gt")
 
     class Meta:
         model = dcm.Pose
@@ -1017,6 +1017,14 @@ class PoseViewSet(viewsets.ModelViewSet):
     Poses can be query string filtered based on `entity_name`, `min_datetime`, and `max_datetime`.
 
     * e.g. `poses/?min_datetime=2015-11-18T18:00:26.756944Z`
+
+    Poses can also be queried on trial id or pose id. 
+    Querying by trial id will return all poses in the given trial.
+    Querying by pose id will return all poses with an id greater than the specified id.
+
+    * e.g. `poses/?trial=55`
+    * e.g. `poses/?id_gt=34409`
+    * e.g. `poses/?trial=29&id_gt=34409`
 
     If the *timestamp* field is not provided on creation, it will be assigned `datetime.now()`
 
