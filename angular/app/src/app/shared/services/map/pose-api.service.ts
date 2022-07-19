@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {Subscription, Subject, interval, Observable, BehaviorSubject, ReplaySubject} from 'rxjs';
+import {Subscription, Subject, interval, timer, Observable, BehaviorSubject, ReplaySubject} from 'rxjs';
 import { map, expand } from "rxjs/operators";
 
 import { TrialApiService } from '../trial/trial-api.service';
@@ -12,17 +12,17 @@ import { PoseAdapters } from './pose.adapter'
   providedIn: 'root'
 })
 export class PoseApiService implements OnDestroy {
-  private subscriptions = new Subscription();
-  
+  private subscriptions: Subscription;
   private posesByPoseSourceSubject: Subject<Object>;
-
-
   private selectedTrialId: number;
-  private INTERVAL_TIME: number = 2000; // 2 second
+  private INTERVAL_TIME: number;
+  private mostRecentPoseID: number;
 
   constructor(private http: HttpClient, private _trialApiService: TrialApiService) { 
+    this.subscriptions = new Subscription();
     this.posesByPoseSourceSubject = new Subject();
-
+    this.INTERVAL_TIME = 2000 // 2 seconds
+    this.mostRecentPoseID = 0;
 
     // Subscribe to the Trial
     // Whenever the trial changes, retrieve new poses
@@ -53,9 +53,16 @@ export class PoseApiService implements OnDestroy {
       ));
   }
   // break this out to clean up functions
-  private performSearch = (url, some_id?) => {
+  private performSearch = (url, poseID?:number , some_id?:number) => {
+    let myParams = new HttpParams();
+    if (some_id) {
+      myParams = myParams.set('trial', some_id);
+    }
+    if (poseID) {
+      myParams = myParams.set('id_gt', poseID);
+    }
     const options = { 
-      params: some_id ? new HttpParams().set('trial', some_id) : {}
+      params: myParams
     };
     return this.http.get(url, options).pipe(
       map((data: any) => PoseAdapters.posePageResultAdapter(data) ),
@@ -64,7 +71,7 @@ export class PoseApiService implements OnDestroy {
 
   // retrieve poses using trial id
   private getPosesInitial(): void {
-    let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.selectedTrialId)
+    let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.mostRecentPoseID, this.selectedTrialId)
     this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
@@ -87,6 +94,9 @@ export class PoseApiService implements OnDestroy {
         }
         main_object[pose.pose_source.name][pose.entity.name] = [...main_object[pose.pose_source.name][pose.entity.name], pose];
       }
+      // TODO potential for missing data since pose api is ordered by descending id
+      // if there's an error in the middle of processing
+      this.mostRecentPoseID = pose.id > this.mostRecentPoseID ? pose.id : this.mostRecentPoseID;
     })
 
     this.posesByPoseSourceSubject.next(main_object);
