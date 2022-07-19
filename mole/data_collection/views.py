@@ -1003,6 +1003,7 @@ class PoseFilter(filters.FilterSet):
         queryset=dcm.Trial.objects.all(),
         null_label="No trial",
     )
+    id = filters.NumberFilter(field_name="id", lookup_expr="gt")
 
     class Meta:
         model = dcm.Pose
