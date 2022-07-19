@@ -359,6 +359,3 @@ pullTrialStyles() {
   }
 
 }
-
-
-
