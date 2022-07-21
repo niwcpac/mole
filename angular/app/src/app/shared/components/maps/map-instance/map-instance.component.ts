@@ -635,7 +635,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
           'id': pose_source,
           'type': 'circle',
           'source': 'posesByPoseSource',
-          // 'filter': ['==', ['get', 'pose_source'], pose_source],
+          'filter': ['==', ['get', 'pose_source'], pose_source],
           paint: {
             'circle-radius': 5,
             'circle-color': COLORS[index],
