@@ -17,6 +17,9 @@ export class PoseApiService implements OnDestroy {
   private selectedTrialId: number;
   private INTERVAL_TIME: number;
   private mostRecentPoseID: number;
+
+  // This will hold the recursive calls for the pose API 
+  // or a timer for the next call
   private recursiveSubscription: Subscription;
 
   constructor(private http: HttpClient, private _trialApiService: TrialApiService) { 
@@ -70,14 +73,12 @@ export class PoseApiService implements OnDestroy {
   private getPosesBase(): void {
     let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.mostRecentPoseID, this.selectedTrialId)
     this.recursiveSubscription = posesRequest.subscribe(this.catagorizePoses.bind(this));
-    // this.subscriptions.add(this.recursiveSubscription);
   }
 
   // retrieve poses using django cursor pagination url
   private getPosesContinued(url: string) {
     let posesRequest: Observable<PosePageResult> = this.performSearch(url)
     this.recursiveSubscription = posesRequest.subscribe(this.catagorizePoses.bind(this));
-    // this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
   // sort poses by pose source, then by entity
@@ -109,7 +110,6 @@ export class PoseApiService implements OnDestroy {
           this.getPosesBase();
         }
       )
-      // this.subscriptions.add(this.recursiveSubscription);
     }
   }
 
