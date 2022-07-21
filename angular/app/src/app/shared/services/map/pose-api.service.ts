@@ -17,6 +17,7 @@ export class PoseApiService implements OnDestroy {
   private selectedTrialId: number;
   private INTERVAL_TIME: number;
   private mostRecentPoseID: number;
+  private recursiveSubscription: Subscription;
 
   constructor(private http: HttpClient, private _trialApiService: TrialApiService) { 
     this.subscriptions = new Subscription();
@@ -35,6 +36,10 @@ export class PoseApiService implements OnDestroy {
         // trial-api service will detect the changes
         if(data.id) {
           this.selectedTrialId = data.id;
+          this.mostRecentPoseID = 0;
+          if (this.recursiveSubscription) {
+            this.recursiveSubscription.unsubscribe();
+          }
           
           // some way to retrieve initial poses
           this.getPosesBase();
@@ -64,13 +69,15 @@ export class PoseApiService implements OnDestroy {
   // retrieve poses using trial id
   private getPosesBase(): void {
     let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.mostRecentPoseID, this.selectedTrialId)
-    this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
+    this.recursiveSubscription = posesRequest.subscribe(this.catagorizePoses.bind(this));
+    // this.subscriptions.add(this.recursiveSubscription);
   }
 
   // retrieve poses using django cursor pagination url
   private getPosesContinued(url: string) {
     let posesRequest: Observable<PosePageResult> = this.performSearch(url)
-    this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
+    this.recursiveSubscription = posesRequest.subscribe(this.catagorizePoses.bind(this));
+    // this.subscriptions.add(posesRequest.subscribe(this.catagorizePoses.bind(this)));
   }
 
   // sort poses by pose source, then by entity
@@ -97,11 +104,12 @@ export class PoseApiService implements OnDestroy {
     }
     else {
       // set timer for next API call
-      this.subscriptions.add(timer(this.INTERVAL_TIME).subscribe(
+      this.recursiveSubscription = timer(this.INTERVAL_TIME).subscribe(
         x => {
           this.getPosesBase();
         }
-      ));
+      )
+      // this.subscriptions.add(this.recursiveSubscription);
     }
   }
 
