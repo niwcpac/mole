@@ -14,7 +14,28 @@ import { FontAwesomeUnicode} from './font-awesome-map'
 import { TimelineCardComponent } from '../../timeline/timeline-card/timeline-card.component';
 import { EventApiService } from 'src/app/shared/services';
 
-
+let COLORS = [
+  '#005f5f',
+  '#5f0000',
+  '#5fff5f',
+  '#005fff',
+  '#00af00',
+  '#00005f',
+  '#ff5f00',
+  '#ff5f5f',
+  '#afffff',
+  '#ffafff',
+  '#ffff00',
+  '#000000',
+  '#ff00af',
+  '#5f5f5f',
+  '#5f5f00',
+  '#ff005f',
+  '#00ffff',
+  '#00ffaf',
+  '#ffffff',
+  '#0000ff',
+]
 
 interface MarkerMetaData {
   markerInstance?: mapboxgl.Marker;
@@ -77,6 +98,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   @Input() allowMarkerMovement: boolean = true;
 
   @Input() posesByPoseSource: Object;
+  poseSourceLayersSet: Set<string>;
 
   // Map is centered on this point
   currentFocus: MapFocus = {zoom: 0, center: [0,0], pitch: 0, bearing: 0, mapFocus: ""};
@@ -106,6 +128,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     private injector: Injector,
     private _eventApiService: EventApiService) {
     this.mapboxMarkers = new Map<number,MarkerMetaData>();
+    this.poseSourceLayersSet = new Set<string>();
   }
 
   ngAfterViewInit(){
@@ -572,6 +595,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     }
 
     Object.keys(newPoses).forEach((pose_source_type) => {
+      this.poseSourceLayersSet.add(pose_source_type);
       Object.keys(newPoses[pose_source_type]).forEach(entity => {
         // let result = newPoses[pose_source_type][entity].map(a => a.coordinates);
         newPoses[pose_source_type][entity].forEach(single_pose => {
@@ -602,17 +626,23 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
       });
     }
 
-
-  if(!this.map.getLayer('posesLayer')){
-    this.map.addLayer({
-      'id': 'posesLayer',
-      'type': 'circle',
-      'source': 'posesByPoseSource',
-      paint: {
-        'circle-radius': 5,
-      },
-    });
-  }
+    // for item in poseSourceLayersSet
+    // add a separate layer with its own styling
+    // cast the set into an array to get a numerical index
+    [...this.poseSourceLayersSet].forEach((pose_source, index) => {
+      if(!this.map.getLayer(pose_source)){
+        this.map.addLayer({
+          'id': pose_source,
+          'type': 'circle',
+          'source': 'posesByPoseSource',
+          // 'filter': ['==', ['get', 'pose_source'], pose_source],
+          paint: {
+            'circle-radius': 5,
+            'circle-color': COLORS[index],
+          },
+        });
+      }
+    }, this);
   }
 
   loadEntities(){
