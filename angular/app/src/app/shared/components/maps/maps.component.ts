@@ -70,7 +70,8 @@ export class MapsComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(_poseApiService.getPoses().subscribe(
       many_poses =>  {
-        let new_mapping = {};
+        // make a shallow copy to reassign posesByPoseSource later
+        let new_mapping = Object.assign({}, this.posesByPoseSource);
         Object.keys(many_poses).forEach(pose_source => {
           let pose_source_mapping = {};
           Object.keys(many_poses[pose_source]).forEach(entity => {
@@ -86,10 +87,9 @@ export class MapsComponent implements OnInit, OnDestroy {
           new_mapping[pose_source] = pose_source_mapping;
         }, this);
 
-        // make sure that the new object isn't empty or our poses will be removed from map
-        if (Object.keys(new_mapping).length !== 0) {
-          this.posesByPoseSource = new_mapping;
-        }
+        // reassign posesByPoseSource so that angular picks up the changes
+        // not updating the reference makes angular ignore additions to the arrays within
+        this.posesByPoseSource = new_mapping;
       }
     ));
 
