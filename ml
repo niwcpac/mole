@@ -103,7 +103,6 @@ def init(
     quiet=False,
     nomaps=False,
     lite=False,
-    deep_clean=False,
     profile=False,
     db_backup=False,
     pre_init_backup=True,
@@ -223,14 +222,7 @@ def init(
         SERVICES.discard("portainer")
         SERVICES.discard("docs")
         SERVICES.discard("event_generator")
-        SERVICES.discard("zookeeper1")
-        SERVICES.discard("zookeeper2")
-        SERVICES.discard("zookeeper3")
-        SERVICES.discard("bookkeeper1")
-        SERVICES.discard("bookkeeper2")
-        SERVICES.discard("bookkeeper3")
         SERVICES.discard("pulsar")
-        SERVICES.discard("pulsar_proxy")
     if not db_backup:
         SERVICES.discard("db_backup")
     if not angular:
@@ -1169,12 +1161,6 @@ if __name__ == "__main__":
         "-l",
         "--lite",
         help="Do not run non-essential services (portainer, docs, proxy).",
-        action="store_true",
-    )
-
-    init_parser.add_argument(
-        "--deep-clean",
-        help="Deprecated, no longer need to specify this flag",
         action="store_true",
     )
 
