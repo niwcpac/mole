@@ -72,17 +72,17 @@ export class PoseApiService implements OnDestroy {
   // retrieve poses using trial id
   private getPosesBase(): void {
     let posesRequest: Observable<PosePageResult> = this.performSearch('/api/poses/', this.mostRecentPoseID, this.selectedTrialId)
-    this.recursiveSubscription = posesRequest.subscribe(this.catagorizePoses.bind(this));
+    this.recursiveSubscription = posesRequest.subscribe(this.categorizePoses.bind(this));
   }
 
   // retrieve poses using django cursor pagination url
   private getPosesContinued(url: string) {
     let posesRequest: Observable<PosePageResult> = this.performSearch(url)
-    this.recursiveSubscription = posesRequest.subscribe(this.catagorizePoses.bind(this));
+    this.recursiveSubscription = posesRequest.subscribe(this.categorizePoses.bind(this));
   }
 
   // sort poses by pose source, then by entity
-  catagorizePoses(page: PosePageResult) {
+  categorizePoses(page: PosePageResult) {
     let main_object = {};
     page.results.forEach((pose) => {
       if (pose.pose_source && pose.pose_source.name) {
