@@ -597,9 +597,8 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     Object.keys(newPoses).forEach((pose_source_type) => {
       this.poseSourceLayersSet.add(pose_source_type);
       Object.keys(newPoses[pose_source_type]).forEach(entity => {
-        // let result = newPoses[pose_source_type][entity].map(a => a.coordinates);
         newPoses[pose_source_type][entity].forEach(single_pose => {
-          let asdf = {
+          listOfFeatures.push({
             'type': 'Feature',
             'properties': {
               'pose_source': pose_source_type,
@@ -610,8 +609,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
               'type': 'Point',
               'coordinates': single_pose.coordinates,
             },
-          }
-          listOfFeatures.push(asdf);
+          });
         });
       });
     });
