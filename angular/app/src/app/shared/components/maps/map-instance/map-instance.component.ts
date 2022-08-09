@@ -60,7 +60,6 @@ interface MarkerMetaData {
 export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   map: mapboxgl.Map;
-  @ViewChild('map') mapElement: ElementRef;
 
   subscriptions: Subscription = new Subscription();
 
@@ -157,9 +156,8 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     if(!this.currentStyle) {
       this.currentStyle = this.styles[0];
     }
-
     this.map = new mapboxgl.Map({
-      container: this.mapElement.nativeElement,
+      container: "mapLocation",
       style: this.currentStyle.style
     });
 
@@ -774,7 +772,10 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes.posesByPoseSource && this.posesByPoseSource){
+      console.log(changes.posesByPoseSource.currentValue);
       this.loadPosesSource(changes.posesByPoseSource.currentValue);      
+      console.log(changes.posesByPoseSource.currentValue["GPS"]);
+      console.log(changes.posesByPoseSource.currentValue["Reported"]);
     }
     if(changes.markers && this.markers){
       this.loadMarkers()
