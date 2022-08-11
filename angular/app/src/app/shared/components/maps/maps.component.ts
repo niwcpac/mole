@@ -68,6 +68,7 @@ export class MapsComponent implements OnInit, OnDestroy {
       }
     ));
 
+    // This observerable collects the incoming pages of poses and appends them to the existing collection
     this.subscriptions.add(_poseApiService.getPoses().subscribe(
       many_poses =>  {
         // make a shallow copy to reassign posesByPoseSource later

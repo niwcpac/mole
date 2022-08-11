@@ -99,6 +99,8 @@ export class PoseApiService implements OnDestroy {
         // if there's an error in the middle of processing
         this.mostRecentPoseID = pose.id > this.mostRecentPoseID ? pose.id : this.mostRecentPoseID;
       })
+      // Each page in the pose API endpoint is sent separately for responsiveness
+      // it's the observer's responsibility to aggregate the poses together
       this.posesByPoseSourceSubject.next(main_object);
     }
     if(page.next){
