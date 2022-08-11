@@ -84,22 +84,23 @@ export class PoseApiService implements OnDestroy {
   // sort poses by pose source, then by entity
   categorizePoses(page: PosePageResult) {
     let main_object = {};
-    page.results.forEach((pose) => {
-      if (pose.pose_source && pose.pose_source.name) {
-        if (!main_object.hasOwnProperty(pose.pose_source.name)) {
-          main_object[pose.pose_source.name] = {};
+    if (page.results.length !== 0) {
+      page.results.forEach((pose) => {
+        if (pose.pose_source && pose.pose_source.name) {
+          if (!main_object.hasOwnProperty(pose.pose_source.name)) {
+            main_object[pose.pose_source.name] = {};
+          }
+          if(!main_object[pose.pose_source.name].hasOwnProperty(pose.entity.name)) {
+            main_object[pose.pose_source.name][pose.entity.name] = [];
+          }
+          main_object[pose.pose_source.name][pose.entity.name] = [...main_object[pose.pose_source.name][pose.entity.name], pose];
         }
-        if(!main_object[pose.pose_source.name].hasOwnProperty(pose.entity.name)) {
-          main_object[pose.pose_source.name][pose.entity.name] = [];
-        }
-        main_object[pose.pose_source.name][pose.entity.name] = [...main_object[pose.pose_source.name][pose.entity.name], pose];
-      }
-      // TODO potential for missing data since pose api is ordered by descending id
-      // if there's an error in the middle of processing
-      this.mostRecentPoseID = pose.id > this.mostRecentPoseID ? pose.id : this.mostRecentPoseID;
-    })
-
-    this.posesByPoseSourceSubject.next(main_object);
+        // TODO potential for missing data since pose api is ordered by descending id
+        // if there's an error in the middle of processing
+        this.mostRecentPoseID = pose.id > this.mostRecentPoseID ? pose.id : this.mostRecentPoseID;
+      })
+      this.posesByPoseSourceSubject.next(main_object);
+    }
     if(page.next){
       this.getPosesContinued(page.next);
     }
