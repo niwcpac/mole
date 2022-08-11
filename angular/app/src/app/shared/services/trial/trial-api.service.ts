@@ -53,7 +53,6 @@ export class TrialApiService implements OnDestroy {
     this.openEventsWebsocketConnection();
     this.initCurrentTrial();
     this.initAllTrials();
-    this.initEventCount();
     this.subscriptions.add(this.clockStateSubject);
     this.subscriptions.add(interval(this.INTERVAL_TIME).subscribe(
       x => {
@@ -82,12 +81,8 @@ export class TrialApiService implements OnDestroy {
         this.currentTrial = result;
         this.currentTrialSubject.next(this.currentTrial);
 
-        // if no trial is selected, set the current as the selected
-        if (!this.selectedTrial) {
-          this.selectedTrial = this.currentTrial;
-          this.selectedTrialSubject.next(this.selectedTrial);
-          this.initEventCount();
-        }
+        // on init, no trial selected so set the current as the selected
+        this.setSelectedTrial(this.currentTrial);
       }
     ));
   }
