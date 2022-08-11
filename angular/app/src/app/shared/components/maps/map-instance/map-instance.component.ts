@@ -98,6 +98,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
 
   @Input() posesByPoseSource: Object;
   poseSourceLayersSet: Set<string>;
+  listOfFeatures: any[];
 
   // Map is centered on this point
   currentFocus: MapFocus = {zoom: 0, center: [0,0], pitch: 0, bearing: 0, mapFocus: ""};
@@ -132,12 +133,6 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
 
   ngAfterViewInit(){
     this.initMap();
-
-    this.map.on('styledata',  () => {
-      this.initSources();
-    });
-
-
   }
 
   initMap(){
@@ -195,6 +190,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     this.symbolLayerEvents();
 
     this.map.on('load', () => {
+      this.initSources();
       this.map.resize();
     });
   }
@@ -578,25 +574,32 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     // reload markers as the filter may have changed
     this.loadEventMarker();
 
-    this.loadPosesSource();
-
-  }
-
-  loadPosesSource(newPoses:Object = {}){
-    let listOfFeatures = [];
-    let my_collection = {
+    let default_collection = {
       "type": "geojson",
       "data": {
         "type": "FeatureCollection",
-        "features": listOfFeatures,
+        "features": [],
       },
     }
+    if(!this.map.getSource("posesByPoseSource")) {
+      this.map.addSource("posesByPoseSource", default_collection);
+    }
+    // once done initializing sources, render the current list of poses
+    this.renderPoses();
+  }
+
+  parseNewPoses(newPoses:Object = {}){
+    [...this.poseSourceLayersSet].forEach((pose_source, index) => {
+      this.map.removeLayer(pose_source);
+    })
+    this.poseSourceLayersSet = new Set<string>();
+    let newList = [];
 
     Object.keys(newPoses).forEach((pose_source_type) => {
       this.poseSourceLayersSet.add(pose_source_type);
       Object.keys(newPoses[pose_source_type]).forEach(entity => {
         newPoses[pose_source_type][entity].forEach(single_pose => {
-          listOfFeatures.push({
+          newList.push({
             'type': 'Feature',
             'properties': {
               'pose_source': pose_source_type,
@@ -611,17 +614,17 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
         });
       });
     });
-
-    if(!this.map.getSource("posesByPoseSource")) {
-      this.map.addSource("posesByPoseSource", my_collection);
+    this.listOfFeatures = newList;
+    if (this.map && this.map.isStyleLoaded()) {
+      this.renderPoses();
     }
-    else{
-      this.map.getSource("posesByPoseSource").setData({
-        "type": "FeatureCollection",
-        "features": listOfFeatures,
-      });
-    }
+  }
 
+  renderPoses() {
+    this.map.getSource("posesByPoseSource").setData({
+      "type": "FeatureCollection",
+      "features": this.listOfFeatures,
+    });
     // for item in poseSourceLayersSet
     // add a separate layer with its own styling
     // cast the set into an array to get a numerical index
@@ -772,10 +775,7 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes.posesByPoseSource && this.posesByPoseSource){
-      console.log(changes.posesByPoseSource.currentValue);
-      this.loadPosesSource(changes.posesByPoseSource.currentValue);      
-      console.log(changes.posesByPoseSource.currentValue["GPS"]);
-      console.log(changes.posesByPoseSource.currentValue["Reported"]);
+      this.parseNewPoses(changes.posesByPoseSource.currentValue);      
     }
     if(changes.markers && this.markers){
       this.loadMarkers()
