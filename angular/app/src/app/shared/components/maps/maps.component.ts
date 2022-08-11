@@ -73,7 +73,7 @@ export class MapsComponent implements OnInit, OnDestroy {
         // make a shallow copy to reassign posesByPoseSource later
         let new_mapping = Object.assign({}, this.posesByPoseSource);
         Object.keys(many_poses).forEach(pose_source => {
-          let pose_source_mapping = {};
+          let pose_source_mapping = Object.assign({}, this.posesByPoseSource[pose_source]);
           Object.keys(many_poses[pose_source]).forEach(entity => {
             let new_list;
             if(this.posesByPoseSource.hasOwnProperty(pose_source) && this.posesByPoseSource[pose_source][entity]) {
