@@ -201,6 +201,8 @@ export class TrialCreatorComponent implements OnInit {
       this.trialForm.controls['system_configuration'].setValue(configUrl)
     }
 
+    // Set to null just in case there is no clock config
+    this.trialForm.controls['clock_config'].setValue(null);
     var selectedClockConfig = this.trialForm.get('clock_config')
     selectedClockConfig = selectedClockConfig.value;
     for (var k=0; k < this.clockConfigs.length; k++) {
