@@ -1,0 +1,157 @@
+import os
+import subprocess
+import signal
+
+# DEBUG = True
+# if not DEBUG:
+#     import subprocess
+
+# else:
+#     from unittest.mock import MagicMock, patch
+#     subprocess = MagicMock()
+
+
+USER_UID = str(os.getuid())
+ENV_PATH = str(os.getenv("PATH"))
+
+# Move to config file?
+CONFIGURE_MOLE_PATH = "mole/data_collection/management/commands/"
+
+SERVICES = {
+    "proxy",
+    "postgres",
+    "redis",
+    "django",
+    "docs",
+    "maptiles",
+    "report",
+    "portainer",
+    "db_backup",
+    "angular",
+    "event_generator",
+    "pulsar",
+}
+
+
+def get_git_hash():
+    """
+    Retrieve Git repository SHA1 hash (Short and long version)
+
+    Return:
+        tuple(short_hash, long_hash)
+
+        short_hash: Length of 4
+        long_hash:
+    """
+    try:
+        short_hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+        long_hash = subprocess.check_output(["git", "rev-parse", "HEAD"])
+    except subprocess.CalledProcessError as e:
+        print("Error retrieving git hash, defaulting to 'latest'")
+        print(e)
+        short_hash = "latest"
+        long_hash = "latest"
+    short_hash = short_hash.strip()
+    long_hash = long_hash.strip()
+
+    return short_hash, long_hash
+
+
+def service_is_running(service_name, id=False):
+    """
+    Args:
+        service_name(str): Docker Service Name
+        id (bool): Default False
+
+    Return:
+        tuple(running, container_id)
+
+        running(bool): True if docker container is running
+        container_id: docker container's unique identifier
+
+    """
+    running = False
+
+    if service_name not in SERVICES:
+        print(
+            f"Error: Service '{service_name}' does not exists. Verify service names is defined within docker-compose.yml"
+        )
+        return
+
+    cmd = ["docker-compose", "ps", "-q", service_name]
+    container_id = subprocess.check_output(cmd)
+
+    if container_id:
+        # Returns empty string if not running
+        cmd = ["docker", "ps", "-q", "--no-trunc"]
+        docker_ps = subprocess.check_output(cmd)
+        running = container_id in docker_ps
+
+    if id:
+        return bool(running), container_id.rstrip().decode()
+    return bool(running)
+
+
+def terminate_mole(mole_subprocess, db_backup=True):
+    """
+    CTRL-C to docker-compose allows for consecutive SIGTERMS to attempt a graceful stop
+    followed by killing.  This function is to maintain that construct.
+
+    Args:
+        mole_subprocess:
+        db_backup(bool):
+    """
+    try:
+        if db_backup:
+            from commands.db import backup_db
+
+            print("\n\nStop requested. Backing up database.")
+            backup_db(name_string="shutdown&sync=true")
+        print("\n")
+
+        mole_subprocess.send_signal(signal.SIGTERM)
+        mole_subprocess.wait()
+    except KeyboardInterrupt:
+        mole_subprocess.send_signal(signal.SIGTERM)
+        mole_subprocess.wait()
+
+
+def stop():
+    """
+    Backups database and stops all running docker containers
+    """
+    print("Stop requested. Backing up database.")
+    from commands.db import backup_db
+
+    backup_db(name_string="ml_stop")
+    cmd = ["docker-compose", "stop"]
+    subprocess.call(cmd)
+
+
+def configure_script_exists(configure_script: str):
+    # Verify configure_script exists
+    configure_script_file = os.path.join(
+        CONFIGURE_MOLE_PATH, "{}.py".format(configure_script)
+    )
+    if not os.path.isfile(configure_script_file):
+
+        available_scripts = glob.glob(CONFIGURE_MOLE_PATH + "[!_]*.py")
+        available_scripts = [os.path.splitext(x)[0] for x in available_scripts]
+        available_scripts = [os.path.basename(x) for x in available_scripts]
+
+        print('ERROR: configuration script "{}" not found.\n'.format(configure_script))
+        print(
+            "The available scripts are:\n   {}".format("\n   ".join(available_scripts))
+        )
+        return False
+
+    return True
+
+
+def install_poetry_env():
+    try:
+        import typer
+    except ModuleNotFoundError:
+        # print("Virtual environment not found. Creating...")
+        cmd = ["poetry", "install"]
+        subprocess.call(cmd)
