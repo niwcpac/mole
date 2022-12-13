@@ -38,6 +38,19 @@ Confirm that docker-compose is installed
 !!! tip "Note"
     In order for Mole to automatically generate keys/certificates for https, the `openssl` command must be installed on the host. This is generally the case by default.
 
+3) Poetry
+
+Requires Python 3.7+ (Windows, MacOS, Linux). See Poetry [System/Install Requirememets](https://python-poetry.org/docs/#system-requirements) for further instructions.
+
+    $ curl -sSL https://install.python-poetry.org | python3 - --version 1.2.0
+
+Confirm Poetry is installed
+
+    $ poetry --version
+
+Setup poetry virtual enviroment. Ensure the command is ran in the same directory as `pyproject.toml` and `poetry.lock`.
+
+    $ poetry install
 ## **Services**
 Mole is composed of a number of different services including the following:
     
@@ -111,7 +124,7 @@ Once the `cert.ext` file has been updated with new hosts/IPs, a new server certi
 ## **Running**
 The `ml` script at the root of the Mole repo can be used to build containers, start services, populate dbs, stop services, 
 or build and serve documentation.  It is structured with a number of subcommands.  Additional help on each command 
-can be found by passing the `-h` flag.  E.g., `./ml run -h`.
+can be found by passing the `--help` flag.  E.g., `./ml run --help`.
 
 If this is the first time you are running Mole, use the following command to configure Mole and initialize the database with defaults:
 

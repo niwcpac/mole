@@ -42,7 +42,21 @@ Confirm that docker-compose is installed
 
     $ docker-compose --version
 
-3) openssl
+3) Poetry
+
+Requires Python 3.7+ (Windows, MacOS, Linux). See Poetry [System/Install Requirememets](https://python-poetry.org/docs/#system-requirements) for further instructions.
+
+    $ curl -sSL https://install.python-poetry.org | python3 - --version 1.2.0
+
+Confirm Poetry is installed
+
+    $ poetry --version
+
+Setup poetry virtual enviroment. Ensure the command is ran in the same directory as `pyproject.toml` and `poetry.lock`.
+
+    $ poetry install
+
+4) openssl
 
 
 In order for Mole to automatically generate keys/certificates for https, the `openssl` command must be installed on the host. This is normally the case by default.
@@ -53,7 +67,7 @@ In order for Mole to automatically generate keys/certificates for https, the `op
 Documentation is available at https://niwcpac.github.io/mole/
 
 Documentation can also be built and served locally using the `ml` script at the root of the Mole repo. The `ml` script can be used to build containers, start services, populate dbs, stop services, or build and serve documentation.  It is structured with a number of commands.  Additional help on each command 
-can be found by passing the `-h` flag.  E.g., `./ml run -h`.
+can be found by passing the `--help` flag.  E.g., `./ml run --help`.
 
 The following command will serve Mole documentation locally at [http://localhost/docs/](http://localhost/docs/):
 
