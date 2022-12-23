@@ -56,7 +56,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ("url", "id", "username", "password", "profile")
         extra_kwargs = {
             "password": {"write_only": True},
-            "profile": {"read_only": True},
+            "profile": {"read_only": True, "allow_null": True},
         }
 
     def update(self, instance, validated_data):
@@ -251,8 +251,14 @@ class EntitySerializer(DynamicFieldsHyperlinkedModelSerializer):
     )
     region = serializers.SerializerMethodField()
     latest_pose = serializers.SerializerMethodField()
-    module_type = serializers.SerializerMethodField()
-    point_style = serializers.SerializerMethodField()
+    module_type = serializers.StringRelatedField(
+        source="entity_type",
+        read_only=True,
+    )
+    point_style = AggregatedPointStyleSerializer(
+        source="entity_type.point_style",
+        read_only=True,
+    )
 
     class Meta:
         model = dcm.Entity
@@ -293,22 +299,18 @@ class EntitySerializer(DynamicFieldsHyperlinkedModelSerializer):
             return [r.name for r in region]
 
         except AttributeError:
-            return
+            return []
 
     def get_latest_pose(self, obj):
         request = self.context.get("request", None)
         last_pose = dcm.Pose.objects.filter(entity=obj).order_by("timestamp").last()
 
+        if last_pose is None:
+            return None
+
         return PoseSerializer(
             last_pose, read_only=True, context={"request": request}
         ).data
-
-    def get_module_type(self, obj):
-        return obj.entity_type.name
-
-    def get_point_style(self, obj):
-        point_style = obj.entity_type.point_style
-        return AggregatedPointStyleSerializer(point_style).data
 
 
 class CampaignSerializer(serializers.HyperlinkedModelSerializer):
@@ -458,7 +460,10 @@ class RegionSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
-    has_segments = serializers.SerializerMethodField()
+    has_segments = serializers.BooleanField(
+        source="test_method.has_segments", 
+        read_only=True,
+    )
     potential_segments = SegmentSerializer(many=True, read_only=True)
 
     class Meta:
@@ -471,16 +476,12 @@ class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
             "variant",
             "test_method",
             "location",
-            "test_method",
             "has_segments",
             "potential_segments",
             "entity_groups",
             "time_limit",
             "scripts",
         )
-
-    def get_has_segments(self, obj):
-        return obj.test_method.has_segments
 
 
 class WeatherSerializer(serializers.HyperlinkedModelSerializer):
@@ -490,17 +491,15 @@ class WeatherSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class TestConditionSerializer(serializers.HyperlinkedModelSerializer):
-    name = serializers.SerializerMethodField("get_test_condition_name")
+    name = serializers.StringRelatedField(
+        source="*",
+        read_only=True,
+    )
 
     class Meta:
         model = dcm.TestCondition
         fields = ("url", "id", "name", "weather", "trials")
         read_only_fields = ("trials",)
-
-    # Name for test condition is derived from component elements.  Update this if additional components are added.
-    def get_test_condition_name(self, obj):
-        test_condition_name = str(obj)
-        return test_condition_name
 
 
 class PerformerSerializer(serializers.HyperlinkedModelSerializer):
@@ -523,7 +522,10 @@ class SystemConfigurationSerializer(serializers.HyperlinkedModelSerializer):
 
 class TrialSerializer(serializers.HyperlinkedModelSerializer):
     scenario = ScenarioSerializer()
-    name = serializers.SerializerMethodField()
+    name = serializers.StringRelatedField(
+        source="*",
+        read_only=True,
+    )
     performers = serializers.SerializerMethodField()
     script_run_counts = serializers.SerializerMethodField()
 
@@ -552,9 +554,6 @@ class TrialSerializer(serializers.HyperlinkedModelSerializer):
             "performers",
             "script_run_counts",
         )
-
-    def get_name(self, obj):
-        return obj.__str__()
 
     def get_performers(self, obj):
         performers = []
@@ -919,7 +918,10 @@ class ImageDataSerializer(serializers.Serializer):
     image_url = serializers.SerializerMethodField()
     image_type = serializers.ReadOnlyField()
     event = serializers.ReadOnlyField()
-    event_id = serializers.SerializerMethodField()
+    event_id = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+        source="event.id"
+    )
     timestamp = serializers.ReadOnlyField()
 
     class Meta:
@@ -929,9 +931,6 @@ class ImageDataSerializer(serializers.Serializer):
         request = self.context.get("request")
         image_url_escaped = request.build_absolute_uri(obj.image.url)
         return http.unquote(image_url_escaped)
-
-    def get_event_id(self, obj):
-        return obj.event.id
 
 
 class ServerTypeSerializer(serializers.HyperlinkedModelSerializer):
@@ -1118,7 +1117,6 @@ class EventDataSerializer(serializers.Serializer):
             )
             lin = LineString(array(poses))
             length = lin.length
-        #        import ipdb; ipdb.set_trace()
         return length
 
     def get_performers(self, obj):
@@ -1351,7 +1349,7 @@ class TriggerSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
-    start_pose = PoseSerializer()
+    start_pose = PoseSerializer(allow_null=True)
     trial = serializers.HyperlinkedRelatedField(
         view_name="trial-detail", label="Trial", queryset=dcm.Trial.objects.all()
     )
@@ -1359,8 +1357,8 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
     weather = WeatherSerializer()
     notes = NoteSerializer(read_only=True, many=True)
     images = ImageSerializer(read_only=True, many=True)
-    trigger = TriggerSerializer(label="Trigger")
-    segment = SegmentSerializer()
+    trigger = TriggerSerializer(label="Trigger", allow_null=True)
+    segment = SegmentSerializer(allow_null=True)
     point_style = serializers.SerializerMethodField()
 
     related_entities = serializers.SerializerMethodField()

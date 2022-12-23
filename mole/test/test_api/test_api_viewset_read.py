@@ -5,6 +5,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 
 from django.urls import reverse
+from openapi_tester import SchemaTester
 
 from data_collection.factories import factories
 import factory
@@ -12,6 +13,7 @@ import factory
 from .parameterized import NamedParameterizedTestsMeta, parameterized
 from .viewset_to_factory import viewset_to_factory
 
+schema_tester = SchemaTester(schema_file_path="./schema.yaml")
 read_test_list = viewset_to_factory.items()
 
 
@@ -35,6 +37,7 @@ class ViewsetReadTests(APITestCase, metaclass=NamedParameterizedTestsMeta):
 
         response = self.client.get(url_list)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        schema_tester.validate_response(response=response)
 
     @parameterized(*read_test_list)
     def test_viewset_read_detail(self, viewset_name_factory):
@@ -52,6 +55,7 @@ class ViewsetReadTests(APITestCase, metaclass=NamedParameterizedTestsMeta):
 
         response = self.client.get(url_detail)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        schema_tester.validate_response(response=response)
 
 
 #    @parameterized(*extra_read_endpoints_list)
