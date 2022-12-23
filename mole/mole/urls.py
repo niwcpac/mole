@@ -1,11 +1,13 @@
 from data_collection import views, routers
 from automation import views as auto_views
-from django.conf.urls import url, include
-from rest_framework.routers import DefaultRouter
+from django.conf.urls import include
+from django.urls import re_path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 import mole.views as viewpath
 from django.contrib.auth import views as auth_views
 from django.conf import settings
+from rest_framework.schemas import get_schema_view
+from django.views.generic import TemplateView
 
 router = routers.HybridRouter()
 router.register(r"users", views.UserViewSet)
@@ -90,22 +92,39 @@ router.register(r"script_conditions", auto_views.ScriptConditionViewSet)
 
 router.add_api_view(
     "server_datetime",
-    url(
+    re_path(
         r"server_datetime/$", views.ServerDatetimeView.as_view(), name="server_datetime"
     ),
 )
 
+base_urls = [
+    re_path(r"^api/", include(router.urls)),
+]
 
-urlpatterns = [
-    url(r"^api/", include(router.urls)),
-    url(r"^api-auth/", include("rest_framework.urls")),
-    url(r"api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    url(r"api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    url(r"^accounts/login/$", auth_views.LoginView.as_view()),
-    url(r"^accounts/logout/$", auth_views.LogoutView.as_view()),
-    url(r"^$", viewpath.home),
-    url(r".*/$", viewpath.home),
+urlpatterns = base_urls + [
+    re_path(
+        "^api/openapi/", 
+        get_schema_view(
+            title="Mole",
+            description="Mole API",
+            version="1.0.0",
+            patterns=base_urls,
+        ), 
+        name='openapi-schema',
+    ),
+    re_path('^api/swagger-ui/', TemplateView.as_view(
+        template_name='SwaggerUI_4.11.1/index.html',
+        extra_context={'schema_url':'openapi-schema'}
+    ), name='swagger-ui'),
+    re_path(r"^api/", include(router.urls)),
+    re_path(r"^api-auth/", include("rest_framework.urls")),
+    re_path(r"api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    re_path(r"api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    re_path(r"^accounts/login/$", auth_views.LoginView.as_view()),
+    re_path(r"^accounts/logout/$", auth_views.LogoutView.as_view()),
+    re_path(r"^$", viewpath.home),
+    re_path(r".*/$", viewpath.home),
 ]
 
 if settings.PROFILE:
-    urlpatterns += [url(r"^silk/", include("silk.urls", namespace="silk"))]
+    urlpatterns += [re_path(r"^silk/", include("silk.urls", namespace="silk"))]
