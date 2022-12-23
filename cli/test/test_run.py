@@ -57,7 +57,6 @@ class TestRun(unittest.TestCase):
                                                            "POPULATE_DB",
                                                            "DEBUG_DJANGO",
                                                            "PATH"] )
-        assert "preexec_fn" in kwargs
         assert kwargs['env']['BACKUP_FLAG'] == 'false'
         assert kwargs['env']['DEBUG_DJANGO'] == 'false'
 
@@ -336,7 +335,6 @@ class TestRun(unittest.TestCase):
                                                            "POPULATE_DB",
                                                            "DEBUG_DJANGO",
                                                            "PATH"] )
-        assert "preexec_fn" in kwargs
         assert kwargs['env']['BACKUP_FLAG'] == 'false'
         assert kwargs['env']['DEBUG_DJANGO'] == 'false'
 

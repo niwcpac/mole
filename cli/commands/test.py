@@ -83,7 +83,7 @@ def test(
             "DEBUG_DJANGO": "false",
             "PATH": str(os.getenv("PATH")),
         }
-        p = subprocess.Popen(cmd, preexec_fn=os.setpgrp, env=env)
+        p = subprocess.Popen(cmd, env=env)
         try:
             return p.wait()
         except KeyboardInterrupt:
@@ -94,7 +94,7 @@ def test(
         "docker-compose-tests.yml",
         "up",
         ]
-    p = subprocess.Popen(cmd, preexec_fn=os.setpgrp)
+    p = subprocess.Popen(cmd)
 
     try:
         return p.wait()

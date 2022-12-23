@@ -44,7 +44,6 @@ class TestTest(unittest.TestCase):
                "up",
                 ]       
         self.assertCountEqual(args[0], cmd)
-        assert "preexec_fn" in kwargs.keys()
 
     @mock.patch("commands.test.subprocess")
     def test_dropdb(self,p_subprocess):
@@ -104,7 +103,6 @@ class TestTest(unittest.TestCase):
             "django",
         ]
         self.assertCountEqual(args[0], cmd)
-        assert "preexec_fn" in kwargs.keys()
         assert "env" in kwargs.keys()
 
         self.assertCountEqual(list(kwargs['env'].keys()), ["PROFILE",
