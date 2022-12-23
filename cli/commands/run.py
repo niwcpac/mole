@@ -120,10 +120,9 @@ def run(
         "PATH": str(os.getenv("PATH")),
     }
 
-    p = subprocess.Popen(cmd, preexec_fn=os.setpgrp, env=env)
+    p = subprocess.Popen(cmd, env=env)
 
     try:
         return p.wait()
     except KeyboardInterrupt:
         terminate_mole(p, db_backup)
-

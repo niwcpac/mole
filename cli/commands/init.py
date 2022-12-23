@@ -248,7 +248,7 @@ def init(
         subprocess.call(clear_images_cmd)
 
         cmd.extend(SERVICES)
-        p = subprocess.Popen(cmd, preexec_fn=os.setpgrp, env=env)
+        p = subprocess.Popen(cmd, env=env)
 
         try:
             return p.wait()

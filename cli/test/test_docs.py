@@ -97,7 +97,6 @@ class TestDocs(unittest.TestCase):
 
         cmd_args = p_subprocess.Popen.call_args_list
         args, kwargs = cmd_args[0]
-        assert "preexec_fn" in kwargs.keys()
         self.assertEqual(args[0], cmd1)
 
         cmd_args = p_subprocess.call.call_args_list
@@ -117,7 +116,6 @@ class TestDocs(unittest.TestCase):
 
         cmd_args = p_subprocess.Popen.call_args_list
         args, kwargs = cmd_args[0]
-        assert "preexec_fn" in kwargs.keys()
         self.assertEqual(args[0], cmd1)
 
     @mock.patch("commands.docs.subprocess")
@@ -152,7 +150,6 @@ class TestDocs(unittest.TestCase):
 
         cmd_args = p_subprocess.Popen.call_args_list
         args, kwargs = cmd_args[0]
-        assert "preexec_fn" in kwargs.keys()
         self.assertEqual(args[0], cmd1)
 
         cmd_args = p_subprocess.call.call_args_list
@@ -172,7 +169,6 @@ class TestDocs(unittest.TestCase):
 
         cmd_args = p_subprocess.Popen.call_args_list
         args, kwargs = cmd_args[0]
-        assert "preexec_fn" in kwargs.keys()
         self.assertEqual(args[0], cmd1)
         
     def tearDown(self):

@@ -74,7 +74,7 @@ def docs(
             "up",
             "django",
         ]
-        subprocess.Popen(cmd, preexec_fn=os.setpgrp)
+        subprocess.Popen(cmd)
 
         # retry num_tries for Django service to be ready
         for i in range(NUM_TRIES + 1):
@@ -142,7 +142,7 @@ def docs(
             "proxy",
         ]
 
-        p = subprocess.Popen(cmd, preexec_fn=os.setpgrp)
+        p = subprocess.Popen(cmd)
 
         try:
             return p.wait()
