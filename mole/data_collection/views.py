@@ -1021,7 +1021,7 @@ class PoseFilter(filters.FilterSet):
         fields = ["max_datetime", "min_datetime", "entity_name"]
 
 
-class PoseViewSet(viewsets.ModelViewSet):
+class PoseViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     """
     This endpoint represents entity poses
 
@@ -1045,11 +1045,47 @@ class PoseViewSet(viewsets.ModelViewSet):
     filterset_class = PoseFilter
     serializer_class = dcs.PoseSerializer
     pagination_class = PosePagination
+    renderer_classes = list(api_settings.DEFAULT_RENDERER_CLASSES) + [
+        rest_pandas.PandasCSVRenderer,
+        rest_pandas.PandasTextRenderer,
+    ]
+
+    def list(self, request, *args, **kwargs):
+        # We need a custom list function
+        # we don't want to paginate for Pandas output
+        renderer = self.request.accepted_renderer
+        if hasattr(renderer, "get_default_renderer"):
+            # BrowsableAPIRenderer
+            renderer = renderer.get_default_renderer(self)
+
+        if isinstance(renderer, rest_pandas.PandasBaseRenderer):
+            queryset = self.filter_queryset(self.get_queryset())
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return super().list(request, *args, *kwargs)
 
     def get_serializer(self, *args, **kwargs):
         if isinstance(kwargs.get("data", {}), list):
             kwargs["many"] = True
         return super(PoseViewSet, self).get_serializer(*args, **kwargs)
+
+    def get_serializer_class(self):
+        # We can't use the default PandasMixin get_serializer_class()
+        # because we want to pass in a different serializer as child
+        # for Pandas-rendered output
+        if self.request is None:
+            return self.serializer_class
+
+        renderer = self.request.accepted_renderer
+        if hasattr(renderer, "get_default_renderer"):
+            # BrowsableAPIRenderer
+            renderer = renderer.get_default_renderer(self)
+
+        if isinstance(renderer, rest_pandas.PandasBaseRenderer):
+            return self.with_list_serializer(dcs.PoseDataSerializer)
+        else:
+            return self.serializer_class
 
 
 class NoteViewSet(viewsets.ModelViewSet):

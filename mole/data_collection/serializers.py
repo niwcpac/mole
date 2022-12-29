@@ -818,6 +818,35 @@ class PoseSerializer(gis_serializers.GeoModelSerializer):
             pass
 
 
+class PoseDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = dcm.Pose
+        fields = [
+            "id",
+            "point",
+            "elevation",
+            "heading",
+            "entity",
+            "pose_source",
+            "timestamp",
+            "trial",
+            "speed",
+            "velocity",
+        ]
+        read_only_fields = [
+            "id",
+            "point",
+            "elevation",
+            "heading",
+            "entity",
+            "pose_source",
+            "timestamp",
+            "trial",
+            "speed",
+            "velocity",
+        ]
+
+
 class NoteSerializer(serializers.HyperlinkedModelSerializer):
     tester = TesterSerializer()
 
