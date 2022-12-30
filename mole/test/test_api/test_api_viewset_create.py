@@ -301,6 +301,7 @@ pose_create_info = (
     "pose",
     {
         "point": "POINT(34.345345 -120.23423)",
+        "trial": ("trial",),
         "entity": ("entity",),
         "pose_source": ("posesource",),
         "timestamp": str(datetime.now()),
@@ -1029,4 +1030,3 @@ class ComplexCreateTests(APITestCase):
 
         msg = "PATCH: Failed to confirm invalid event type."
         self.assertEqual(entity_2_instance.name, event_entity_2_name, msg=msg)
-
