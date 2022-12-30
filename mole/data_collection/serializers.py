@@ -743,6 +743,9 @@ class PoseSerializer(gis_serializers.GeoModelSerializer):
     events = serializers.HyperlinkedRelatedField(
         view_name="event-detail", many=True, read_only=True,
     )
+    trial = serializers.HyperlinkedRelatedField(
+        view_name="trial-detail", required=False, allow_null=True, queryset=dcm.Trial.objects.all()
+    )
 
     class Meta:
         model = dcm.Pose
@@ -786,6 +789,19 @@ class PoseSerializer(gis_serializers.GeoModelSerializer):
             raise serializers.ValidationError(
                 "Either valid point or separate lat and lon must be supplied."
             )
+
+        # if trial is not explicitly stated, assume it goes to the trial marked current
+        if "trial" not in validated_data:
+            try:
+                current_trial = dcm.get_current_trial(dt=validated_data["timestamp"])
+            except dcm.Trial.DoesNotExist:
+                raise serializers.ValidationError(
+                    "Unable to determine suitable trial.  No trial is marked current and there are no trials that "
+                    "overlap the start_datetime of this pose ({})".format(
+                        validated_data.get("timestamp").isoformat()
+                    )
+                )
+            validated_data["trial"] = current_trial
 
         instance = dcm.Pose(**validated_data)
         if isinstance(self._kwargs["data"], dict):
