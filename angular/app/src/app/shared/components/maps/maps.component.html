@@ -1,7 +1,6 @@
 <mat-slide-toggle  
     *ngIf="enableSwitcher"
-    [checked]="useCesium"
-    (change)="updateMapType($event.checked)"
+    [(ngModel)]="useCesium"
     class="toggle-cesium"
     color="warn"
     labelPosition="before">

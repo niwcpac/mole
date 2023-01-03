@@ -324,6 +324,7 @@ export class TrialApiService implements OnDestroy {
         // auto-select created trial
         this.selectedTrial = this.trialApiAdapters.trialAdapter(data);
         this.selectedTrialSubject.next(this.selectedTrial);
+        this.initEventCount();
       },
         err => {
           console.log(err)

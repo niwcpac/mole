@@ -3,8 +3,8 @@
   <mat-card-header id="mat-card-header-selected-trial" *ngIf="trialVisibility">
     <mat-card-title class="selector">
       <form [formGroup]="form">
-          <mat-form-field>
-              <mat-label id="mat-label-selected-trial-name">{{selectedTrial.name}}</mat-label>
+          <mat-form-field floatLabel="never" >
+              <mat-label id="mat-label-selected-trial-name"> {{selectedTrial.name}} </mat-label>
               <mat-select id="mat-select-trials" formControlName="trials" panelClass="panel-light" (selectionChange)="onChangeTrial($event)">
                 <mat-option id="mat-option-trial" *ngFor="let trial of allTrialsObservable | async" [value]="trial">
                   {{trial.name}}
