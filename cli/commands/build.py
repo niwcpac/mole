@@ -23,7 +23,8 @@ def clean():
     if input().lower() in ("yes", "y", "ye"):
         print("Clearing containers and volumes...\n")
         cmd = [
-            "docker-compose",
+            "docker",
+            "compose",
             "down",
             "--volumes",
             "--remove-orphans",
@@ -38,7 +39,8 @@ def clean():
 def _build_only():
     print("Building container images...\n")
     cmd = [
-        "docker-compose",
+        "docker",
+        "compose",
         "-f",
         "docker-compose.yml",
         "-f",

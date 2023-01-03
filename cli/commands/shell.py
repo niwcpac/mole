@@ -32,11 +32,11 @@ def shell(ctx: typer.Context):
     cmd = ["sed", "-i", "-e", "s/init/init_shell/g", "compose_init_db.yml"]
     subprocess.call(cmd)
 
-    cmd = ["docker-compose", "-f", "compose_init_db.yml", "up", "-d"]
+    cmd = ["docker", "compose", "-f", "compose_init_db.yml", "up", "-d"]
     subprocess.call(cmd)
 
     try:
-        cmd = ["docker-compose", "exec", "django", "/bin/bash"]
+        cmd = ["docker", "compose", "exec", "django", "/bin/bash"]
         subprocess.call(cmd)
         stop()
     except KeyboardInterrupt:

@@ -100,7 +100,7 @@ This `process` method will be called for each message that comes in on the list 
 
 Unit testing the Pulsar functions can be done by running a custom docker-compose file.
 
-    docker-compose -f docker-compose-tests.yml up
+    docker compose -f docker-compose-tests.yml up
 
 This will run any tests in the `pulsar/tests` directory.
 

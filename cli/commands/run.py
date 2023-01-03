@@ -50,7 +50,10 @@ def run(
         help="Expose the port for Redis, allowing external access to the Redis server",
     ),
     debug: bool = typer.Option(
-        False, "-d", "--debug", help="Debug the Django container",
+        False,
+        "-d",
+        "--debug",
+        help="Debug the Django container",
     ),
 ):
 
@@ -59,10 +62,11 @@ def run(
         return
 
     # Need recreate on so new environment variable get set. (BACKUP_FLAG, etc.)
-    cmd = ["docker-compose", "up"]
+    cmd = ["docker", "compose", "up"]
     if os.environ.get("UNLOCK_REDIS") or unlock_redis:
         cmd = [
-            "docker-compose",
+            "docker",
+            "compose",
             "-f",
             "docker-compose.yml",
             "-f",

@@ -91,7 +91,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -151,7 +152,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -338,7 +340,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "-f",
                 "docker-compose.yml",
                 "-f",
@@ -389,7 +392,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -438,7 +442,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -481,7 +486,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -510,7 +516,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -563,7 +570,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -592,7 +600,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",
@@ -683,7 +692,8 @@ class TestInit(unittest.TestCase):
         self.assertCountEqual(
             args[0],
             [
-                "docker-compose",
+                "docker",
+                "compose",
                 "up",
                 "--build",
                 "--force-recreate",

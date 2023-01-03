@@ -30,17 +30,16 @@ Reboot, then confirm docker is running.
     
     $ docker run hello-world
 
-2) docker-compose
+2) Docker Compose
 
-Install Docker-Compose locally, set permissions, and modify the path. See [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+Install Docker Compose plugin. See [https://docs.docker.com/compose/install/linux/#install-using-the-repository](https://docs.docker.com/compose/install/linux/#install-using-the-repository)
 
-    $ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    $ sudo chmod +x /usr/local/bin/docker-compose
-    $ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  $ sudo apt-get update
+  $ sudo apt-get install docker-compose-plugin
 
-Confirm that docker-compose is installed
+Confirm that docker compose is installed
 
-    $ docker-compose --version
+    $ docker compose --version
 
 3) Poetry
 

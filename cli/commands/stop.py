@@ -26,7 +26,7 @@ def stop(ctx: typer.Context):
 
     print("Stop requested. Backing up database.")
     backup_db(name_string="ml_stop")
-    cmd = ["docker-compose", "stop"]
+    cmd = ["docker", "compose", "stop"]
     subprocess.call(cmd)
 
 

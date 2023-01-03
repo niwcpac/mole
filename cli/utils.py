@@ -1,6 +1,7 @@
 import os
 import subprocess
 import signal
+import json
 
 # DEBUG = True
 # if not DEBUG:
@@ -74,27 +75,32 @@ def service_is_running(service_name, id=False):
 
     if service_name not in SERVICES:
         print(
-            f"Error: Service '{service_name}' does not exists. Verify service names is defined within docker-compose.yml"
+            f"Error: Service '{service_name}' does not exist. Verify service names is defined within docker-compose.yml."
         )
-        return
+        return False
 
-    cmd = ["docker-compose", "ps", "-q", service_name]
-    container_id = subprocess.check_output(cmd)
+    cmd = ["docker", "compose", "ps", "--format", "json", service_name]
 
-    if container_id:
-        # Returns empty string if not running
-        cmd = ["docker", "ps", "-q", "--no-trunc"]
-        docker_ps = subprocess.check_output(cmd)
-        running = container_id in docker_ps
+    service_info = {}
+    try:
+        output = subprocess.check_output(cmd)
+        service_info = json.loads(output.rstrip().decode())
+    except subprocess.CalledProcessError:
+        return False
+
+    if service_info[0]["State"] == "running":
+        running = True
+
+    container_id = service_info[0]["ID"]
 
     if id:
-        return bool(running), container_id.rstrip().decode()
-    return bool(running)
+        return running, container_id
+    return running
 
 
 def terminate_mole(mole_subprocess, db_backup=True):
     """
-    CTRL-C to docker-compose allows for consecutive SIGTERMS to attempt a graceful stop
+    CTRL-C to docker compose allows for consecutive SIGTERMS to attempt a graceful stop
     followed by killing.  This function is to maintain that construct.
 
     Args:
@@ -124,7 +130,7 @@ def stop():
     from commands.db import backup_db
 
     backup_db(name_string="ml_stop")
-    cmd = ["docker-compose", "stop"]
+    cmd = ["docker", "compose", "stop"]
     subprocess.call(cmd)
 
 

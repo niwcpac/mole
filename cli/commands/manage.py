@@ -1,4 +1,5 @@
 import subprocess
+import os
 import typer
 from typing import List, Optional
 import sys
@@ -12,106 +13,6 @@ app = typer.Typer(add_completion=False)  # Create an typer appplication
 ###                           Helper Function                                ###
 ################################################################################
 
-def get_project_config():
-    project_info = []
-    docker_compose = ["docker-compose", "images"]
-    awk = ["awk", "NR>2"]
-    project_images = subprocess.Popen(
-        docker_compose,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    cleaned_project_images = subprocess.Popen(
-        awk, stdin=project_images.stdout, stdout=subprocess.PIPE
-    )
-    if sys.version_info.major == 3:
-        output, err = cleaned_project_images.communicate(
-            "Grabbing the project images".encode()
-        )
-        output = output.decode()
-    else:
-        output, err = cleaned_project_images.communicate(b"Grabbing the project images")
-    print("\ncontents of project:")
-    print(output)
-    img_data = output.split("\n")
-    for img_info in img_data:
-        if img_info:
-            container = {}
-            container_info = img_info.split()
-            container["name"] = container_info[0]
-            container["repository"] = container_info[1]
-            container["tag"] = container_info[2]
-            container["img_id"] = container_info[3]
-            project_info.append(container)
-    return project_info
-
-
-def export_project_containers():
-    project_info = get_project_config()
-    containers_file = open("project_containers.txt", "w")
-    for instance in project_info:
-        print("Exporting container %s" % (instance["name"]))
-        containers_file.write(instance["name"] + "\n")
-        cmd = [
-            "docker",
-            "export",
-            "--output=%s.tar" % (instance["name"]),
-            instance["name"],
-        ]
-        subprocess.call(cmd)
-    containers_file.close()
-
-
-def import_project_containers():
-    project_containers = open("project_containers.txt", "r").readlines()
-    for container in project_containers:
-        print("importing %s" % (container))
-        cmd = ["docker", "import", container + ".tar"]
-        subprocess.call(cmd)
-
-
-def delete_project_config():
-    project_info = get_project_config()
-    for instance in project_info:
-        print("Deleting container: %s" % (instance["name"]))
-        cmd = ["docker", "rm", instance["name"]]
-        print("Deleting image: %s" % (instance["repository"]))
-        subprocess.call(cmd)
-        cmd = ["docker", "image", "rm", instance["img_id"]]
-        subprocess.call(cmd)
-        print("DELETING Volumes")
-    cmd = ["docker", "volume", "prune"]
-    subprocess.call(cmd)
-
-
-def save_project_images(target, repos):
-    project_config = get_project_config()
-    img_save_cmd = ["docker", "save", "-o", "%s.tar" % (target)]
-    for instance in project_config:
-        repository = instance["repository"]
-        tag = instance["tag"]
-        if len(repos) > 0:
-            if repository in repos:
-                print("Adding %s to repository." % (repository))
-                command_txt = repository + ":" + tag
-                img_save_cmd.append(command_txt)
-                repos.remove(repository)
-        else:
-            print("Adding %s:%s to archive" % (repository, tag))
-            command_txt = repository + ":" + tag
-            img_save_cmd.append(command_txt)
-    if len(repos) > 0:
-        for name in repos:
-            print("Error!!! Image %s NOT FOUND! Could not add to archive" % (name))
-
-    print("Creating Project Repository Tarball")
-    subprocess.call(img_save_cmd)
-
-    print("Compressing Tarball")
-    compress_tarball_cmd = ["gzip", "%s.tar" % (target)]
-    subprocess.call(compress_tarball_cmd)
-
 
 ################################################################################
 ###                   Typer Application Default Callback                     ###
@@ -124,78 +25,80 @@ description = "Manage container builds. Load, Store, Save, Containers/images"
 @app.callback(invoke_without_command=True, help=description)
 def manage(
     ctx: typer.Context,
-    target: Optional[List[str]] = typer.Option(
-        ["mole_project"], "-t", "--target", help="Specify name for your archive."
-    ),
-    load: str = typer.Option(
+    load: Optional[str] = typer.Option(
         None,
         "-l",
         "--load",
-        flag_value="mole_project.tar.gz",
-        help="Load an archived images into local docker repo. Default name is mole_project.tar.gz if none is specified.",
+        flag_value=os.path.realpath(sys.argv[0]).split("/")[-3],
+        help="Load docker images from gzipped tarball, can provide optional source archive name. Note: the project root directory should be changed to match the tarball file name.",
     ),
-    build: bool = typer.Option(
-        False,
-        "-b",
-        "--build",
-        help="Build containers in local image repository. Will only build containers that exist for this project",
-    ),
-    save: Optional[List[str]] = typer.Option(
+    save: Optional[str] = typer.Option(
         None,
         "-s",
         "--save",
-        help="Save docker image/images to tarball onto host machine.",
+        flag_value=os.path.realpath(sys.argv[0]).split("/")[-3],
+        help="Save docker images into gzipped tarball, can take optional target archive name.",
     ),
-    imp: str = typer.Option(
-        None,
-        "-i",
-        "--imp",
-        flag_value="",
-        help="Load an archived containers or container into local docker repo. Default names are [container name].tar.gz if none are specified.",
-    ),  # list
-    exp: str = typer.Option(
-        None,
-        "-e",
-        "--exp",
-        flag_value="",
-        help="save an archived containers into local docker repos. Default names are [container name].tar.gz if none are specified.",
-    ),  # list
-    all: bool = typer.Option(False, "-a", "--all", help="Does nothing at the moment"),
 ):
 
     if ctx.invoked_subcommand is not None:
         return
-    
-    if load:
-        yes = ("yes", "y", "ye")
-        prompt = """
-        WARNING: You have requested to load images for Mole.
-        This will permanently delete all current docker images for the project.
 
-        Would you like to backup the current images? [y/N]: """
-
-        sys.stdout.write(prompt)
-        choice = input().lower()
-
-        if choice in yes:
-            save_project_images("mole_project_backup", [])
-
-        delete_project_config()
-        load_cmd = ["docker", "load", "-i", load]
-        print("Loading images from: %s" % load)
-        subprocess.call(load_cmd)
-    
-    if build:
-        run.run()
-
-    if len(save) > 0:
-        save_project_images(target[0], save)
-
-    if imp != None:
-        import_project_containers()
-
-    if exp != None:
-        export_project_containers()
+    if save:
+        # This command grabs the:
+        #   repo name if it's a custom built image
+        #   repo:tag if it's a pulled image
+        # used in docker compose file
+        command = [
+            "docker",
+            "compose",
+            "config",
+            "--images",
+        ]
+        r = subprocess.run(command, stdout=subprocess.PIPE, encoding="utf8", check=True)
+        list_of_images = r.stdout.split("\n")
+        list_of_images = [x for x in list_of_images if x]
+        second_command = [
+            "docker",
+            "save",
+            "-o",
+            f"{save}.tar",
+        ]
+        second_command.extend(list_of_images)
+        print(f"Archiving into {save}.tar...\n\tThis might take a while...")
+        r2 = subprocess.run(second_command, check=True)
+        print("Finished archiving")
+        compress_command = [
+            "gzip",
+            f"{save}.tar",
+        ]
+        print("Compressing with gzip...\n\tThis also might take a while...")
+        r3 = subprocess.run(compress_command, check=True)
+        print("Finished compressing")
+    elif load:
+        print("Looking for the file...")
+        list_of_possible_files = [
+            item for item in os.listdir(".") if os.path.isfile(os.path.join(".", item))
+        ]
+        list_of_possible_files = [
+            item for item in list_of_possible_files if load in item
+        ]
+        print("Found possible files, trying to load into docker...")
+        success = False
+        for x in list_of_possible_files:
+            load_command = ["docker", "load", "-i", x]
+            try:
+                r = subprocess.run(load_command, check=True)
+            except subprocess.CalledProcessError as e:
+                continue
+            if r.returncode == 0:
+                success = True
+                print("Finished loading new images")
+                break
+        if not success:
+            print(
+                "No valid input for docker load command, please submit a tar archive of docker images"
+            )
 
 
 ################################################################################

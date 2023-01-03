@@ -7,24 +7,25 @@ services:
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
-    entrypoint: ["/usr/bin/python"]
-    command: ["-m", "pytest", "-s", "tests/"]
-
+    entrypoint: [ "/pulsar/tests/init_test.sh" ]
 
   postgres:
     image: postgis/postgis:11-3.0
     environment:
-      - POSTGRES_DB=${PGDATABASE} 
+      - POSTGRES_DB=${PGDATABASE}
       - POSTGRES_USER=${PGUSER}
       - POSTGRES_PASSWORD=${PGPASSWORD}
     volumes:
       - ./mole/build/postgresql.conf:/etc/postgresql/postgresql.conf
-    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
-
+    command:
+      [
+        "postgres",
+        "-c",
+        "config_file=/etc/postgresql/postgresql.conf"
+      ]
 
   redis:
     image: redis:latest
-
 
   django:
     init: true

@@ -23,17 +23,16 @@ Reboot, then confirm docker is running.
 !!! tip "Note"
     If building the Docker containers hangs in the Mole initialization step below, see [Configuring Docker to Use a Different DNS Server](#configuring-docker-to-use-a-different-dns-server).  This may be due to Docker's default DNS server (Google's 8.8.8.8) being blocked on your network.
 
-2) docker-compose
+2) Docker Compose
 
-Install Docker-Compose locally, set permissions, and modify the path. See [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
+Install Docker Compose plugin. See [https://docs.docker.com/compose/install/linux/#install-using-the-repository](https://docs.docker.com/compose/install/linux/#install-using-the-repository)
 
-    $ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    $ sudo chmod +x /usr/local/bin/docker-compose
-    $ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  $ sudo apt-get update
+  $ sudo apt-get install docker-compose-plugin
 
-Confirm that docker-compose is installed
+Confirm that docker compose is installed
 
-    $ docker-compose --version
+    $ docker compose --version
 
 !!! tip "Note"
     In order for Mole to automatically generate keys/certificates for https, the `openssl` command must be installed on the host. This is generally the case by default.
