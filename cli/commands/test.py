@@ -22,6 +22,7 @@ description = (
     "Run the Django unit tests. Note: Mole does not run when this flag is set."
 )
 
+
 @app.callback(invoke_without_command=True, help=description)
 def test(
     ctx: typer.Context,
@@ -43,11 +44,12 @@ def test(
         return
 
     if dropdb:
-        cmd = ["docker-compose", "-f", "compose_init_db.yml", "up", "-d", "postgres"]
+        cmd = ["docker", "compose", "-f", "compose_init_db.yml", "up", "-d", "postgres"]
         subprocess.call(cmd)
 
         cmd = [
-            "docker-compose",
+            "docker",
+            "compose",
             "exec",
             "postgres",
             "dropdb",
@@ -61,7 +63,8 @@ def test(
         standalone_backup()
 
         cmd = [
-            "docker-compose",
+            "docker",
+            "compose",
             "-f",
             "docker-compose-e2e.yml",
             "-f",
@@ -88,12 +91,14 @@ def test(
             return p.wait()
         except KeyboardInterrupt:
             terminate_mole(p, False)
-    
-    cmd = [ "docker-compose",
+
+    cmd = [
+        "docker",
+        "compose",
         "-f",
         "docker-compose-tests.yml",
         "up",
-        ]
+    ]
     p = subprocess.Popen(cmd)
 
     try:
@@ -106,13 +111,11 @@ def test(
 ###                          Typer Application Command                       ###
 ################################################################################
 
+
 @app.command()
 def pytest():
     """
     Verify ml commands using Pytest
     """
-    cmd = [ "pytest",
-        "cli/test/"
-        ]
+    cmd = ["pytest", "cli/test/"]
     p = subprocess.call(cmd)
-   

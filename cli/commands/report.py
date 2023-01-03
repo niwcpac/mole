@@ -25,7 +25,7 @@ def report(ctx: typer.Context):
     if ctx.invoked_subcommand is not None:
         return
 
-    cmd = ["docker-compose", "up", "report"]
+    cmd = ["docker", "compose", "up", "report"]
     try:
         subprocess.call(cmd)
     except KeyboardInterrupt:

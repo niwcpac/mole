@@ -7,10 +7,10 @@ Mole supports the automatic generation of [OpenAPI](https://github.com/OAI/OpenA
 There are two ways to generate a schema for Mole:
 
 1. Generate the schema using `./ml docs --generate-schema`
-2. Use the docker-compose exec command.
+2. Use the docker compose exec command.
 
 ```shell
-$ docker-compose exec django python manage.py generateschema --file openapi_schema.yml
+$ docker compose exec django python manage.py generateschema --file openapi_schema.yml
 ```
 
 The generated schema will be located in `/mole/openapi_schema.yml`.

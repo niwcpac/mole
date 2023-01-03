@@ -164,7 +164,8 @@ def init(
 
     if choice in yes:
         cmd = [
-            "docker-compose",
+            "docker",
+            "compose",
             "up",
             "--build",
             "--force-recreate",
@@ -176,7 +177,8 @@ def init(
 
         if os.environ.get("UNLOCK_REDIS") or unlock_redis:
             cmd = [
-                "docker-compose",
+                "docker",
+                "compose",
                 "-f",
                 "docker-compose.yml",
                 "-f",

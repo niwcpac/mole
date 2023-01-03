@@ -24,7 +24,8 @@ def build_angular():
 
     subprocess.call(
         [
-            "docker-compose",
+            "docker",
+            "compose",
             "run",
             "--rm",
             "--entrypoint",
@@ -34,7 +35,7 @@ def build_angular():
             "--configuration",
             "production",
             "--base-href",
-            "static/"
+            "static/",
         ]
     )
     sys.stdout = org_stdout
@@ -52,11 +53,8 @@ description = "Start the angular development server on port 4200."
 def ang(
     ctx: typer.Context,
     build: bool = typer.Option(
-        False, 
-        "-b", 
-        "--build", 
-        show_default=False,
-        help="Build angular static files"),
+        False, "-b", "--build", show_default=False, help="Build angular static files"
+    ),
 ):
 
     if ctx.invoked_subcommand is not None:
@@ -69,7 +67,7 @@ def ang(
             django_running = service_is_running("django")
             if not django_running:
                 print("Django service not running, starting Django...")
-                subprocess.call(["docker-compose", "up", "-d", "django"])
+                subprocess.call(["docker", "compose", "up", "-d", "django"])
 
             # build angular files
             build_angular()
@@ -78,7 +76,8 @@ def ang(
             print("Collecting front-end static files...")
             subprocess.call(
                 [
-                    "docker-compose",
+                    "docker",
+                    "compose",
                     "exec",
                     "django",
                     "./manage.py",
@@ -90,12 +89,12 @@ def ang(
             # if django wasn't originally running, stop django
             if not django_running:
                 subprocess.call(
-                    ["docker-compose", "stop", "django", "postgres", "redis"]
+                    ["docker", "compose", "stop", "django", "postgres", "redis"]
                 )
 
         else:
             print("Spinning up angular development container ...")
-            subprocess.call(["docker-compose", "up", "angular"])
+            subprocess.call(["docker", "compose", "up", "angular"])
 
     except KeyboardInterrupt:
         print("Stopping angular development container ...")

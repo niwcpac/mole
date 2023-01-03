@@ -27,7 +27,7 @@ def maps(ctx: typer.Context):
     if ctx.invoked_subcommand is not None:
         return
 
-    cmd = ["docker-compose", "up", "maptiles"]
+    cmd = ["docker", "compose", "up", "maptiles"]
     try:
         subprocess.call(cmd)
     except KeyboardInterrupt:

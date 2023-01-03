@@ -66,7 +66,8 @@ def docs(
         url = "http://mole.localhost:8000/api/"
 
         cmd = [
-            "docker-compose",
+            "docker",
+            "compose",
             "-f",
             "docker-compose.yml",
             "-f",
@@ -86,7 +87,8 @@ def docs(
 
                     if schema:
                         cmd = [
-                            "docker-compose",
+                            "docker",
+                            "compose",
                             "exec",
                             "django",
                             "python",
@@ -97,10 +99,11 @@ def docs(
                         ]
                         p1 = subprocess.call(cmd)
                         print("\nOpenAPI Schema generated: mole/openapi_schema.yml\n")
-                    
+
                     if graph_models:
                         cmd = [
-                            "docker-compose",
+                            "docker",
+                            "compose",
                             "exec",
                             "django",
                             "python",
@@ -115,24 +118,25 @@ def docs(
                         print("\nModels graphed: mole/mole_models_graph.png\n")
 
                     print("Stopping Django service...")
-                    cmd = ["docker-compose", "stop", "django"]
+                    cmd = ["docker", "compose", "stop", "django"]
                     subprocess.call(cmd)
                     break
 
             except IOError:
                 time.sleep(1.0)
-    
+
         if i == NUM_TRIES:
             print(
                 "Schema Generation Error: Django service failed to start. Unable to generate OpenAPI schema."
             )
-    
+
     if serve:
         print("Serving documentation at http://localhost:8001.")
         print("Note: Only limited Mole services are running in this mode.\n")
 
         cmd = [
-            "docker-compose",
+            "docker",
+            "compose",
             "-f",
             "docker-compose.yml",
             "-f",
@@ -149,14 +153,22 @@ def docs(
 
         except KeyboardInterrupt:
             terminate_mole(p, db_backup=False)
-            
 
     else:
         print(
             "Building documentation. Other Mole services are not running in this mode."
         )
         # override default "mkdocs serve" entrypoint
-        cmd = ["docker-compose", "run", "--entrypoint", '""', "docs", "mkdocs", "build"]
+        cmd = [
+            "docker",
+            "compose",
+            "run",
+            "--entrypoint",
+            '""',
+            "docs",
+            "mkdocs",
+            "build",
+        ]
 
         try:
             subprocess.call(cmd)
