@@ -11,6 +11,9 @@ import { Observable } from 'rxjs';
 })
 export class EventDialogComponent implements OnInit, OnDestroy {
 
+  displayedColumns: string[] = ['edit', 'key', 'value', 'actions'];
+  dataSource:any[] = [];
+
   eventTypesObservable: Observable<EventType[]>;
   imagesToUpload: File[] = null;
   order: string = "name";
@@ -32,16 +35,14 @@ export class EventDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.eventTypesObservable = this._eventTypeService.getEventTypes();
-    Object.keys(this.event.metadata).forEach(key => {
-      this.metadataKeys.push(key);
-    });
-  }
-
-  addMetadata(key: string, value: string) {
-    this.event.metadata[key] = value;
-    this.metadataKeys.push(key);
-    this.metaKeyInput = '';
-    this.metaValueInput = '';
+    Object.entries(this.event.metadata).forEach(function([key, value]) {
+      const newRow = { key: key, value: value, isEditable: false, actions: ''};
+      this.dataSource = [...this.dataSource, newRow];
+    }, this);
+    console.log(this.dataSource.length);
+    if(this.dataSource.length == 0){
+      this.addRow();
+    }
   }
 
   addPose(pose: Pose) {
@@ -64,22 +65,23 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     this.localImages = images;
   }
 
-  removeMetadata(key: string) {
-    delete this.event.metadata[key];
-    this.metadataKeys.splice(this.metadataKeys.indexOf(key), 1);
-  }
-
   onSubmit(event: Event) {
+    event.metadata = {};
+    this.dataSource.forEach(function (element) {
+      let trimmed_key = element.key.trim();
+      if(trimmed_key) {
+        event.metadata[trimmed_key] = element.value;
+      }
+    });
+ 
     // updating existing event
     if(event.url) {
       this._eventApiService.updateEvent(event);
     }
-
     // creating new event
     else {
       this._eventApiService.createEvent(event, this.localNotes, this.localImages);
     }
-
     this.dialogRef.close();
   }
 
@@ -107,9 +109,17 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     }
   }
 
+  addRow() {
+    const newRow = { edit:'', key: '', value: '', isEditable: true, actions: ''};
+    this.dataSource = [...this.dataSource, newRow];
+  }
+
+  deleteRow(row) {
+    this.dataSource = this.dataSource.filter(i => i.key !== row.key);
+  }
+
   ngOnDestroy(): void {
     delete this.localImages;
     delete this.localNotes;
   }
-
 }

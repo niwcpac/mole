@@ -13,23 +13,76 @@
     <mat-tab-group>
       <mat-tab label="Metadata">
         <br>
-        <span>
-            <mat-form-field class="meta-field" appearance="fill">
-                <mat-label>Key</mat-label>
-                <input matInput id="input-key" #newKey [(ngModel)]="metaKeyInput">
-            </mat-form-field>
-            :
-            <mat-form-field class="meta-field" appearance="fill">
-                <mat-label>Value</mat-label>
-                <input matInput id="input-value" #newValue [(ngModel)]="metaValueInput">
-            </mat-form-field>
-            <button mat-icon-button id="button1-mat-tab-group"
-                (click)="addMetadata(newKey.value, newValue.value)"
-                [disabled]="newKey.value.length == 0 || newValue.value.length == 0"
-                color="primary">
-                <mat-icon>done</mat-icon>
-            </button>
-        </span>
+        <article class="table-header">
+          <button class="button-add-row" mat-button (click)="addRow()">Add Row</button>
+        </article>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+          <!-- edit Column -->
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>  </th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+              <div *ngIf="element.isEditable; then thenBlock else elseBlock"></div>
+              <ng-template #thenBlock>
+                <button mat-icon-button (click)="element.isEditable = !element.isEditable">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </ng-template>
+              <ng-template #elseBlock>
+                <button mat-icon-button (click)="element.isEditable = !element.isEditable">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </ng-template>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Key Column -->
+          <ng-container matColumnDef="key">
+            <th mat-header-cell *matHeaderCellDef> Key </th>
+            <td mat-cell *matCellDef="let element"> 
+              <div *ngIf="element.isEditable; then thenBlock else elseBlock"></div>
+              <ng-template #thenBlock>
+                <mat-form-field appearance="fill">
+                  <mat-label>Key</mat-label>
+                  <input matInput [(ngModel)]="element.key">
+                </mat-form-field>
+              </ng-template>
+              <ng-template #elseBlock> {{element.key}} </ng-template>
+            </td>
+          </ng-container>
+        
+          <!-- Value Column -->
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef> Value </th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.isEditable; then thenBlock else elseBlock"></div>
+              <ng-template #thenBlock>
+                <mat-form-field appearance="fill">
+                  <mat-label>Value</mat-label>
+                  <input matInput [(ngModel)]="element.value">
+                </mat-form-field>
+              </ng-template>
+              <ng-template #elseBlock> {{element.value}} </ng-template>
+            </td>
+          </ng-container>
+
+          <!-- actionables Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>  </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button (click)="deleteRow(element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
       </mat-tab>
       <mat-tab label="Notes">
         <br>

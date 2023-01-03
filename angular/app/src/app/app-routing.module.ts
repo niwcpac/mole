@@ -15,15 +15,6 @@ export const routes: Route[] = [
     loadChildren: () => import('./modules/operator/operator.module').then(m => m.OperatorModule)
   },
   {
-    path: 'dashboard',
-    canActivate: [AuthGuard],
-    data: {
-      'title': 'Dashboard',
-      'icon': 'dashboard',
-    },
-    loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
-  },
-  {
     path: 'clock',
     data: {
       'title': 'Clock',
