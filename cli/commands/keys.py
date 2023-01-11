@@ -1,8 +1,8 @@
-
 import os, sys
 import subprocess
 
 import typer
+
 app = typer.Typer(add_completion=False)  # Create an typer appplication
 
 CERT_CONF_DIR = os.path.join(".", "traefik", "configuration")
@@ -22,10 +22,12 @@ SERVER_CERT_FILE = os.path.join(CERT_DIR, "mole.crt")
 ###                           Helper Function                                ###
 ################################################################################
 
+
 def is_key_exists():
     if not os.path.isfile(CA_KEY_FILE):
         return False
     return True
+
 
 def create_backup_file(filename):
     if os.path.isfile(filename):
@@ -33,11 +35,13 @@ def create_backup_file(filename):
         return True
     return False
 
+
 def backup_ca_files():
     """Backup Certificate Authority (CA) Key/Certificate Files"""
     print("Backing up certificate authority certificates...")
     create_backup_file(CA_KEY_FILE)
     create_backup_file(CA_CERT_FILE)
+
 
 def backup_server_files():
     """Back Up Server Key/Certificate Files"""
@@ -48,7 +52,7 @@ def backup_server_files():
 
 
 def generate_keys(skip_server=False, skip_ca=False):
-    
+
     if is_key_exists():
         yes = ("yes", "y", "ye")
         prompt = """
@@ -60,9 +64,8 @@ def generate_keys(skip_server=False, skip_ca=False):
         sys.stdout.write(prompt)
 
         choice = input().lower()
-        if choice not in 'yes':
+        if choice not in "yes":
             return
-
 
     if not skip_ca:
         backup_ca_files()
@@ -162,17 +165,30 @@ def generate_keys(skip_server=False, skip_ca=False):
 ###                   Typer Application Default Callback                     ###
 ################################################################################
 
-description="Generate keys/certificates for serving via https"
+description = "Generate keys/certificates for serving via https"
+
+
 @app.callback(invoke_without_command=True, help=description)
-def keys(ctx : typer.Context,
-         skip_server : bool = typer.Option(False, "--ca",show_default=False, help="Only generate Certificate Authority certificates. Do not generate server certificates."), 
-         skip_ca : bool = typer.Option(False, "--server", show_default=False, help="Only generate server certificates. Do not generate Certificate Authority certificates.")):
-    
+def keys(
+    ctx: typer.Context,
+    skip_server: bool = typer.Option(
+        False,
+        "--ca",
+        show_default=False,
+        help="Only generate Certificate Authority certificates. Do not generate server certificates.",
+    ),
+    skip_ca: bool = typer.Option(
+        False,
+        "--server",
+        show_default=False,
+        help="Only generate server certificates. Do not generate Certificate Authority certificates.",
+    ),
+):
+
     if ctx.invoked_subcommand is not None:
         return
 
-    if not is_key_exists():
-        generate_keys(skip_server, skip_ca)
+    generate_keys(skip_server, skip_ca)
 
 
 ################################################################################
