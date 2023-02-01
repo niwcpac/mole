@@ -88,6 +88,8 @@ def service_is_running(service_name, id=False):
     except subprocess.CalledProcessError:
         return False
 
+    if not service_info:
+        return False
     if service_info[0]["State"] == "running":
         running = True
 
