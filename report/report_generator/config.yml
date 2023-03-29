@@ -16,8 +16,9 @@ mole:
   api: http://django:8000/api
   endpoints:
     trial: /trial_data
-    event: /event_data
+    event: /events/?format=csv
     entity: /entity_data
     entity_groups: /entity_groups_data
+    poses: /poses/?format=csv
 
   

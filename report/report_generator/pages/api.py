@@ -85,7 +85,7 @@ def control_inidicator_layout(endpoint_url, print=False):
                     "request-interval-indicator",
                 ),
                 rm.indicator(
-                    "Entity Data Endpoint Retrieval Time (s)", "entity-retrieval-time"
+                    "Pose Data Endpoint Retrieval Time (s)", "entity-retrieval-time"
                 ),
                 rm.indicator(
                     "Event Data Endpoint Retrieval Time (s)", "event-retrieval-time"

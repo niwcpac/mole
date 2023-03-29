@@ -1050,6 +1050,18 @@ class PoseViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         rest_pandas.PandasTextRenderer,
     ]
 
+    def get_pandas_filename(self, request, format):
+        if format in ("csv"):
+            # Use custom filename and Content-Disposition header
+            # mole_<endpoint>_<YYYYMMDD>_<HHMM>
+            endpoint = self.get_view_name().lower().replace(" ","_")
+            datetime_string = datetime.datetime.now().strftime("%Y%m%d_%H%M")
+            filename = f"mole_{endpoint}_{datetime_string}"
+            return filename  # Extension will be appended automatically
+        else:
+            # Default filename from URL (no Content-Disposition header)
+            return None
+
     def list(self, request, *args, **kwargs):
         # We need a custom list function
         # we don't want to paginate for Pandas output
@@ -1061,7 +1073,7 @@ class PoseViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         if isinstance(renderer, rest_pandas.PandasBaseRenderer):
             queryset = self.filter_queryset(self.get_queryset())
             serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
+            return self.update_pandas_headers(Response(serializer.data))
         else:
             return super().list(request, *args, *kwargs)
 
@@ -1363,6 +1375,18 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     ]
     schema = schemas.EventSchema()
 
+    def get_pandas_filename(self, request, format):
+        if format in ("csv"):
+            # Use custom filename and Content-Disposition header
+            # mole_<endpoint>_<YYYYMMDD>_<HHMM>
+            endpoint = self.get_view_name().lower().replace(" ","_")
+            datetime_string = datetime.datetime.now().strftime("%Y%m%d_%H%M")
+            filename = f"mole_{endpoint}_{datetime_string}"
+            return filename  # Extension will be appended automatically
+        else:
+            # Default filename from URL (no Content-Disposition header)
+            return None
+
     def list(self, request, *args, **kwargs):
         # We need a custom list function
         # we don't want to paginate for Pandas output
@@ -1374,7 +1398,7 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         if isinstance(renderer, rest_pandas.PandasBaseRenderer):
             queryset = self.filter_queryset(self.get_queryset())
             serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
+            return self.update_pandas_headers(Response(serializer.data))
         else:
             return super().list(request, *args, *kwargs)
 
@@ -1501,16 +1525,6 @@ class EventViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
         )
         event_producer.close()
         ss.schedule_events(saved)
-
-
-class EventDataViewSet(rest_pandas.PandasViewSet):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    queryset = dcm.Event.objects.all().select_related(
-        "start_pose", "event_type", "weather"
-    )
-    serializer_class = dcs.EventDataSerializer
-    filterset_class = EventFilter
-    schema = None
 
 
 class EntityDataViewSet(rest_pandas.PandasViewSet):
