@@ -98,23 +98,23 @@ def register_component_callbacks(app):
     )
     def endpoint_request(n, trial, endpoint_session):
         """Return current endpoint request polling rate and data retrieval time for trial-event and entity."""
-        event_filter = f"?trial={trial}"
+        trial_filter = f"&trial={trial}"
         if endpoint_session:
-            entity_url = f"{endpoint_session}{cfg['mole']['endpoints']['entity']}"
+            pose_url = f"{endpoint_session}{cfg['mole']['endpoints']['poses']}{trial_filter}"
             event_url = (
-                f"{endpoint_session}{cfg['mole']['endpoints']['event']}{event_filter}"
+                f"{endpoint_session}{cfg['mole']['endpoints']['event']}{trial_filter}"
             )
         else:
-            entity_url = f"{cfg['mole']['api']}{cfg['mole']['endpoints']['entity']}"
+            pose_url = f"{cfg['mole']['api']}{cfg['mole']['endpoints']['poses']}{trial_filter}"
             event_url = (
-                f"{cfg['mole']['api']}{cfg['mole']['endpoints']['event']}{event_filter}"
+                f"{cfg['mole']['api']}{cfg['mole']['endpoints']['event']}{trial_filter}"
             )
 
-        entity_retrieval_time = utils.data_retrieval_time(entity_url)
+        pose_retrieval_time = utils.data_retrieval_time(pose_url)
         event_retrieval_time = utils.data_retrieval_time(event_url)
 
         return (
-            f"{entity_retrieval_time}",
+            f"{pose_retrieval_time}",
             f"{event_retrieval_time}",
             event_retrieval_time,
         )

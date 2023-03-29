@@ -25,7 +25,8 @@ import report_generator.dash.export as re
 PATH = pathlib.Path(__file__).parents[1]
 with open(f"{PATH}/config.yml", "r") as config:
     cfg = yaml.safe_load(config)
-    event_endpoint = f"{cfg['mole']['api']}{cfg['mole']['endpoints']['event']}"
+    event_endpoint = f"{cfg['mole']['endpoints']['event']}"
+    local_event_endpoint = f"{cfg['mole']['api']}{cfg['mole']['endpoints']['event']}"
 
 
 bulk_export = re.make_bulk_exported()
@@ -84,7 +85,7 @@ def csv_table(data, filename, font_color, plot_color, height, width):
 def api_event_bar(endpoint, trial, font_color, plot_color, height, width):
     """Return a Bar Chart:
 
-    :param endpoint: An string, the API endpoint.
+    :param endpoint: A string, the API endpoint.
     :param trial: An int, the current or selected trial id.
     :param font_color: A string, the font color for the figure.
     :param plot_color: A string, the background color for the figure.
@@ -94,10 +95,10 @@ def api_event_bar(endpoint, trial, font_color, plot_color, height, width):
 
     title = "Event Statistics"
     if endpoint:
-        event = qf.api_request(f"{endpoint}/event_data?trial={trial}")
+        event = qf.api_request(f"{endpoint}{event_endpoint}&trial={trial}")
     else:
         # If an endpoint is not provided on the UI, a default endpoint (Mole event data endpoint) will be used.
-        event = qf.api_request(f"{event_endpoint}?trial={trial}")
+        event = qf.api_request(f"{local_event_endpoint}&trial={trial}")
 
     if not event.empty:
         eventTotal = event.groupby(["event_type"]).size().reset_index(name="total")
@@ -145,7 +146,7 @@ def api_event_bar(endpoint, trial, font_color, plot_color, height, width):
 def api_event_timeline(endpoint, trial, font_color, plot_color, height, width):
     """Return a Scatter Plot:
 
-    :param endpoint: An string, the API endpoint.
+    :param endpoint: A string, the API endpoint.
     :param trial: An int, the current or selected trial id.
     :param font_color: A string, the font color for the figure.
     :param plot_color: A string, the background color for the figure.
@@ -156,10 +157,10 @@ def api_event_timeline(endpoint, trial, font_color, plot_color, height, width):
     title = "Event Timeline"
 
     if endpoint:
-        event = qf.api_request(f"{endpoint}/event_data?trial={trial}")
+        event = qf.api_request(f"{endpoint}{event_endpoint}&trial={trial}")
     else:
-        # If an endpoint is not provided on the UI, use default (Mole must be running)
-        event = qf.api_request(f"{event_endpoint}?trial={trial}")
+        # If an endpoint is not provided on the UI, a default endpoint (Mole event data endpoint) will be used.
+        event = qf.api_request(f"{local_event_endpoint}&trial={trial}") 
 
     if not event.empty:
         fig = px.scatter(

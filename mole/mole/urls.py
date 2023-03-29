@@ -57,7 +57,6 @@ router.register(r"capabilities", views.CapabilityViewSet)
 router.register(r"event_levels", views.EventLevelViewSet)
 router.register(r"event_types", views.EventTypeViewSet)
 router.register(r"events", views.EventViewSet)
-router.register(r"event_data", views.EventDataViewSet, basename="event_data")
 router.register(r"entity_data", views.EntityDataViewSet, basename="entity_data")
 router.register(r"trial_data", views.TrialDataViewSet, basename="trial_data")
 router.register(
