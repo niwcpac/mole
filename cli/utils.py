@@ -89,7 +89,10 @@ def service_is_running(service_name, id=False):
         return False
 
     if not service_info:
-        return False
+        if id:
+            return False,-1
+        else:
+            return False
     if service_info[0]["State"] == "running":
         running = True
 
