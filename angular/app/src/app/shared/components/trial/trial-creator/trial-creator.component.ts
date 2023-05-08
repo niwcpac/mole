@@ -201,8 +201,6 @@ export class TrialCreatorComponent implements OnInit {
       this.trialForm.controls['system_configuration'].setValue(configUrl)
     }
 
-    // Set to null just in case there is no clock config
-    this.trialForm.controls['clock_config'].setValue(null);
     var selectedClockConfig = this.trialForm.get('clock_config')
     selectedClockConfig = selectedClockConfig.value;
     for (var k=0; k < this.clockConfigs.length; k++) {
@@ -213,6 +211,11 @@ export class TrialCreatorComponent implements OnInit {
       this.trialForm.controls['clock_config'].reset()
       this.trialForm.controls['clock_config'].setValue(selectedClockConfig)
     }
+    // In cases where no clock config exists, 'clock_config' value is '[]' which is an invalid payload 
+    if (Array.isArray(this.trialForm.controls['clock_config'].value)) {
+      this.trialForm.controls['clock_config'].setValue(null);
+    }
+
   }
 
   onNoClick(): void {
