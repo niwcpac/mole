@@ -422,7 +422,7 @@ class Command(BaseCommand):
         # Entity Event Roles
         example_role = factories.EntityEventRoleFactory(
             name="example_role",
-            metadata_key="example_role",
+            metadata_key=factories.MetadataKeyFactory(name="example_role"),
             entity_state=example_entity_state,
             valid_event_types=[node_online_event_type],
             valid_entity_types=[example_entity_type],

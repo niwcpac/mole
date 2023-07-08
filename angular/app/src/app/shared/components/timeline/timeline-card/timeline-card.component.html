@@ -48,7 +48,7 @@
           </fa-icon>&nbsp;
           No Event Type Assigned
       </mat-label>
-      <mat-select id="mat-select-event-types" [(ngModel)]="event.eventType" (ngModelChange)="toggleEditType()" required>
+      <mat-select id="mat-select-event-types" [(ngModel)]="event.eventType" (ngModelChange)="toggleEditType()" (selectionChange)="bubbleUpEventType($event.value)" required>
           <mat-option
               *ngFor="let type of eventTypesObservable | async | orderBy:order"
               [value]="type">

@@ -3,9 +3,11 @@ import {
   OnInit,
   AfterViewInit,
   Input,
+  Output,
   ViewChild,
   ElementRef,
-  HostListener
+  HostListener,
+  EventEmitter,
 } from '@angular/core';
 import { Event, EventType, EventImage, Pose } from '../../../models'
 import { MatDialog } from '@angular/material/dialog';
@@ -49,7 +51,8 @@ export class TimelineCardComponent implements OnInit, AfterViewInit {
   @Input() allowPoseUpdates: boolean = false;
   @Input() showMetadata: boolean = true;
   @Input() allowResize: boolean = false;
-
+  @Output() eventType = new EventEmitter<String>();
+  
   // prioritized keys are listed first in metadata section
   prioritizedKeys: Array<string> = [];
 
@@ -336,6 +339,10 @@ export class TimelineCardComponent implements OnInit, AfterViewInit {
       this.loadEventCard();
     }
     this.resizeState = state;
+  }
+
+  bubbleUpEventType(value: string) {
+    this.eventType.emit(value);
   }
 
 }

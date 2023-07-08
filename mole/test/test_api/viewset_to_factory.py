@@ -51,4 +51,6 @@ viewset_to_factory = {
     "script": auto_factories.ScriptFactory,
     "scriptedevent": auto_factories.ScriptedEventFactory,
     "scriptcondition": auto_factories.ScriptConditionFactory,
+    "metadatakey": factories.MetadataKeyFactory,
+    "metadatavalue": factories.MetadataValueFactory,
 }

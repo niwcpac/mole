@@ -909,7 +909,7 @@ class EntityEventRole(models.Model):
     # This model defines possible Roles an Entity may have in an Event
     name = models.CharField(max_length=100, blank=False, null=False, unique=True)
     # metadata_key is used if the entity is submitted via metadata. This key is used to match the entity in the associated metadata value.
-    metadata_key = models.CharField(max_length=100, blank=True, null=True, unique=True)
+    metadata_key = models.ForeignKey("MetadataKey", null=True, blank=True, on_delete=models.SET_NULL)
     description = models.TextField(blank=True, default="")
     entity_state = models.ForeignKey(
         "EntityState", blank=True, null=True, on_delete=models.SET_NULL
@@ -1268,6 +1268,24 @@ class Trigger(models.Model):
         max_length=10, blank=True, null=False, default=""
     )
     trigger_responses = models.ManyToManyField(OrderedTriggerResponse, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class MetadataKey(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, default="")
+    event_type_list = models.ManyToManyField(EventType, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class MetadataValue(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True, default="")
+    metadata_keys = models.ManyToManyField(MetadataKey, blank=True)
 
     def __str__(self):
         return self.name

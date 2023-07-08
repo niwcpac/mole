@@ -4,10 +4,6 @@
     right: 0;
 }
 
-.meta-field {
-    width: 35%;
-}
-
 mat-card {
     margin: 10px;
     padding: 15px;
@@ -19,17 +15,24 @@ mat-tab {
     padding-top: 2em;
 }
 
-.mat-column-edit, .mat-column-actions {
-    width:1%;
-    padding:0px;
+.mat-column-edit,
+.mat-column-actions {
+    width: 1%;
+    padding: 0px;
 }
 
-// :host ::ng-deep .mat-form-field {
-//     width:100%;
-//     .mat-form-field-wrapper {
-//         padding-bottom: 0;
-//     }
-//     .mat-form-field-underline {
-//         bottom: 0;
-//     }
-// }
+.my-list {
+    padding: 5px;
+}
+
+.flex-parent {
+    display: flex;
+    justify-content: flex-start;
+    margin: 16px 5px;
+}
+
+.flex-item {
+    width: fit-content;
+    margin: 5px;
+    padding: 5px;
+}

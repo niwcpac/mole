@@ -62,7 +62,7 @@ The state is then associated to the `EntityEventRole` that correlates to it.
 ``` python
 example_role = factories.EntityEventRoleFactory(
     name="example_role", 
-    metadata_key="example_role",
+    metadata_key=example_metadatakey,
     entity_state=example_entity_state,
     valid_event_types=[example_event_type],
     valid_entity_types=[example_entity_type]
@@ -87,7 +87,7 @@ none specified
 In brief, entity event roles define the part an entity plays in an event. 
 
 When an event is created, the serializer will check the event `metadata` for the 
-`metadata_key` defined in the EntityEventRole instance and validate its value. If the 
+`metadata_key` instance defined in the EntityEventRole instance and validate its value. If the 
 value of this key matches the `name` of an existing entity, the serializer will attempt 
 to relate the entity to the event and apply the state to the entity. 
 
