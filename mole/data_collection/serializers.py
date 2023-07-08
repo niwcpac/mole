@@ -676,9 +676,23 @@ class EventLevelSerializer(serializers.HyperlinkedModelSerializer):
         fields = ("url", "id", "name", "description", "key", "visibility")
 
 
+class MetadataKeySerializer(serializers.HyperlinkedModelSerializer):
+    metadatavalue_set = serializers.SlugRelatedField(slug_field="name", many=True, queryset=dcm.MetadataValue.objects.all())
+
+    class Meta:
+        model = dcm.MetadataKey
+        fields = ("url", "name", "description", "event_type_list", "metadatavalue_set")
+
+
 class EventTypeSerializer(serializers.HyperlinkedModelSerializer):
     event_level = EventLevelSerializer()
     point_style = PointStyleSerializer()
+    metadatakey_set = serializers.HyperlinkedRelatedField(
+        view_name="metadatakey-detail", 
+        queryset=dcm.MetadataKey.objects.all(),
+        many=True, 
+        required=False,
+    )
 
     class Meta:
         model = dcm.EventType
@@ -696,6 +710,7 @@ class EventTypeSerializer(serializers.HyperlinkedModelSerializer):
             "resets_with",
             "ends_segment",
             "is_manual",
+            "metadatakey_set",
         )
 
     def __init__(self, *args, **kwargs):
@@ -1566,7 +1581,7 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
                 valid_entities = []
                 for entity_role in entity_roles:
                     try:
-                        entity_list = metadata[entity_role.metadata_key]
+                        entity_list = metadata[entity_role.metadata_key.name]
                         if type(entity_list) is not list:
                             entity_list = [entity_list]
                         for entity_name in entity_list:
@@ -1699,7 +1714,7 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
             valid_entities = []
             for entity_role in entity_roles:
                 try:
-                    entity_list = metadata[entity_role.metadata_key]
+                    entity_list = metadata[entity_role.metadata_key.name]
                     if type(entity_list) is not list:
                         entity_list = [entity_list]
                     for entity_name in entity_list:
@@ -2034,3 +2049,9 @@ class ImageOverviewSerializer(serializers.HyperlinkedModelSerializer):
         model = dcm.Image
         fields = ("url", "image_url", "thumb_url")
         read_only_fields = ("url", "image_url", "thumb_url")
+
+
+class MetadataValueSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = dcm.MetadataValue
+        fields = ("url", "name", "description", "metadata_keys")

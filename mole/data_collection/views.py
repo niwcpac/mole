@@ -1879,3 +1879,28 @@ class RegionViewSet(viewsets.ModelViewSet):
     filterset_class = RegionFilter
     serializer_class = dcs.RegionSerializer
     schema = schemas.RegionSchema()
+
+
+class MetadataKeyViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint represents metadata keys that are expected on specific event types.
+
+    Each metadata key has a list of associated metadata values that are possible
+    and a list of event types it's expected to appear on. 
+    """
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = dcm.MetadataKey.objects.all()
+    serializer_class = dcs.MetadataKeySerializer
+
+
+class MetadataValueViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint represents metadata values that are valid values for specified metadata keys.
+
+    Each uniquely named value can be associated to one or more metadata key.
+    """
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = dcm.MetadataValue.objects.all()
+    serializer_class = dcs.MetadataValueSerializer

@@ -53,6 +53,7 @@ export interface EventType {
   resetsWith: Array<any>;
   endsSegment: boolean;
   isManual: boolean;
+  metadatakey_set: Array<string>;
 }
 
 export interface EventImage {

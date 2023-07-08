@@ -64,7 +64,7 @@ entity_event_role_info = (
     "entityeventrole",
     {
         "name": "entity_event_role_name",
-        "metadata_key": "entity_event_role_metadata_key",
+        "metadata_key": ("metadatakey",),
         "description": "entity_event_role_description",
         "entity_state": ("entitystate",),
         "valid_event_types": (["eventtype"],),
@@ -455,6 +455,22 @@ clock_config_create_info = (
     }
 )
 
+metadata_key_create_info = (
+    "metadata_key",
+    {
+        "name": "example_metadata_key",
+        "event_type_list": (["eventtype"],)
+    }
+)
+
+metadata_value_create_info = (
+    "metadata_value",
+    {
+        "name": "example_metadata_value",
+        "metadata_keys": (["metadata_key"],)
+    }
+)
+
 create_test_list = (
     user_create_info,
     user_profile_create_info,
@@ -554,10 +570,10 @@ class ComplexCreateTests(APITestCase):
 
     def testCreateEntityOnEvent(self):
         event_role_1_instance = factories.EntityEventRoleFactory(
-            name="Test Role 1", metadata_key="test_role_1_key"
+            name="Test Role 1", metadata_key=factories.MetadataKeyFactory(name="test_role_1_key"),
         )
         event_role_2_instance = factories.EntityEventRoleFactory(
-            name="Test Role 2", metadata_key="test_role_2_key"
+            name="Test Role 2", metadata_key=factories.MetadataKeyFactory(name="test_role_2_key"),
         )
         entity_1_instance = factories.EntityFactory()
         entity_1_path = reverse("entity-detail", args=(entity_1_instance.name,))
@@ -800,10 +816,10 @@ class ComplexCreateTests(APITestCase):
         3. Update with valid related entities as a list in metadata. Entity relations should be created.
         """
         event_role_1_instance = factories.EntityEventRoleFactory(
-            name="Test Role 1", metadata_key="test_role_1_key"
+            name="Test Role 1", metadata_key=factories.MetadataKeyFactory(name="test_role_1_key"),
         )
         event_role_2_instance = factories.EntityEventRoleFactory(
-            name="Test Role 2", metadata_key="test_role_2_key"
+            name="Test Role 2", metadata_key=factories.MetadataKeyFactory(name="test_role_2_key"),
         )
         entity_1_instance = factories.EntityFactory()
         entity_1_path = reverse("entity-detail", args=(entity_1_instance.name,))

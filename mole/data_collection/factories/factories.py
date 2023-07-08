@@ -389,6 +389,17 @@ class EventTypeFactory(DjangoModelFactory):
             for event_type in extracted:
                 self.resets_with.add(event_type)
 
+    # handle many-to-many relationship
+    @factory.post_generation
+    def metadatakey_set(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            # A list of MetadataKeys was passed in, use them
+            for metadata_key in extracted:
+                self.metadatakey_set.add(metadata_key)
+
 
 class CampaignFactory(DjangoModelFactory):
     class Meta:
@@ -726,7 +737,7 @@ class EntityEventRoleFactory(DjangoModelFactory):
         django_get_or_create = ("name",)
 
     name = factory.Sequence(lambda n: "entity_event_role_%d" % n)
-    metadata_key = factory.Sequence(lambda n: "entity_event_role_%d" % n)
+    metadata_key = factory.SubFactory("data_collection.factories.factories.MetadataKeyFactory")
 
     @factory.post_generation
     def valid_event_types(self, create, extracted, **kwargs):
@@ -832,3 +843,52 @@ class RegionFactory(DjangoModelFactory):
             # A list of scenarios was passed in, use them
             for scenario in extracted:
                 self.scenarios.add(scenario)
+
+
+class MetadataKeyFactory(DjangoModelFactory):
+    class Meta:
+        model = models.MetadataKey
+        django_get_or_create = ("name",)
+
+    name = factory.Sequence(lambda n: "metadata_key_%d" % n)
+
+    # handle many-to-many relationship
+    @factory.post_generation
+    def event_type_list(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            # A list of scenarios was passed in, use them
+            for event_type in extracted:
+                self.event_type_list.add(event_type)
+
+    # handle many-to-many relationship
+    @factory.post_generation
+    def metadatavalue_set(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            # A list of scenarios was passed in, use them
+            for metadatavalue in extracted:
+                self.metadatavalue_set.add(metadatavalue)
+    
+
+class MetadataValueFactory(DjangoModelFactory):
+    class Meta:
+        model = models.MetadataValue
+        django_get_or_create = ("name",)
+
+    name = factory.Sequence(lambda n: "metadata_value_%d" % n)
+
+    # handle many-to-many relationship
+    @factory.post_generation
+    def metadata_keys(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            # A list of scenarios was passed in, use them
+            for key in extracted:
+                self.metadata_keys.add(key)

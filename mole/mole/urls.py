@@ -81,6 +81,8 @@ router.register(r"condition_variables", views.ConditionVariableViewSet)
 router.register(r"requested_data", views.RequestedDataViewSet)
 router.register(r"regions", views.RegionViewSet)
 router.register(r"region_types", views.RegionTypeViewSet)
+router.register(r"metadata_keys", views.MetadataKeyViewSet)
+router.register(r"metadata_values", views.MetadataValueViewSet)
 
 router.register(r"clock_configs", views.ClockConfigViewSet)
 router.register(r"clock_phases", views.ClockPhaseViewSet)

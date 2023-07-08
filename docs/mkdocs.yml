@@ -14,6 +14,7 @@ nav:
       - Game Clock: game_clock.md
       - Scenario Scripts: scenario_scripts.md
       - Point Styles: point_styles.md
+      - Metadata Keys/Values: metadata_keyvalue.md
       - Trigger Setup: trigger_setup.md
     - API Usage: usage.md
     - Report Generator: report_generator.md
