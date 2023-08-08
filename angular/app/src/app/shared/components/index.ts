@@ -1,9 +1,9 @@
 export { MapsComponent } from './maps/maps.component';
 export { MapInstanceComponent } from './maps/map-instance/map-instance.component';
 export { CesiumInstanceComponent } from './maps/cesium-instance/cesium-instance.component';
-export { ContextMenuLayerComponent } from './maps/cesium-instance/cesium-context-menu/context-menu-layer.component'; 
+export { ContextMenuLayerComponent } from './maps/cesium-instance/cesium-context-menu/context-menu-layer.component';
 export { CesiumContextMenuComponent } from './maps/cesium-instance/cesium-context-menu/cesium-context-menu.component';
-export { TrialSelectorComponent } from './trial/trial-selector/trial-selector.component';
+export { HeaderBarComponent } from './trial/header-bar/header-bar.component';
 export { TrialCreatorComponent } from './trial/trial-creator/trial-creator.component';
 export { TimelineComponent } from './timeline/timeline.component'
 export { TimelineCardComponent } from './timeline/timeline-card/timeline-card.component';

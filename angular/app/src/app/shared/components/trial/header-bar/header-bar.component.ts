@@ -11,10 +11,10 @@ import { TrialApiAdapters } from '../../../services/trial/trial-api.adapter';
 
 @Component({
   selector: 'mole-trial-selector',
-  templateUrl: './trial-selector.component.html',
-  styleUrls: ['./trial-selector.component.scss']
+  templateUrl: './header-bar.component.html',
+  styleUrls: ['./header-bar.component.scss']
 })
-export class TrialSelectorComponent implements OnInit, OnDestroy {
+export class HeaderBarComponent implements OnInit, OnDestroy {
 
   @Input() trial: Trial;
   @Input() allowEdit: boolean = true;
