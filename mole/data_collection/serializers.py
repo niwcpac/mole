@@ -422,7 +422,7 @@ class RegionTypeSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
-class RegionSerializer(serializers.HyperlinkedModelSerializer):
+class RegionSerializer(DynamicFieldsHyperlinkedModelSerializer):
     region_type = serializers.HyperlinkedRelatedField(
         view_name="regiontype-detail", queryset=dcm.RegionType.objects.all()
     )
@@ -465,6 +465,11 @@ class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True,
     )
     potential_segments = SegmentSerializer(many=True, read_only=True)
+    regions = RegionSerializer(
+        read_only=True,
+        many=True,
+        fields=("url", "name", "geom"),
+    )
 
     class Meta:
         model = dcm.Scenario
@@ -481,6 +486,7 @@ class ScenarioSerializer(serializers.HyperlinkedModelSerializer):
             "entity_groups",
             "time_limit",
             "scripts",
+            "regions",
         )
 
 
@@ -1260,39 +1266,17 @@ class TrialDataSerializer(serializers.Serializer):
     id_micro = serializers.ReadOnlyField()
     campaign = serializers.ReadOnlyField()
     scenario = serializers.ReadOnlyField()
-    testers = serializers.ReadOnlyField()
+    testers = serializers.SerializerMethodField()
     test_condition = serializers.ReadOnlyField()
     system_configuration = serializers.ReadOnlyField()
-    performers = serializers.SerializerMethodField
+    performers = serializers.SerializerMethodField()
     start_datetime = serializers.ReadOnlyField()
     end_datetime = serializers.ReadOnlyField()
     note = serializers.ReadOnlyField()
     current = serializers.ReadOnlyField()
     reported = serializers.ReadOnlyField()
+    region = serializers.SerializerMethodField()
 
-    class Meta:
-        model = dcm.Trial
-        fields = (
-            "url",
-            "id",
-            "name",
-            "id_major",
-            "id_minor",
-            "id_micro",
-            "campaign",
-            "scenario",
-            "testers",
-            "entities",
-            "test_condition",
-            "bagfile",
-            "system_configuration",
-            "start_datetime",
-            "end_datetime",
-            "note",
-            "current",
-            "reported",
-            "clock_config",
-        )
 
     def get_name(self, obj):
         return obj.__str__()
@@ -1308,6 +1292,24 @@ class TrialDataSerializer(serializers.Serializer):
             pass
         performers.sort()
         return performers
+
+    def get_testers(self, obj):
+        testers = obj.testers.all()
+        if testers.count() == 1:
+            return testers.first().user.username
+        else:
+            return [tester.user.username for tester in testers]
+
+    def get_region(self, obj):
+        regions = obj.scenario.regions.all()
+        region_serializer = RegionSerializer(
+            regions,
+            many=True,
+            fields=["geom"],
+        )
+        
+        # Extract the coordinates of the geom field that is a ploygon and return them as a list
+        return [region["geom"]["coordinates"][0] for region in region_serializer.data if region["geom"]["type"] == "Polygon"]
 
 
 class ConditionVariableSerializer(serializers.HyperlinkedModelSerializer):
