@@ -757,7 +757,7 @@ class BulkPoseSerializer(serializers.ListSerializer):
 
 class PoseSerializer(gis_serializers.GeoModelSerializer):
     entity = EntitySerializer(
-        fields=("url", "name", "id", "description", "entity_type")
+        fields=("url", "name", "id", "description", "entity_type", "point_style")
     )
     pose_source = PoseSourceSerializer()
     events = serializers.HyperlinkedRelatedField(

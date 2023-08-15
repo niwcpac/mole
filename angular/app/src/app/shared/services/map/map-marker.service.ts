@@ -9,7 +9,7 @@ import { TrialApiService } from '../trial/trial-api.service';
 import { map, mergeAll, distinct } from 'rxjs/operators';
 import { EntityApiService } from '../entity/entity-api.service';
 import { PointStyleService } from '../point-style/point-style.service';
-import { PoseAdapters } from './pose.adapter';
+import { PoseAdapters } from '../pose/pose.adapter';
 @Injectable({
   providedIn: 'root'
 })
@@ -359,6 +359,3 @@ pullTrialStyles() {
   }
 
 }
-
-
-

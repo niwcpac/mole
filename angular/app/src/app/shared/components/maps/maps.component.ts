@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 
 import { Subscription } from 'rxjs';
 
-import {MapMarkerService, EventApiService, TrialApiService} from '../../services';
+import {MapMarkerService, EventApiService, TrialApiService, PoseApiService} from '../../services';
 import { Marker, MapFocus, Event, Trial, Entity, Pose } from "../../models";
 import { MatDialog } from '@angular/material/dialog';
 import { EventDialogComponent } from '../event/event-dialog/event-dialog.component';
 import { CookieService } from 'ngx-cookie-service';
-import { PoseAdapters } from '../../services/map/pose.adapter';
+import { PoseAdapters } from '../../services/pose/pose.adapter';
 import { map } from 'rxjs/operators';
 
 /**
@@ -43,11 +43,13 @@ export class MapsComponent implements OnInit, OnDestroy {
   eventMarker: Marker;
   createPose: boolean = false;
   trial: Trial;
+  posesArray: Pose[];
 
   constructor(
     private _mapMarkerService: MapMarkerService,
     private _eventApiService: EventApiService,
     private _trialApiService: TrialApiService,
+    private _poseApiService: PoseApiService,
     public dialog: MatDialog,
     private cookie: CookieService
   ) {
@@ -62,6 +64,11 @@ export class MapsComponent implements OnInit, OnDestroy {
       trial => this.trial = trial
     ));
 
+    this.subscriptions.add(_poseApiService.getPoses().subscribe(
+      (poses: Pose[]) => {
+        this.posesArray = poses;
+      }
+    ));
 
     this.subscriptions.add(_mapMarkerService.getTrialStyles().subscribe(
       (trialStyles: MapSettings[]) =>

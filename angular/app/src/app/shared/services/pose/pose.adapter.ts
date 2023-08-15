@@ -14,7 +14,8 @@ export class PoseAdapters {
         heading: pose.heading,
         entity: pose.entity,
         pose_source: pose.pose_source,
-        url: pose.url
+        url: pose.url,
+        id: pose.id
       }
 
     if(pose.timestamp){
