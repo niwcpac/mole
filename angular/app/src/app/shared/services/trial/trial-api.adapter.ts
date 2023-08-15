@@ -1,5 +1,15 @@
 
-import { Trial, TrialEventCount, TrialClockState, Scenario, SystemConfiguration, Testers, ClockConfig } from "../../models";
+import {
+  Trial,
+  TrialEventCount,
+  TrialClockState,
+  Scenario,
+  SystemConfiguration,
+  Testers,
+  ClockConfig,
+  Pose, PointStyle
+} from "../../models";
+import {Entities} from "../../models/trial.model";
 
 export class TrialApiAdapters {
   trialAdapter(json: any): Trial {
@@ -119,14 +129,14 @@ export class TrialApiAdapters {
 
   clockStateAdapter(json: any): TrialClockState {
     let clockState: TrialClockState = {}
-    
+
     if (json.trial_id) {
       clockState.trialId = json.trial_id;
     }
     if (json.timezone) {
       clockState.timezone = json.timezone;
     }
-    
+
     if (json.message) {
       clockState.message = json.message;
     }
@@ -166,4 +176,29 @@ export class TrialApiAdapters {
     return clockState;
   }
 
+  entitiesAdapter(json: any): Entities {
+    let entities: Entities = {
+      next:json.next,
+      previous:json.previous,
+      results:json.results
+      // url:json.url,
+      // name: json.name,
+      // display_name:json.display_name,
+      // physical_id:json.physical_id,
+      // entity_type:json.entity_type,
+      // description:json.description,
+      // trials: json.trials,
+      // campaigns: json.campaigns,
+      // groups:json.groups,
+      // mods: json.mods,
+      // region:json.region,
+      // latest_pose: json.pose,
+      // module_type: json.module_type,
+      // point_style: json.point_style
+    };
+    return entities;
+  }
+
 }
+
+

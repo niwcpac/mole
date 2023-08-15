@@ -12,7 +12,7 @@ mat-card {
 mat-card-title {
     margin-bottom: 0px;
 }
-    
+
 mat-checkbox {
     margin-left: 1rem;
 }
@@ -50,13 +50,13 @@ mat-checkbox {
 
 input[type=number] {
     /*for absolutely positioning spinners*/
-    position: relative; 
+    position: relative;
     padding: 2.5px;
     height: 25px;
 }
 
 
-input[type=number]::-webkit-outer-spin-button, 
+input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: inner-spin-button !important;
     width: 25px;
@@ -65,4 +65,9 @@ input[type=number]::-webkit-inner-spin-button {
     right: 0;
     height: 100%;
 }
+
+.mat-selected{
+  color: white!important;
+}
+
 

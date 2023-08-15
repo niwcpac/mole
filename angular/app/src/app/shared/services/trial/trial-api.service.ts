@@ -10,6 +10,7 @@ import { TrialEventCount, Trial, TrialId, Scenario, SystemConfiguration, Testers
 import { TrialApiAdapters } from "./trial-api.adapter";
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
+import {EntityApiAdapters} from "../entity/entity-api.adapter";
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,7 @@ export class TrialApiService implements OnDestroy {
 
   public trialApiAdapters = new TrialApiAdapters();
   private eventPayloadApiAdapters = new EventPayloadApiAdapters();
+
 
   constructor(private http: HttpClient, private cookie: CookieService) {
 
@@ -295,6 +297,13 @@ export class TrialApiService implements OnDestroy {
       );
     return testersRequest;
   }
+  public getAllEntities() {
+    let entitiesRequest = this.http.get(`/api/entities/`).pipe(
+      map(entity=>this.trialApiAdapters.entitiesAdapter(entity))
+    );
+    return entitiesRequest;
+  }
+
 
   public getAllClockConfigs() {
     let clockConfigRequest = this.http.get(`/api/clock_configs`)
@@ -363,7 +372,7 @@ export class TrialApiService implements OnDestroy {
         this.currentClockState = result;
         this.clockStateSubject.next(this.currentClockState);
       });
-      
+
     }
   }
 
