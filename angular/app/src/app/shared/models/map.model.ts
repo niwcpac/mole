@@ -9,6 +9,7 @@ export interface Pose {
   pose_source?: any; // url/object
   timestamp?: any;
   url?: string;
+  id?: number;
 }
 
 export interface PosePageResult {

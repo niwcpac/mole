@@ -76,6 +76,8 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   @Input() showTitle: boolean = true;
   @Input() allowMarkerMovement: boolean = true;
 
+  @Input() posesArray: Pose[] = []
+
   // Map is centered on this point
   currentFocus: MapFocus = {zoom: 0, center: [0,0], pitch: 0, bearing: 0, mapFocus: ""};
   @Input() set focus(value: MapFocus){
@@ -97,6 +99,15 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
 
   // global variable for layer name
   entityLayer: string = "entities";
+  trialPosesStyledOld: string = "trialPosesStyledOld";
+  trialPosesStyledMid: string = "trialPosesStyledMid";
+  trialPosesStyledNew: string = "trialPosesStyledNew";
+
+  entityPopup: mapboxgl.Popup  = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: true,
+    anchor: "top",
+  });;
 
   markerFeatures: Map<number,any>;
 
@@ -111,6 +122,9 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
 
     this.map.on('styledata',  () => {
       this.initSources();
+    });
+    this.map.on('error', function(err) {
+      console.log('A error event occurred: ', err);
     });
 
 
@@ -555,7 +569,156 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
     // reload markers as the filter may have changed
     this.loadEventMarker();
 
+    let default_collection = {
+      "type": "geojson",
+      "data": {
+        "type": "FeatureCollection",
+        "features": [],
+      },
+    }
+    if(!this.map.getSource("trialPosesSource")) {
+      this.map.addSource("trialPosesSource", default_collection);
+    }
+
+    function hoverPopup (event) {
+      var coordinates = event.features[0].geometry.coordinates.slice();
+      while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+      if (!this.entityPopup.isOpen()) {
+        this.entityPopup.setLngLat(coordinates).setHTML(event.features[0].properties["entity"]).addTo(this.map);
+      }
+    }
+    function hoverPopdown (event) {
+      this.entityPopup.remove();
+    }
+    this.map.on('mouseover', this.trialPosesStyledOld, hoverPopup.bind(this));
+    this.map.on('mouseover', this.trialPosesStyledMid, hoverPopup.bind(this));
+    this.map.on('mouseover', this.trialPosesStyledNew, hoverPopup.bind(this));
+    this.map.on('mouseleave', this.trialPosesStyledOld, hoverPopdown.bind(this));
+    this.map.on('mouseleave', this.trialPosesStyledMid, hoverPopdown.bind(this));
+    this.map.on('mouseleave', this.trialPosesStyledNew, hoverPopdown.bind(this));
   }
+
+  parseNewPoses(newPoses:Pose[] = []){
+    let newList = [];
+    newPoses.forEach((singlePose) => {
+      let timestampSinceEpoch = Date.parse(singlePose.timestamp);
+      newList.push({
+        'type': 'Feature',
+        'properties': {
+          'pose_source': singlePose.pose_source.name,
+          'entity': singlePose.entity.name,
+          'draggable': false,
+          'timestampSinceEpoch': timestampSinceEpoch,
+          'timestamp': singlePose.timestamp,
+          'icon': FontAwesomeUnicode.map[singlePose.entity.point_style.icon],
+        },
+        'geometry': {
+          'type': 'Point',
+          'coordinates': singlePose.coordinates,
+        },
+      });
+    });
+    this.posesArray = newList;
+    if(this.map.getSource("trialPosesSource")) {
+      this.map.getSource("trialPosesSource").setData({
+        "type": "FeatureCollection",
+        "features": this.posesArray,
+      });
+    }
+    this.renderPoses();
+  }
+
+  renderPoses() {
+    // TODO update to MapLibre v2.0.0 and use map.redraw()
+    if(this.map.getLayer(this.trialPosesStyledOld)) {
+      this.map.removeLayer(this.trialPosesStyledOld);
+    }
+    if(this.map.getLayer(this.trialPosesStyledMid)) {
+      this.map.removeLayer(this.trialPosesStyledMid);
+    }
+    if(this.map.getLayer(this.trialPosesStyledNew)) {
+      this.map.removeLayer(this.trialPosesStyledNew);
+    }
+
+    let nowSinceEpoch = Date.now();
+    if(!this.map.getLayer(this.trialPosesStyledOld)){
+      this.map.addLayer({
+        'id': this.trialPosesStyledOld,
+        'type': 'symbol',
+        'source': 'trialPosesSource',
+        // Display in red if the timestamp is older than 30 seconds from now
+        'filter': ['<', ['get', 'timestampSinceEpoch'], ['-', nowSinceEpoch, 30000]],
+        'layout': {
+          // Using text field to display unicode, which will render an icon
+          'text-field': ['get', 'icon']  ,
+          'text-anchor': "bottom",
+          // 'text-font': ['Font Awesome 5 Free Solid'],
+          'text-ignore-placement': true,
+          // TODO text-allow-overlap is deprecated in 2.1.0, replace with text-overlap
+          'text-allow-overlap': false,
+          'text-size': Number(15),
+          'text-transform': 'uppercase',
+        },
+        paint: {
+          'text-color': '#eb3528',
+          'text-halo-width': 1,
+          'text-halo-color': "rgba(0, 0, 0, 100)",
+        },
+      });
+    }
+    if(!this.map.getLayer(this.trialPosesStyledMid)){
+      this.map.addLayer({
+        'id': this.trialPosesStyledMid,
+        'type': 'symbol',
+        'source': 'trialPosesSource',
+        // Display in yellow if the timestamp is within 5-30 seconds from now
+        'filter': ['all', ['>=', ['get', 'timestampSinceEpoch'], ['-', nowSinceEpoch, 30000]], ['<', ['get', 'timestampSinceEpoch'], ['-', nowSinceEpoch, 5000]]],
+        'layout': {
+          // Using text field to display unicode, which will render an icon
+          'text-field': ['get', 'icon']  ,
+          'text-anchor': "bottom",
+          'text-ignore-placement': true,
+          // TODO text-allow-overlap is deprecated in 2.1.0, replace with text-overlap
+          'text-allow-overlap': false,
+          'text-size': Number(15),
+          'text-transform': 'uppercase',
+        },
+        paint: {
+          'text-color': '#c2b610',
+          'text-halo-width': 1,
+          'text-halo-color': "rgba(0, 0, 0, 100)",
+        },
+      });
+    }
+    if(!this.map.getLayer(this.trialPosesStyledNew)){
+      this.map.addLayer({
+        'id': this.trialPosesStyledNew,
+        'type': 'symbol',
+        'source': 'trialPosesSource',
+        // Display in green if the timestamp is within 5 seconds from now
+        // gives a 0.5 second margin if timestamp on the pose is slightly off
+        'filter': ['all', ['>=', ['get', 'timestampSinceEpoch'], ['-', nowSinceEpoch, 5000]], ['<', ['get', 'timestampSinceEpoch'], ['+', nowSinceEpoch, 500]]],
+        'layout': {
+          // Using text field to display unicode, which will render an icon
+          'text-field': ['get', 'icon']  ,
+          'text-anchor': "bottom",
+          'text-ignore-placement': true,
+          // TODO text-allow-overlap is deprecated in 2.1.0, replace with text-overlap
+          'text-allow-overlap': false,
+          'text-size': Number(15),
+          'text-transform': 'uppercase',
+        },
+        paint: {
+          'text-color': '#41f02e',
+          'text-halo-width': 1,
+          'text-halo-color': "rgba(0, 0, 0, 100)",
+        },
+      });
+    }
+  }
+
 
   loadEntities(){
     if(this.entities) {
@@ -566,7 +729,6 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
       for(let entity of filteredEntities){
         geoJSONFeatures.push(this.getGeoJSONPoint(entity));
       }
-
       this.setMapGeoJsonLayer(geoJSONFeatures, layerName);
     }
   }
@@ -689,6 +851,9 @@ export class MapInstanceComponent implements OnChanges, AfterViewInit, OnDestroy
   ngOnChanges(changes: SimpleChanges) {
     if(changes.markers && this.markers){
       this.loadMarkers()
+    }
+    if(changes.posesArray && this.posesArray){
+      this.parseNewPoses(changes.posesArray.currentValue);
     }
 
     if(changes.eventMarker && this.eventMarker){

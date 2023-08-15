@@ -70,7 +70,6 @@ class PosePagination(CursorPagination):
     page_size = 100
     page_size_query_param = "page_size"
     max_page_size = 1000
-    ordering = "-id"
     cursor_query_param = "cursor"  # default value = 'cursor'
 
 
@@ -1015,6 +1014,11 @@ class PoseFilter(filters.FilterSet):
         queryset=dcm.Trial.objects.all(),
         null_label="No trial",
     )
+    excluding = filters.ModelMultipleChoiceFilter(
+        field_name="entity",
+        queryset=dcm.Entity.objects.all(),
+        exclude=True,
+    )
 
     class Meta:
         model = dcm.Pose
@@ -1043,6 +1047,9 @@ class PoseViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.Pose.objects.all().select_related("entity", "pose_source")
     filterset_class = PoseFilter
+    filter_backends = [ filters.DjangoFilterBackend, OrderingFilter ]
+    ordering = "-timestamp"
+    ordering_fields = ["timestamp"]
     serializer_class = dcs.PoseSerializer
     pagination_class = PosePagination
     renderer_classes = list(api_settings.DEFAULT_RENDERER_CLASSES) + [
@@ -1098,6 +1105,19 @@ class PoseViewSet(viewsets.ModelViewSet, rest_pandas.PandasMixin):
             return self.with_list_serializer(dcs.PoseDataSerializer)
         else:
             return self.serializer_class
+
+    @action(detail=False, schema=None)
+    def latest(self, request):
+        """
+        This endpoint provides info about the most recent poses for all entities on a given trial.
+        """
+        trial_id = self.request.query_params.get("trial")
+        if not trial_id:
+            return Response("This endpoint expects a `trial` query parameter", status=status.HTTP_400_BAD_REQUEST)
+        # retrieve queryset and filter if user requested any filtering
+        queryset = self.filter_queryset(self.get_queryset())
+        poses = queryset.order_by("entity__name", "-timestamp").filter(trial=trial_id).distinct("entity__name")
+        return Response(dcs.PoseSerializer(poses, context={"request": request}, many=True).data)
 
 
 class NoteViewSet(viewsets.ModelViewSet):

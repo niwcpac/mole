@@ -1,6 +1,6 @@
 import {Event, EventPageResult, EventFilter, EventImage, EventNote } from "../../models";
 import { EventTypeApiAdapters } from '../event-type/event-type-api.adapter';
-import { PoseAdapters } from "../map/pose.adapter";
+import { PoseAdapters } from "../pose/pose.adapter";
 import { TesterApiAdapters } from '../tester/tester-api.adapter';
 
 export class EventApiAdapters {
