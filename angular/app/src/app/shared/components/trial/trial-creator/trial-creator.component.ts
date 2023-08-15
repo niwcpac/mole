@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { Trial, Campaign, ClockConfig } from '../../../models';
@@ -12,15 +12,17 @@ import { TrialApiService, AuthService, CampaignApiService } from '../../../servi
 })
 export class TrialCreatorComponent implements OnInit {
 
+
   scenarios: any;
   systemConfigs: any;
-  systemConfigList: Array<string> = [];
+  systemConfigList:Array<string>=[];
   testers: any;
   testerName: string;
   testerList: Array<string> = [];
   clockConfigs: any;
   clockConfigList: Array<ClockConfig> = [];
   temp: any;
+
 
   selectedCampaign: Campaign;
 
@@ -36,6 +38,14 @@ export class TrialCreatorComponent implements OnInit {
   startDatetime: any;
   endDatetime: any;
 
+  entities: any;
+  entityName: string;
+  entitiesList: Array<string> = [];
+
+
+
+//  trialEntities= new FormControl(["http://localhost/api/entities/example_entity/","http://localhost/api/entities/map_marker/"]);
+
   constructor(
     private _trialApiService: TrialApiService,
     private _campaignApiService: CampaignApiService,
@@ -50,6 +60,11 @@ export class TrialCreatorComponent implements OnInit {
     this.getSysConfigList();
     this.getTestersList();
     this.getClockConfigList();
+    this.getEntitiesList();
+
+
+
+
 
     this.trialForm = this.fb.group({
       id_major: [''],
@@ -64,7 +79,8 @@ export class TrialCreatorComponent implements OnInit {
       system_configuration: [''],
       reported: [''],
       current: [''],
-      note: ['']
+      note: [''],
+      entities: ['']
     });
 
     this.startDatetime = new Date(this.trial.startDatetime);
@@ -86,6 +102,7 @@ export class TrialCreatorComponent implements OnInit {
     this.trialForm.get('reported').setValue(this.trial.reported);
     this.trialForm.get('campaign').setValue(this.trial.campaign);
     this.trialForm.get('note').setValue(this.trial.note);
+    this.trialForm.get('entities').setValue(this.entitiesList);
   }
 
   public getCampaignIdNames() {
@@ -121,11 +138,27 @@ export class TrialCreatorComponent implements OnInit {
       this.testers.map(tester => {
         if (String(this.trial.testers) == tester.url) {
           this.testerList.push(tester.name);
-        } 
+        }
       });
     });
   }
 
+  public getEntitiesList() {
+    this._trialApiService.getAllEntities().subscribe(entityData => {
+      var filteredEntities=[];
+      this.entities= entityData.results;
+      this.entities.map(entity=>
+      {
+        if (String(this.trial.entities) == entity.url) {
+          this.entitiesList.push(entity.display_name);
+        }
+        if( entity.trials &&  entity.trials.includes(this.trial.url)){
+          filteredEntities.push(entity.url); // corrected typo
+        }
+        this.trialForm.get('entities').setValue(filteredEntities);
+      })
+    });
+  }
   public getClockConfigList() {
     this._trialApiService.getAllClockConfigs().subscribe(clockConfigData => {
       this.clockConfigs = clockConfigData;
@@ -206,12 +239,11 @@ export class TrialCreatorComponent implements OnInit {
     for (var k=0; k < this.clockConfigs.length; k++) {
       if (this.clockConfigs[k].name == selectedClockConfig) {
         selectedClockConfig = this.clockConfigs[k].url
-        console.log(selectedClockConfig);
       }
       this.trialForm.controls['clock_config'].reset()
       this.trialForm.controls['clock_config'].setValue(selectedClockConfig)
     }
-    // In cases where no clock config exists, 'clock_config' value is '[]' which is an invalid payload 
+    // In cases where no clock config exists, 'clock_config' value is '[]' which is an invalid payload
     if (Array.isArray(this.trialForm.controls['clock_config'].value)) {
       this.trialForm.controls['clock_config'].setValue(null);
     }

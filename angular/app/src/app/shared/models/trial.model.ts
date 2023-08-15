@@ -1,3 +1,5 @@
+import {PointStyle, Pose} from "./map.model";
+
 export interface Trial {
   url: string;
   id: number;
@@ -84,4 +86,25 @@ export interface TrialClockState {
   minor?: TrialClockState;
   major?: TrialClockState;
   reported?: TrialClockState;
+}
+export interface Entities {
+  next?:string,
+  previous?:string,
+  results:Array<any>
+}
+export interface EntityResult{
+  url:string;
+  name: string;
+  display_name:string;
+  physical_id:string;
+  entity_type:string;
+  description:string;
+//   trials: Array<any>;
+//   campaigns: Array<any>;
+//   groups:Array<any>;
+//   mods: Array<any>;
+//   region:Array<any>;
+//   latest_pose?: Pose;
+//   module_type: string
+//   point_style?: PointStyle
 }

@@ -86,7 +86,15 @@
 
       <mat-checkbox formControlName="reported" color="primary">Reported</mat-checkbox>
       <mat-checkbox formControlName="current" color="primary">Current</mat-checkbox>
+      <mat-form-field appearance="fill" class="form-element-md">
 
+       <mat-label>Entities</mat-label>
+        <mat-select formControlName="entities"  multiple>
+          <mat-option id="mat-option-entities" *ngFor="let entity of entities" [value]="entity.url">
+            {{ entity.display_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <mat-form-field appearance="fill" class="form-element-lg">
         <mat-label>Note</mat-label>
         <textarea matInput formControlName="note"></textarea>
