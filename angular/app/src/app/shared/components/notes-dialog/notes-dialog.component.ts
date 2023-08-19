@@ -23,13 +23,13 @@ export class NotesDialogComponent implements OnInit, OnDestroy {
   eventObservable = this._eventApiService.getSingleEvent();
   newNoteValue: string = '';
   localNoteId: number = -1;
+  displayButtons:boolean=false;
 
   constructor(
     private _eventApiService: EventApiService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public event: Event
   ) { }
-
   ngOnInit(): void {
     this.eventObservable.subscribe(
       (event: Event) => {
@@ -42,8 +42,11 @@ export class NotesDialogComponent implements OnInit, OnDestroy {
       this.dialogNotes = this.event.notes;
     }
   }
-
-  attachNote() {
+  onCancel(): void {
+    console.log("Cancel clicked");
+  }
+  public attachNote() {
+    console.log("In AttachNote");
     if (this.event.url) {
       this._eventApiService.addEventNote(this.event, this.newNoteValue).subscribe(_ => {
         // note post success
@@ -99,7 +102,7 @@ export class NotesDialogComponent implements OnInit, OnDestroy {
         this.dialogNotes = this.dialogNotes.concat([]); // trigger array change for data bind
       }
     }
-    
+
     // show note deleted message
     this._snackBar.open("Note Deleted", "", {
       duration: 2000,
@@ -118,6 +121,7 @@ export class NotesDialogComponent implements OnInit, OnDestroy {
     }
     return -1;
   }
+
 
   ngOnDestroy(): void {
     delete this.dialogNotes;

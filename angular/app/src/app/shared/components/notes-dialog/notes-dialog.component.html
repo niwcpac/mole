@@ -6,13 +6,6 @@
     [(ngModel)]='newNoteValue'></textarea>
 </mat-form-field>
 &nbsp;
-<button id="mat-icon-button-1" mat-icon-button
-    (click)="attachNote()"
-    [disabled]="newNoteValue.length == 0"
-    color="primary">
-    <mat-icon>done</mat-icon>
-</button>
-
 <div class="notes-container">
   <mat-card class="card-light" *ngFor="let note of dialogNotes | reverse; let noteIndex=index">
     <span class="top-right-corner">
@@ -53,5 +46,15 @@
     </mat-card-content>
 
 
+
+
+
   </mat-card>
+
 </div>
+
+ <div mat-dialog-actions *ngIf="displayButtons">
+      <button mat-flat-button id="button1-dialog-action"  color="accent" mat-dialog-close>Cancel</button>
+      <button mat-flat-button id="button2-dialog-action" mat-dialog-close (click)="attachNote()" color="primary">Ok</button>
+       </div>
+

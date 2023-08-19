@@ -102,6 +102,10 @@
       </mat-tab>
       <mat-tab label="Notes">
         <br>
+        <article class="table-header">
+          <button class="button-add-row" mat-button (click)="onNoteAddClick()" >Add Note</button>
+        </article>
+        <br>
         <mole-notes-dialog (newNoteEvent)="addNote($event)" (updateNoteEvent)="updateNote($event)"
           (deleteNoteEvent)="deleteNote($event)" [title]="false">
         </mole-notes-dialog>
