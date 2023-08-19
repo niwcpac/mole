@@ -215,14 +215,16 @@ export class TimelineCardComponent implements OnInit, AfterViewInit {
 
   // opens dialog for viewing and writing notes
   openNotesDialog(): void {
+
     const dialogRef = this.dialog.open(NotesDialogComponent, {
       width: '33vw',
-      data: this.event
+      data:this.event,
     });
-
+    //Triggers display of OK and Cancel buttons in the dialog
+    dialogRef.componentInstance.displayButtons=true;
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this._eventApiService.updateEvent(result);
+//       this._eventApiService.updateEvent(result);
     });
   }
 

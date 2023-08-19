@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Event, EventType, LocalEventNote, Pose, MetadataKey } from '../../../models'
 import { EventApiService, MetadataApiService } from '../../../services';
 import { Subscription } from 'rxjs';
+import {NotesDialogComponent} from "../../notes-dialog/notes-dialog.component";
 
 @Component({
   selector: 'mole-event-dialog',
@@ -25,6 +26,8 @@ export class EventDialogComponent implements OnInit, OnDestroy {
   localImages: FileList;
 
   imagesToUpload: File[] = null;
+
+  @ViewChild(NotesDialogComponent) notes!: NotesDialogComponent;
 
   constructor(
     private _eventApiService: EventApiService,
@@ -52,11 +55,18 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     }
   }
 
+  onNoteAddClick(){
+    if  (this.notes.newNoteValue.length > 0){
+      this.notes.attachNote();
+    }
+
+  }
   addPose(pose: Pose) {
     this.event.startPose = pose;
   }
 
   addNote(note: LocalEventNote) {
+    console.log("NOTE object passed to the addNote function",note);
     this.localNotes.push(note);
   }
 
@@ -94,6 +104,10 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     else {
       this._eventApiService.createEvent(event, this.localNotes, this.localImages);
     }
+    if (this.notes.newNoteValue.trim().length>0){
+      this.notes.attachNote();
+    }
+    console.log("EVENT ", event);
     this.dialogRef.close();
   }
 
@@ -142,8 +156,8 @@ export class EventDialogComponent implements OnInit, OnDestroy {
     // Using this.event.url as a way to determine if we're modifying an existing event
     if (this.event.url) {
       if (newItem.metadatakey_set.length) {
-        // The first event dialog with existing metadata doesn't populate the 
-        // dropdown because the following code runs before the metadata api service 
+        // The first event dialog with existing metadata doesn't populate the
+        // dropdown because the following code runs before the metadata api service
         // has a chance to retrieve the metadata keys from the API
         // TODO The expected fix for this would be to wait here until
         // this.metadataKeysToValuesMap is populated and continue
