@@ -1,14 +1,6 @@
 version: '3.7'
 
 services:
-  pulsar:
-    init: true
-    build: ./pulsar
-    environment:
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=1
-    entrypoint: [ "/pulsar/tests/init_test.sh" ]
-
   postgres:
     image: postgis/postgis:11-3.0
     environment:
@@ -45,5 +37,7 @@ services:
       - DEBUG_DJANGO
       - PYTHONDONTWRITEBYTECODE=1
       - TIMEZONE
+      - TEST_DJANGO=true
+
     entrypoint: build/init_test.sh
     working_dir: /home/django/mole

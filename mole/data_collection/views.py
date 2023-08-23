@@ -4,6 +4,7 @@ import json
 import os.path
 from django.utils import timezone
 
+from django.conf import settings
 from rest_framework.settings import api_settings
 import django_filters
 from django_filters import rest_framework as filters
@@ -45,9 +46,13 @@ import redis
 from automation.scenario_scripts.scenario_scripts import ScenarioScripts
 ss = ScenarioScripts()
 
-pulsar_client = pulsar.Client("pulsar://pulsar:6650")
-
 log = logging.getLogger("mole")
+
+
+pulsar_client = None
+if not settings.TEST_DJANGO:
+    log.info("Initializing Pulsar Client")
+    pulsar_client = pulsar.Client("pulsar://pulsar:6650")
 
 
 class EventPagination(CursorPagination):

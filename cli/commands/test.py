@@ -38,6 +38,12 @@ def test(
         help="Run integration tests with event generator.",
         show_default=False,
     ),
+    pulsar: bool = typer.Option(
+        False,
+        "--pulsar",
+        help="Run pulsar tests.",
+        show_default=False,
+    ),
 ):
 
     if ctx.invoked_subcommand is not None:
@@ -91,13 +97,31 @@ def test(
             return p.wait()
         except KeyboardInterrupt:
             terminate_mole(p, False)
+    
+    if pulsar:
+        cmd = [
+            "docker",
+            "compose",
+            "-f",
+            "docker-compose-pulsar-tests.yml",
+            "up",
+            "--exit-code-from",
+            "pulsar",
+        ]    
+        p = subprocess.Popen(cmd)
+        try:
+            return p.wait()
+        except KeyboardInterrupt:
+            terminate_mole(p, False)
 
     cmd = [
         "docker",
         "compose",
         "-f",
-        "docker-compose-tests.yml",
+        "docker-compose-django-tests.yml",
         "up",
+        "--exit-code-from",
+        "django",
     ]
     p = subprocess.Popen(cmd)
 
