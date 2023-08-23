@@ -9,6 +9,10 @@ PROFILE = False
 if "PROFILE" in os.environ:
     PROFILE = os.environ["PROFILE"] == "true"
 
+TEST_DJANGO = False
+if "TEST_DJANGO" in os.environ:
+    TEST_DJANGO = os.environ["TEST_DJANGO"]=="true"
+    
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 

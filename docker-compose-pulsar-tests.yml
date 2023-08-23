@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  pulsar:
+    init: true
+    build: ./pulsar
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    entrypoint: [ "/pulsar/tests/init_test.sh" ]
