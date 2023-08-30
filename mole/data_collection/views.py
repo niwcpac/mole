@@ -1598,10 +1598,22 @@ class ImageTypeViewSet(viewsets.ModelViewSet):
     serializer_class = dcs.ImageTypeSerializer
 
 
+class ImageFilter(filters.FilterSet):
+    trial = filters.ModelMultipleChoiceFilter(
+        queryset=dcm.Trial.objects.all(),
+        field_name="event__trial",
+    )
+
+    class Meta:
+        model = dcm.Image
+        fields = []
+
+
 class ImageViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = dcm.Image.objects.all().select_related("image_type", "event")
     serializer_class = dcs.ImageSerializer
+    filterset_class = ImageFilter
 
 
 class ImageDataViewSet(rest_pandas.PandasViewSet):
