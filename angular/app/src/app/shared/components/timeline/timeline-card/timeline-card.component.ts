@@ -9,6 +9,7 @@ import {
   HostListener,
   EventEmitter,
 } from '@angular/core';
+import { OWL_DATE_TIME_FORMATS} from 'ng-pick-datetime';
 import { Event, EventType, EventImage, Pose } from '../../../models'
 import { MatDialog } from '@angular/material/dialog';
 import { EventDialogComponent } from '../../event/event-dialog/event-dialog.component';
@@ -27,10 +28,17 @@ const enum ResizeState {
   RESIZE = 1
 }
 
+export const MY_NATIVE_FORMATS = {
+  fullPickerInput: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'},
+};
+
 @Component({
   selector: 'mole-timeline-card',
   templateUrl: './timeline-card.component.html',
-  styleUrls: ['./timeline-card.component.scss']
+  styleUrls: ['./timeline-card.component.scss'],
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS },
+],
 })
 export class TimelineCardComponent implements OnInit, AfterViewInit {
 
