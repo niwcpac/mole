@@ -1,14 +1,23 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators , FormControl} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { OWL_DATE_TIME_FORMATS} from 'ng-pick-datetime';
 
 import { Trial, Campaign, ClockConfig } from '../../../models';
 import { TrialApiService, AuthService, CampaignApiService } from '../../../services';
+
+
+export const MY_NATIVE_FORMATS = {
+  fullPickerInput: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'},
+};
 
 @Component({
   selector: 'mole-trial-creator',
   templateUrl: './trial-creator.component.html',
   styleUrls: ['./trial-creator.component.scss'],
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS },
+],
 })
 export class TrialCreatorComponent implements OnInit {
 
@@ -185,21 +194,6 @@ export class TrialCreatorComponent implements OnInit {
   }
 
   public modifyTrialPayload() {
-
-    // set trial start and end time seconds to 0
-    var trialStartDatetime = this.trialForm.get('start_datetime');
-    if (trialStartDatetime) {
-      var startDate = new Date(trialStartDatetime.value);
-      startDate.setSeconds(0);
-      this.trialForm.get('start_datetime').setValue(startDate);
-    }
-
-    var trialEndDatetime = this.trialForm.get('end_datetime');
-    if (trialEndDatetime) {
-      var endDate = new Date(trialEndDatetime.value);
-      endDate.setSeconds(0);
-      this.trialForm.get('end_datetime').setValue(endDate);
-    }
 
     var testersUrl = [];
     this.temp = this.trialForm.get('testers')

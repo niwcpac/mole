@@ -17,20 +17,18 @@
           <mat-label>Start Datetime</mat-label>
           <input matInput formControlName="start_datetime" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="yyyyy-MMM-ddTHH:mm:ss:">
           <button mat-button [owlDateTimeTrigger]="dt1" matSuffix mat-icon-button aria-label="start_datetime">
-            <owl-date-time color="primary" hour12Timer="true" #dt1></owl-date-time>
+            <owl-date-time color="primary" hour12Timer="true" showSecondsTimer="true" #dt1></owl-date-time>
             <mat-icon>calendar_today</mat-icon>
           </button>
-          <owl-date-time #dt1></owl-date-time>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-element-md ml-2">
           <mat-label>End Datetime</mat-label>
           <input matInput formControlName="end_datetime" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="yyyyy-MMM-ddTHH:mm:ss:">
           <button mat-button [owlDateTimeTrigger]="dt2" matSuffix mat-icon-button aria-label="end_datetime">
-            <owl-date-time color="primary" hour12Timer="true" #dt2></owl-date-time>
+            <owl-date-time color="primary" hour12Timer="true" showSecondsTimer="true" #dt2></owl-date-time>
             <mat-icon>calendar_today</mat-icon>
           </button>
-          <owl-date-time #dt2></owl-date-time>
 
       </mat-form-field>
 
