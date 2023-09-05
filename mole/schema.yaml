@@ -4443,6 +4443,18 @@ paths:
         description: trial
         schema:
           type: string
+      - name: excluding
+        required: false
+        in: query
+        description: excluding
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -4600,6 +4612,18 @@ paths:
         description: trial
         schema:
           type: string
+      - name: excluding
+        required: false
+        in: query
+        description: excluding
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       responses:
         '200':
           content:
@@ -4666,6 +4690,18 @@ paths:
         required: false
         in: query
         description: trial
+        schema:
+          type: string
+      - name: excluding
+        required: false
+        in: query
+        description: excluding
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
         schema:
           type: string
       requestBody:
@@ -4747,6 +4783,18 @@ paths:
         description: trial
         schema:
           type: string
+      - name: excluding
+        required: false
+        in: query
+        description: excluding
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -4824,6 +4872,18 @@ paths:
         required: false
         in: query
         description: trial
+        schema:
+          type: string
+      - name: excluding
+        required: false
+        in: query
+        description: excluding
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
         schema:
           type: string
       responses:
@@ -11739,6 +11799,38 @@ components:
                 description:
                   type: string
                   nullable: true
+                point_style:
+                  type: object
+                  properties:
+                    icon:
+                      type: string
+                      nullable: true
+                      maxLength: 200
+                    render_as_symbol:
+                      type: boolean
+                      nullable: true
+                    color:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                    use_marker_pin:
+                      type: boolean
+                    marker_color:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                    scale_factor:
+                      type: string
+                      format: decimal
+                      multipleOf: 0.0001
+                      maximum: 1000
+                      minimum: -1000
+                      nullable: true
+                    animation:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                  readOnly: true
               required:
               - name
               - entity_type
@@ -12510,6 +12602,38 @@ components:
             description:
               type: string
               nullable: true
+            point_style:
+              type: object
+              properties:
+                icon:
+                  type: string
+                  nullable: true
+                  maxLength: 200
+                render_as_symbol:
+                  type: boolean
+                  nullable: true
+                color:
+                  type: string
+                  nullable: true
+                  maxLength: 100
+                use_marker_pin:
+                  type: boolean
+                marker_color:
+                  type: string
+                  nullable: true
+                  maxLength: 100
+                scale_factor:
+                  type: string
+                  format: decimal
+                  multipleOf: 0.0001
+                  maximum: 1000
+                  minimum: -1000
+                  nullable: true
+                animation:
+                  type: string
+                  nullable: true
+                  maxLength: 100
+              readOnly: true
           required:
           - name
           - entity_type
@@ -13114,6 +13238,38 @@ components:
                 description:
                   type: string
                   nullable: true
+                point_style:
+                  type: object
+                  properties:
+                    icon:
+                      type: string
+                      nullable: true
+                      maxLength: 200
+                    render_as_symbol:
+                      type: boolean
+                      nullable: true
+                    color:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                    use_marker_pin:
+                      type: boolean
+                    marker_color:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                    scale_factor:
+                      type: string
+                      format: decimal
+                      multipleOf: 0.0001
+                      maximum: 1000
+                      minimum: -1000
+                      nullable: true
+                    animation:
+                      type: string
+                      nullable: true
+                      maxLength: 100
+                  readOnly: true
               required:
               - name
               - entity_type
