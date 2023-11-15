@@ -1,0 +1,788 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mole Documentation">
+      
+      
+      
+      
+        <link rel="prev" href="basic_config.html">
+      
+      
+        <link rel="next" href="pulsar.html">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Entity States - Mole Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/prism.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="Black" data-md-color-accent="Light-Blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#entitystate" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Mole Documentation" class="md-header__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mole Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Entity States
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Mole Documentation" class="md-nav__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mole Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting_started.html" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="true">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="basic_config.html" class="md-nav__link">
+        Basic Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Entity States
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="entity_states.html" class="md-nav__link md-nav__link--active">
+        Entity States
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entitystate" class="md-nav__link">
+    EntityState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entityeventrole" class="md-nav__link">
+    EntityEventRole
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pulsar.html" class="md-nav__link">
+        Pulsar Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="game_clock.html" class="md-nav__link">
+        Game Clock
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scenario_scripts.html" class="md-nav__link">
+        Scenario Scripts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="point_styles.html" class="md-nav__link">
+        Point Styles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="metadata_keyvalue.html" class="md-nav__link">
+        Metadata Keys/Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trigger_setup.html" class="md-nav__link">
+        Trigger Setup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        API Usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="report_generator.html" class="md-nav__link">
+        Report Generator
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="maps.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Utilities
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Utilities
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilities_event_mocker.html" class="md-nav__link">
+        Event Mocker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" tabindex="0" aria-expanded="false">
+          Developer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Developer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_debugger.html" class="md-nav__link">
+        Debugger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular.html" class="md-nav__link">
+        User Interface
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular_testing.html" class="md-nav__link">
+        Angular Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_migrations.html" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#entitystate" class="md-nav__link">
+    EntityState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entityeventrole" class="md-nav__link">
+    EntityEventRole
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Entity States</h1>
+
+<p>Entity states add the ability to track how events affect entities, as well as modify 
+entity appearance in the UI via point style overrides and transforms. The fields in the 
+Entity State model describe entity point style overrides and transforms that will be 
+serialized when an Entity is related to an Event (seen on the <code>related_entities</code> 
+property on the event).</p>
+<h2 id="entitystate">EntityState<a class="headerlink" href="#entitystate" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">example_entity_state</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">EntityStateFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;example_state&quot;</span><span class="p">,</span>
+    <span class="n">point_style_icon_transform</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{icon}</span><span class="s2">_example&quot;</span><span class="p">,</span>
+    <span class="n">point_style_color_transform</span><span class="o">=</span><span class="s2">&quot;#00AA00&quot;</span><span class="p">,</span>
+    <span class="n">point_style_use_marker_pin_override</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">point_style_marker_color_transform</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{marker_color}</span><span class="s2">33&quot;</span><span class="p">,</span>
+    <span class="n">point_style_scale_factor_override</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">point_style_animation_transform</span><span class="o">=</span><span class="s2">&quot;Previous animation: </span><span class="si">{animation}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">point_style_render_as_symbol_override</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Field Descriptions:</strong></p>
+<ul>
+<li><strong><code>name</code></strong>: the name of the entity state</li>
+<li><strong><code>point_style_icon_transform</code></strong>: transforms or overrides the entity's icon, 
+transforms must use keyword <code>icon</code> in curly braces. The above example would transform 
+the icon string "test.svg" into "test_example.svg". Notice that transforms are applied 
+before the file extension.</li>
+<li><strong><code>point_style_color_transform</code></strong>: transforms or overrides the entity's color, 
+transforms must use keyword <code>color</code> in curly braces. Colors are represented as hex 
+strings. If you are confident that the entity type point style color property does not 
+include an alpha value, you could use the transform to add an alpha value. Otherwise, 
+common use for this property would be to override the color entirely. The above example 
+would transform the color string "#00FF00" into "#00AA00".</li>
+<li><strong><code>point_style_use_marker_pin_override</code></strong>: overrides the entity's <code>use_marker_pin</code> 
+property. The above example would change the property "False" to "True".</li>
+<li><strong><code>point_style_marker_color_transform</code></strong>: transforms or overrides the entity's marker 
+color, transforms must use keyword <code>marker_color</code> in curly braces. Colors are 
+represented as hex strings. If you are confident that the entity type point style 
+marker color property does not include an alpha value, you could use the transform to 
+add an alpha value. Otherwise, common use for this property would be to override the 
+marker color entirely. The above example would transform the color string "#00FF00" 
+into "#00FF0033".</li>
+<li><strong><code>point_style_scale_factor_override</code></strong>: overrides the entity's <code>scale_factor</code> 
+property. The above example would override the scale factor "3" into "7".</li>
+<li><strong><code>point_style_animation_transform</code></strong>: transforms or overrides the entity's animation 
+color, transforms must use keyword <code>animation</code> in curly braces. The above example would 
+change the animation "test" into "Previous animation: test".</li>
+<li><strong><code>point_style_render_as_symbol_override</code></strong>: overrides the entity's <code>render_as_symbol</code> 
+property. The above example would change the property "False" to "True".</li>
+</ul>
+<p>By default, the base point style will be inherited from the point style on the entity's 
+type. Learn more about point styles <a href="basic_config.html#marker-styles">here</a>. The fields 
+with the <code>_transform</code> suffix use a Python string format to inject the previous value 
+(from the entity's point style) into the new value using the point style property name 
+as the format argument. The fields with the <code>_override</code> suffix will do a direct value 
+override. Overrides are also possible on <code>_transform</code> fields by omitting the point 
+style property reference.</p>
+<p>The state is then associated to the <code>EntityEventRole</code> that correlates to it. </p>
+<h2 id="entityeventrole">EntityEventRole<a class="headerlink" href="#entityeventrole" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">example_role</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">EntityEventRoleFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;example_role&quot;</span><span class="p">,</span> 
+    <span class="n">metadata_key</span><span class="o">=</span><span class="n">example_metadatakey</span><span class="p">,</span>
+    <span class="n">entity_state</span><span class="o">=</span><span class="n">example_entity_state</span><span class="p">,</span>
+    <span class="n">valid_event_types</span><span class="o">=</span><span class="p">[</span><span class="n">example_event_type</span><span class="p">],</span>
+    <span class="n">valid_entity_types</span><span class="o">=</span><span class="p">[</span><span class="n">example_entity_type</span><span class="p">]</span>
+    <span class="n">valid_entity_groups</span><span class="o">=</span><span class="p">[</span><span class="n">example_entity_group</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Field Descriptions:</strong></p>
+<ul>
+<li><strong><code>name</code></strong>: the name of the entity event role</li>
+<li><strong><code>metadata_key</code></strong>: event metadata key used to relate an entity to the event</li>
+<li><strong><code>entity_state</code></strong>: the entity state to apply to the entity related to the event</li>
+<li><strong><code>valid_event_types</code></strong>: entities will only be related to events of an event type 
+listed in this field, or to an event of any type if none specified</li>
+<li><strong><code>valid_entity_types</code></strong>: entities will only be related to events if the entity's 
+entity type is listed in this field, or will be related regardless of entity type if 
+none specified</li>
+<li><strong><code>valid_entity_groups</code></strong>: entities will only be related to events if the entity is in 
+an entity group listed in this field, or will be related regardless of entity group if 
+none specified</li>
+</ul>
+<p>In brief, entity event roles define the part an entity plays in an event. </p>
+<p>When an event is created, the serializer will check the event <code>metadata</code> for the 
+<code>metadata_key</code> instance defined in the EntityEventRole instance and validate its value. If the 
+value of this key matches the <code>name</code> of an existing entity, the serializer will attempt 
+to relate the entity to the event and apply the state to the entity. </p>
+<p>You may optionally define entity types, event types, and <code>entity_groups</code> to qualify the 
+entity for state transitions in the <code>valid_entity_types</code>, <code>valid_event_types</code>, and 
+<code>valid_entity_groups</code> fields respectively. If either list is empty, a validation check 
+will not be run on it. </p>
+<p>Validated entities will be serialized in the <code>related_entities</code> property on the event 
+along with their transformed point style. The names of entities that were found in the 
+metadata but did not pass validation will be listed in the <code>invalid_entities</code> property 
+on the event. If the entity does not exist, it will be listed in the <code>unfound_entities</code> 
+property on the event.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="js/prism.js"></script>
+      
+    
+  </body>
+</html>

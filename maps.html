@@ -1,0 +1,935 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mole Documentation">
+      
+      
+      
+      
+        <link rel="prev" href="report_generator.html">
+      
+      
+        <link rel="next" href="utilities_event_mocker.html">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Maps - Mole Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/prism.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="Black" data-md-color-accent="Light-Blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#maps" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Mole Documentation" class="md-header__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mole Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Maps
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Mole Documentation" class="md-nav__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mole Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting_started.html" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="basic_config.html" class="md-nav__link">
+        Basic Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="entity_states.html" class="md-nav__link">
+        Entity States
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pulsar.html" class="md-nav__link">
+        Pulsar Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="game_clock.html" class="md-nav__link">
+        Game Clock
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scenario_scripts.html" class="md-nav__link">
+        Scenario Scripts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="point_styles.html" class="md-nav__link">
+        Point Styles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="metadata_keyvalue.html" class="md-nav__link">
+        Metadata Keys/Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trigger_setup.html" class="md-nav__link">
+        Trigger Setup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        API Usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="report_generator.html" class="md-nav__link">
+        Report Generator
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Maps
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="maps.html" class="md-nav__link md-nav__link--active">
+        Maps
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-aerial-imagery-map-tiles" class="md-nav__link">
+    Generating Aerial Imagery Map Tiles
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating Aerial Imagery Map Tiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acquiring-aerial-imagery" class="md-nav__link">
+    Acquiring Aerial Imagery
+  </a>
+  
+    <nav class="md-nav" aria-label="Acquiring Aerial Imagery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digital-globe-imagery-preferred-method" class="md-nav__link">
+    Digital Globe Imagery (preferred method)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#national-map-imagery-method-2" class="md-nav__link">
+    National Map Imagery (method 2)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing-imagery-into-mbtiles" class="md-nav__link">
+    Processing Imagery into .mbtiles
+  </a>
+  
+    <nav class="md-nav" aria-label="Processing Imagery into .mbtiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digital-globe-imagery" class="md-nav__link">
+    Digital Globe Imagery
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#national-map-imagery-method-2_1" class="md-nav__link">
+    National Map Imagery (method 2)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Utilities
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Utilities
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilities_event_mocker.html" class="md-nav__link">
+        Event Mocker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" tabindex="0" aria-expanded="false">
+          Developer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Developer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_debugger.html" class="md-nav__link">
+        Debugger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular.html" class="md-nav__link">
+        User Interface
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular_testing.html" class="md-nav__link">
+        Angular Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_migrations.html" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#generating-aerial-imagery-map-tiles" class="md-nav__link">
+    Generating Aerial Imagery Map Tiles
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating Aerial Imagery Map Tiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acquiring-aerial-imagery" class="md-nav__link">
+    Acquiring Aerial Imagery
+  </a>
+  
+    <nav class="md-nav" aria-label="Acquiring Aerial Imagery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digital-globe-imagery-preferred-method" class="md-nav__link">
+    Digital Globe Imagery (preferred method)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#national-map-imagery-method-2" class="md-nav__link">
+    National Map Imagery (method 2)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing-imagery-into-mbtiles" class="md-nav__link">
+    Processing Imagery into .mbtiles
+  </a>
+  
+    <nav class="md-nav" aria-label="Processing Imagery into .mbtiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digital-globe-imagery" class="md-nav__link">
+    Digital Globe Imagery
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#national-map-imagery-method-2_1" class="md-nav__link">
+    National Map Imagery (method 2)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="maps"><strong>Maps</strong><a class="headerlink" href="#maps" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">TODO</p>
+<p>Add section on configuring tileserver-gl with json file to serve multiple tilesets and to serve vector tiles.</p>
+</div>
+<p>Mole includes a service that serves map tiles using <a href="https://github.com/klokantech/tileserver-gl">tileserver-gl</a>. To 
+serve an set of map tiles in the .mbtiles format, place the file in the <code>maps/maptiles</code> folder.  </p>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>The .mbtiles file must have the <code>name</code> and <code>format</code> metadata tables set.  See the <a href="https://github.com/mapbox/mbtiles-spec/blob/master/1.3/spec.md">.mbtiles spec</a> 
+for more information.  The instructions below describe adding the appropriate metadata.</p>
+</div>
+<p>The tiles will be served at </p>
+<pre class="code"><code>http://localhost/maps/data/&lt;filename_without_extension&gt;/&lt;z&gt;/&lt;y&gt;/&lt;x&gt;.jpg
+</code></pre>
+
+<p>A map preview is served at </p>
+<pre class="code"><code>http://localhost/maps/data/&lt;filename_without_extension&gt;
+</code></pre>
+
+<p>The <code>maps</code> service runs by default.  To disable it, use the <code>--nomaps</code> flag to <code>./ml run</code>:</p>
+<pre class="code"><code>./ml run --nomaps
+</code></pre>
+
+<h2 id="generating-aerial-imagery-map-tiles"><strong>Generating Aerial Imagery Map Tiles</strong><a class="headerlink" href="#generating-aerial-imagery-map-tiles" title="Permanent link">&para;</a></h2>
+<p>This section describes methods for obtaining aerial imagery and processing it into an .mbtiles file to be served by the 
+Mole map tile server.</p>
+<h3 id="acquiring-aerial-imagery"><strong>Acquiring Aerial Imagery</strong><a class="headerlink" href="#acquiring-aerial-imagery" title="Permanent link">&para;</a></h3>
+<h4 id="digital-globe-imagery-preferred-method"><strong>Digital Globe Imagery (preferred method)</strong><a class="headerlink" href="#digital-globe-imagery-preferred-method" title="Permanent link">&para;</a></h4>
+<p>Government employees can get access to Digital Globe imagery.  This generally provides more recent data than that available via the NGA
+national map site. If you have access to Digital Globe, log in at  <a href="https://evwhs.digitalglobe.com">https://evwhs.digitalglobe.com</a> .<br />
+Here you can select a region of interest to download.</p>
+<ol>
+<li>Define an area of interest with the drawing tool.</li>
+<li>Select Generate a tileset<ol>
+<li>Enter Name</li>
+<li>Set "End Zoom Level" to 18</li>
+</ol>
+</li>
+<li>Click <code>&lt;Save&gt;</code></li>
+<li>Files will be available under <code>My Imagery --&gt; Library</code> once they have been prepared (takes a while)</li>
+<li>Uncompress the archive</li>
+</ol>
+<h4 id="national-map-imagery-method-2"><strong>National Map Imagery (method 2)</strong><a class="headerlink" href="#national-map-imagery-method-2" title="Permanent link">&para;</a></h4>
+<p>Go to  <a href="http://viewer.nationalmap.gov/basic/">http://viewer.nationalmap.gov/basic/</a>  to download imagery for region of interest.</p>
+<ol>
+<li>Select "Imagery - 1 foot (HRO)" at the left<ol>
+<li>Zoom to desired bounding box</li>
+<li>Click the black square icon </li>
+<li>Draw desired bounding box.</li>
+<li>Click the "Find Products" button at the top of the left pane.<ol>
+<li>You can add additional search options (e.g. "CL" for only 3 band color imagery or "4B" for 4 band color imagery) </li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Add all items to the card by pressing the "+All" icon for each page in the search returns<ol>
+<li>This is tedious. Please update this page if you find a better way.</li>
+</ol>
+</li>
+<li>Click "View Cart"</li>
+<li>Click "List and Export Cart Items"<ol>
+<li>This will spawn a file download that corresponds to a .csv file with download links and information about each of the
+requested images.</li>
+</ol>
+</li>
+<li>Download the files in the .csv file by either using the download manager (java program) </li>
+<li>Unzip all downloaded files.<ol>
+<li>This should result in a set of .jp2 files.</li>
+</ol>
+</li>
+</ol>
+<h3 id="processing-imagery-into-mbtiles"><strong>Processing Imagery into .mbtiles</strong><a class="headerlink" href="#processing-imagery-into-mbtiles" title="Permanent link">&para;</a></h3>
+<h4 id="digital-globe-imagery"><strong>Digital Globe Imagery</strong><a class="headerlink" href="#digital-globe-imagery" title="Permanent link">&para;</a></h4>
+<p>The archive downloaded above already has a tiled structure.  We just need to create an mbtiles file.  The 
+<a href="https://github.com/mapbox/mbutil">mbutil</a> utility can do this.</p>
+<ol>
+<li>Install mbutil<ol>
+<li><code>git clone http://github.com/mapbox/mbutil.git</code></li>
+</ol>
+</li>
+<li>Change directory to the base of the Digital Globe tileset<ol>
+<li>Sub-directories at this level should be numbers (e.g., /12/)</li>
+</ol>
+</li>
+<li>
+<p>Create <code>metadata.json</code> file:</p>
+<p><code>echo '{"name": "&lt;desired_tileset_name&gt;", "format": "jpg"}' &gt; metadata.json</code></p>
+</li>
+<li>
+<p>Create the .mbtiles file:</p>
+<p><code>mbutil/mb-util --image_format=jpg ./ &lt;filename&gt;.mbtiles</code></p>
+</li>
+</ol>
+<h4 id="national-map-imagery-method-2_1"><strong>National Map Imagery (method 2)</strong><a class="headerlink" href="#national-map-imagery-method-2_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>In the folder containing the downloaded .jp2 files, run the following commands:<ol>
+<li><code>gdalbuildvrt index.vrt *.jp2</code></li>
+<li><code>gdalwarp -r near --config GDAL_CACHEMAX 3000 -wm 3000 -co compress=jpeg -co photometric=ycbcr -co tiled=yes -t_srs
+EPSG:3857 index.vrt &lt;filename&gt;.tif</code><ol>
+<li>see  <a href="http://www.gdal.org/gdalwarp.html">http://www.gdal.org/gdalwarp.html</a> for more options, particularly for 
+the resampling method (-r flag)</li>
+</ol>
+</li>
+<li><code>gdaladdo -r nearest --config COMPRESS_OVERVIEW JPEG --config PHOTOMETRIC_OVERVIEW YCBCR &lt;filename&gt;.tif 2 4 8 16
+32 64 128</code><ol>
+<li>see  <a href="http://www.gdal.org/gdaladdo.html">http://www.gdal.org/gdaladdo.html</a> for more options, particularly for 
+the resampling method (-r flag)</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Use gdal2tiles.py to cut the tiles.<ol>
+<li>Install gdal2tiles.py <ol>
+<li><code>sudo apt-get install python-gdal</code></li>
+</ol>
+</li>
+<li><code>gdal2tiles.py &lt;filename&gt;.tif</code><ol>
+<li>This will create a folder called <filename> with appropriate tiles in it</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Use mbutil to create the mbtiles file<ol>
+<li>Install mbutil<ol>
+<li><code>git clone http://github.com/mapbox/mbutil.git</code></li>
+</ol>
+</li>
+<li><code>./mbutil/mb-util --scheme=tms &lt;filename&gt;/ &lt;filename&gt;.mbtiles</code></li>
+</ol>
+</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="js/prism.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1170 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mole Documentation">
+      
+      
+      
+      
+        <link rel="prev" href="developer_debugger.html">
+      
+      
+        <link rel="next" href="developer_angular_testing.html">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>User Interface - Mole Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/prism.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="Black" data-md-color-accent="Light-Blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#user-interface" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Mole Documentation" class="md-header__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mole Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              User Interface
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Mole Documentation" class="md-nav__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mole Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting_started.html" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="basic_config.html" class="md-nav__link">
+        Basic Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="entity_states.html" class="md-nav__link">
+        Entity States
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pulsar.html" class="md-nav__link">
+        Pulsar Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="game_clock.html" class="md-nav__link">
+        Game Clock
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scenario_scripts.html" class="md-nav__link">
+        Scenario Scripts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="point_styles.html" class="md-nav__link">
+        Point Styles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="metadata_keyvalue.html" class="md-nav__link">
+        Metadata Keys/Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trigger_setup.html" class="md-nav__link">
+        Trigger Setup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        API Usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="report_generator.html" class="md-nav__link">
+        Report Generator
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="maps.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Utilities
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Utilities
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilities_event_mocker.html" class="md-nav__link">
+        Event Mocker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" tabindex="0" aria-expanded="true">
+          Developer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Developer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_debugger.html" class="md-nav__link">
+        Debugger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          User Interface
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="developer_angular.html" class="md-nav__link md-nav__link--active">
+        User Interface
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-angular-cli" class="md-nav__link">
+    Install Angular CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-styling" class="md-nav__link">
+    Code Styling
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    Project Structure
+  </a>
+  
+    <nav class="md-nav" aria-label="Project Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modules" class="md-nav__link">
+    Modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    Components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    Services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    Models
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-directory" class="md-nav__link">
+    Shared Directory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routing" class="md-nav__link">
+    Routing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sharing-data-between-components" class="md-nav__link">
+    Sharing Data Between Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Sharing Data Between Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shared-modules" class="md-nav__link">
+    Shared Modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui-styling" class="md-nav__link">
+    UI Styling
+  </a>
+  
+    <nav class="md-nav" aria-label="UI Styling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#colors" class="md-nav__link">
+    Colors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iconography" class="md-nav__link">
+    Iconography
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point-styles" class="md-nav__link">
+    Point Styles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unit-testing" class="md-nav__link">
+    Unit Testing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-server" class="md-nav__link">
+    Development Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serve-static-files-from-django" class="md-nav__link">
+    Serve Static Files from Django
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular_testing.html" class="md-nav__link">
+        Angular Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_migrations.html" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Started">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-angular-cli" class="md-nav__link">
+    Install Angular CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-styling" class="md-nav__link">
+    Code Styling
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    Project Structure
+  </a>
+  
+    <nav class="md-nav" aria-label="Project Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modules" class="md-nav__link">
+    Modules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    Components
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    Services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    Models
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-directory" class="md-nav__link">
+    Shared Directory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routing" class="md-nav__link">
+    Routing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sharing-data-between-components" class="md-nav__link">
+    Sharing Data Between Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Sharing Data Between Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shared-modules" class="md-nav__link">
+    Shared Modules
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui-styling" class="md-nav__link">
+    UI Styling
+  </a>
+  
+    <nav class="md-nav" aria-label="UI Styling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#colors" class="md-nav__link">
+    Colors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iconography" class="md-nav__link">
+    Iconography
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point-styles" class="md-nav__link">
+    Point Styles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unit-testing" class="md-nav__link">
+    Unit Testing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-server" class="md-nav__link">
+    Development Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serve-static-files-from-django" class="md-nav__link">
+    Serve Static Files from Django
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="user-interface"><strong>User Interface</strong><a class="headerlink" href="#user-interface" title="Permanent link">&para;</a></h1>
+<h2 id="introduction"><strong>Introduction</strong><a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The Mole user interface is built using the Angular web framework. You can read more
+about the Angular framework <a href="https://angular.io/">here</a>.</p>
+<h2 id="getting-started"><strong>Getting Started</strong><a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<h3 id="install-angular-cli"><strong>Install Angular CLI</strong><a class="headerlink" href="#install-angular-cli" title="Permanent link">&para;</a></h3>
+<p>Before beginning development, it's recommended that you insall the Angular CLI. The CLI 
+will give you a library of commands to generate components, services, modules, etc. as 
+well as check for updates and run unit tests.</p>
+<p>Install: <code>npm install -g @angular/cli</code></p>
+<h3 id="code-styling"><strong>Code Styling</strong><a class="headerlink" href="#code-styling" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Variables</strong>: camelCase<ul>
+<li>Service instances prefixed with underscore</li>
+</ul>
+</li>
+<li><strong>Indentation</strong>: 2 spaces</li>
+<li><strong>Curly Brackets</strong>: Openning bracket inline with header</li>
+</ul>
+<h2 id="project-structure"><strong>Project Structure</strong><a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
+<p>The root of the project's working files is <code>angular &gt; app &gt; src &gt; app</code>. The folder 
+structure for the project was heavily informed by this <a href="https://medium.com/@motcowley/angular-folder-structure-d1809be95542">article</a>.</p>
+<h3 id="modules"><strong>Modules</strong><a class="headerlink" href="#modules" title="Permanent link">&para;</a></h3>
+<p>Modules can be thought of as the pages within Mole. They are composed of a module 
+typescript file and a component (generated seperately, see <a href="/developer_angular.html#components">Components</a>. 
+Modules define the placement and layout of the components that make up a page. When 
+generating a module, the Angular CLI will create a single typescript file where you can 
+import the resources you would like to expose to components within the module.</p>
+<div class="admonition info">
+<p class="admonition-title">Generate a module within cwd:</p>
+<p>Local: <code>ng g m {module_name}</code></p>
+<p>Shared: <code>ng g m --module shared {module_name}</code></p>
+</div>
+<h3 id="components"><strong>Components</strong><a class="headerlink" href="#components" title="Permanent link">&para;</a></h3>
+<p>The user interface is broken into UI building blocks called "components". Every 
+component has its own html, typescript, sass, and unit test file within a containing 
+directory. When generating a component, the Angular CLI will create a named directory 
+with template component files. Every component provides a custom html tag to be used 
+throughout the app.</p>
+<div class="admonition info">
+<p class="admonition-title">Generate a component within cwd:</p>
+<p>Local: <code>ng g c {component_name}</code></p>
+<p>Shared: <code>ng g c --module shared {component_name}</code></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>The component typescript file should be restricted to only contain view logic. 
+Logic outside of this scope, especially if it will be used by other components, 
+should be contained within a <a href="/developer_angular.html#services">service</a>.</p>
+</div>
+<h3 id="services"><strong>Services</strong><a class="headerlink" href="#services" title="Permanent link">&para;</a></h3>
+<p>Services perform tasks for components and are especially useful when components are 
+sharing the same resources. When generating a service, the Angular CLI will create a 
+typescript file and unit test file within a named directory.</p>
+<div class="admonition info">
+<p class="admonition-title">Generate a local service within cwd:</p>
+<p>Local: <code>ng g s {service_name}</code></p>
+<p>Shared: <code>ng g s --module shared {service_name}</code></p>
+</div>
+<h3 id="models"><strong>Models</strong><a class="headerlink" href="#models" title="Permanent link">&para;</a></h3>
+<p>Models are simply interfaces. All models are stored within <code>angular &gt; app &gt; src &gt; app &gt; 
+shared &gt; models</code>. You may allow multiple <strong>related</strong> models to share the same model 
+file. If your model is an interface for an api model, you will need to write an adapter 
+for the model. An adapter is essentially a function that taks a json object as a 
+paramter and returns an instance of the model (see exmple below).</p>
+<div class="admonition info">
+<p class="admonition-title">Generate a model:</p>
+<ol>
+<li>Create a new typescript file following this naming scheme: {model_name}.model.ts</li>
+<li>Update index.ts to export the models you created</li>
+</ol>
+</div>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nx">eventTypeAdapter</span><span class="p">(</span><span class="nx">json</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">EventType</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">eventType</span><span class="o">:</span><span class="w"> </span><span class="kt">EventType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">json.name</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="kt">json.description</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">eventLevel</span><span class="o">:</span><span class="w"> </span><span class="kt">json.event_level</span><span class="p">,</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">eventType</span><span class="p">.</span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;http://django:8000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">json</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">eventType</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">eventType</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<h2 id="shared-directory"><strong>Shared Directory</strong><a class="headerlink" href="#shared-directory" title="Permanent link">&para;</a></h2>
+<p>Most components can be shared among multiple modules, that's the purpose of the 
+<code>angular &gt; app &gt; src &gt; app &gt; shared</code> directory: to expose common components to all the 
+modules. If you find yourself developing a component or service that will only be used 
+by a single module, this code may be placed within that module's directory. </p>
+<h2 id="routing"><strong>Routing</strong><a class="headerlink" href="#routing" title="Permanent link">&para;</a></h2>
+<p>All app routes are defined in <code>app-routing.module.ts</code>. This file contains two exported 
+constants: <code>routes</code> and <code>moleLinks</code>. </p>
+<ul>
+<li><strong><code>routes</code></strong> contains all the route objects for internal modules and are lazy loaded</li>
+<li><strong><code>moleLinks</code></strong> contains all the route objects for external links</li>
+</ul>
+<p>When you add a route object to this file, the side navigation menu is configured to 
+list it without any additional configuration.</p>
+<h2 id="sharing-data-between-components"><strong>Sharing Data Between Components</strong><a class="headerlink" href="#sharing-data-between-components" title="Permanent link">&para;</a></h2>
+<p>There are a few ways of sharing data between components, and Mole utilizes all of them. 
+When developing the UI, it's important to be familiar with the @Input, @Output, and 
+@ViewChild decorators, as well as rxjs Observables. A good resource for these concepts 
+can bew viewed <a href="https://fireship.io/lessons/sharing-data-between-angular-components-four-methods/">here</a>.</p>
+<h3 id="shared-modules"><strong>Shared Modules</strong><a class="headerlink" href="#shared-modules" title="Permanent link">&para;</a></h3>
+<p>The shared directly also includes two shared modules: <code>molemat.module.ts</code> and 
+<code>shared.module.ts</code>.</p>
+<ul>
+<li><strong><code>molemat.module.ts</code></strong>:
+This module imports and exports all Angular Material modules so they can be used 
+throughout the application.</li>
+<li><strong><code>shared.module.ts</code></strong>:
+This module imports all modules that are not Angular Material modules and exports all 
+shared components.</li>
+</ul>
+<h2 id="ui-styling"><strong>UI Styling</strong><a class="headerlink" href="#ui-styling" title="Permanent link">&para;</a></h2>
+<h3 id="colors"><strong>Colors</strong><a class="headerlink" href="#colors" title="Permanent link">&para;</a></h3>
+<p>All UI colors are defined in an Angular Material theme located in <code>angular &gt; src &gt; 
+styles &gt; _theme.scss</code>. Read more about theming Angular Material <a href="https://material.angular.io/guide/theming">here</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>It is recommended not to hard-code colors within components and to reference the 
+theme instead.</p>
+</div>
+<h3 id="iconography"><strong>Iconography</strong><a class="headerlink" href="#iconography" title="Permanent link">&para;</a></h3>
+<p>There are two different icon libraries available for use throughout the project:</p>
+<ul>
+<li><strong>Material Design Icons</strong><ul>
+<li>See usage docs <a href="https://material.angular.io/components/icon/overview">here</a>.</li>
+<li>See available icons <a href="https://material.io/resources/icons/?icon=accessibility&amp;style=baseline">here</a>.</li>
+</ul>
+</li>
+<li><strong>Font Awesome</strong><ul>
+<li>See usage docs <a href="https://www.npmjs.com/package/@fortawesome/angular-fontawesome">here</a>.</li>
+<li>See available icons <a href="https://fontawesome.com/icons?d=gallery">here</a>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="point-styles"><strong>Point Styles</strong><a class="headerlink" href="#point-styles" title="Permanent link">&para;</a></h3>
+<p>Point styles define the colors and icons of map markers and event types. Read more 
+about point styles <a href="/configuration.html#marker-styles">here</a>.</p>
+<h2 id="unit-testing"><strong>Unit Testing</strong><a class="headerlink" href="#unit-testing" title="Permanent link">&para;</a></h2>
+<p>Refer to <a href="/developer_angular_testing.html">Angular Testing</a> for more details on unit 
+testing.</p>
+<div class="admonition info">
+<p class="admonition-title">Run unit tests:</p>
+<p>From <code>angular &gt; app &gt; src &gt; app</code>, run <code>ng test</code></p>
+</div>
+<h2 id="development-server"><strong>Development Server</strong><a class="headerlink" href="#development-server" title="Permanent link">&para;</a></h2>
+<p>The Angular development server hosts Mole on port <code>4200</code>. The Angular development 
+server automatically spins up when you start mole. As changes are made in the codebase, 
+the application auto-reloads to reflect the changes. This allows for a more rapid 
+development experience.</p>
+<h2 id="serve-static-files-from-django"><strong>Serve Static Files from Django</strong><a class="headerlink" href="#serve-static-files-from-django" title="Permanent link">&para;</a></h2>
+<p>The Angular container is able to build the Angular files to be served statically from 
+Django. To build the files, use the <code>-a</code> flag on the <code>init</code> script. Mole will spin up a 
+one-time angular container to build the static files into the docker volume. Once 
+complete, the angular container will delete itself. Static files are hosted on port 
+<code>8000/a</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Build Angular files to be served from Django:</p>
+<p><code>./ml init -a</code></p>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="js/prism.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1188 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mole Documentation">
+      
+      
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+        <link rel="next" href="basic_config.html">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Getting Started - Mole Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/prism.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="Black" data-md-color-accent="Light-Blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Mole Documentation" class="md-header__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mole Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Mole Documentation" class="md-nav__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mole Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="getting_started.html" class="md-nav__link md-nav__link--active">
+        Getting Started
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    Services
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#https-optional" class="md-nav__link">
+    Https (optional)
+  </a>
+  
+    <nav class="md-nav" aria-label="Https (optional)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-the-mole-certificate-authority-certificate-to-chrome" class="md-nav__link">
+    Adding the Mole Certificate Authority certificate to Chrome
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-keys" class="md-nav__link">
+    Generating keys
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running" class="md-nav__link">
+    Running
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    Commands
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-backups" class="md-nav__link">
+    Database Backups
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-backup-location" class="md-nav__link">
+    Database Backup Location
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoring-from-a-database-backup-archive" class="md-nav__link">
+    Restoring from a Database Backup Archive
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exporting-docker-images-to-an-external-host" class="md-nav__link">
+    Exporting Docker Images to an External Host
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-docker-to-use-a-different-dns-server" class="md-nav__link">
+    Configuring Docker to Use a Different DNS Server
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="basic_config.html" class="md-nav__link">
+        Basic Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="entity_states.html" class="md-nav__link">
+        Entity States
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pulsar.html" class="md-nav__link">
+        Pulsar Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="game_clock.html" class="md-nav__link">
+        Game Clock
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scenario_scripts.html" class="md-nav__link">
+        Scenario Scripts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="point_styles.html" class="md-nav__link">
+        Point Styles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="metadata_keyvalue.html" class="md-nav__link">
+        Metadata Keys/Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trigger_setup.html" class="md-nav__link">
+        Trigger Setup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        API Usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="report_generator.html" class="md-nav__link">
+        Report Generator
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="maps.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Utilities
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Utilities
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilities_event_mocker.html" class="md-nav__link">
+        Event Mocker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" tabindex="0" aria-expanded="false">
+          Developer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Developer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_debugger.html" class="md-nav__link">
+        Debugger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular.html" class="md-nav__link">
+        User Interface
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular_testing.html" class="md-nav__link">
+        Angular Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_migrations.html" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    Services
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#https-optional" class="md-nav__link">
+    Https (optional)
+  </a>
+  
+    <nav class="md-nav" aria-label="Https (optional)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-the-mole-certificate-authority-certificate-to-chrome" class="md-nav__link">
+    Adding the Mole Certificate Authority certificate to Chrome
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-keys" class="md-nav__link">
+    Generating keys
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running" class="md-nav__link">
+    Running
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    Commands
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-backups" class="md-nav__link">
+    Database Backups
+  </a>
+  
+    <nav class="md-nav" aria-label="Database Backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-backup-location" class="md-nav__link">
+    Database Backup Location
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restoring-from-a-database-backup-archive" class="md-nav__link">
+    Restoring from a Database Backup Archive
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exporting-docker-images-to-an-external-host" class="md-nav__link">
+    Exporting Docker Images to an External Host
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-docker-to-use-a-different-dns-server" class="md-nav__link">
+    Configuring Docker to Use a Different DNS Server
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="getting-started"><strong>Getting Started</strong><a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
+<h2 id="requirements"><strong>Requirements</strong><a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<p>1) Docker</p>
+<p>Add docker apt repository, install Docker, create <code>docker</code> group and add the user to it, then start the service. See <a href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></p>
+<pre class="code"><code>$ sudo apt-get update
+$ sudo sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+$ echo &quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+
+$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+$ sudo service docker start
+</code></pre>
+
+<p>Reboot, then confirm docker is running.</p>
+<pre class="code"><code>$ docker run hello-world
+</code></pre>
+
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>If building the Docker containers hangs in the Mole initialization step below, see <a href="#configuring-docker-to-use-a-different-dns-server">Configuring Docker to Use a Different DNS Server</a>.  This may be due to Docker's default DNS server (Google's 8.8.8.8) being blocked on your network.</p>
+</div>
+<p>2) Docker Compose</p>
+<p>Install Docker Compose plugin. See <a href="https://docs.docker.com/compose/install/linux/#install-using-the-repository">https://docs.docker.com/compose/install/linux/#install-using-the-repository</a></p>
+<p>$ sudo apt-get update
+  $ sudo apt-get install docker-compose-plugin</p>
+<p>Confirm that docker compose is installed</p>
+<pre class="code"><code>$ docker compose --version
+</code></pre>
+
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>In order for Mole to automatically generate keys/certificates for https, the <code>openssl</code> command must be installed on the host. This is generally the case by default.</p>
+</div>
+<p>3) Poetry</p>
+<p>Requires Python 3.7+ (Windows, MacOS, Linux). See Poetry <a href="https://python-poetry.org/docs/#system-requirements">System/Install Requirememets</a> for further instructions.</p>
+<pre class="code"><code>$ curl -sSL https://install.python-poetry.org | python3 - --version 1.2.0
+</code></pre>
+
+<p>Confirm Poetry is installed</p>
+<pre class="code"><code>$ poetry --version
+</code></pre>
+
+<p>Setup poetry virtual enviroment. Ensure the command is ran in the same directory as <code>pyproject.toml</code> and <code>poetry.lock</code>.</p>
+<pre class="code"><code>$ poetry install
+</code></pre>
+
+<h2 id="services"><strong>Services</strong><a class="headerlink" href="#services" title="Permanent link">&para;</a></h2>
+<p>Mole is composed of a number of different services including the following:</p>
+<ul>
+<li><strong>proxy</strong>     : A Traefik-based reverse proxy to expose services at paths and via https.
+                  Accessible on host port 8080 (<a href="http://localhost:8080">http://localhost:8080</a>)</li>
+<li><strong>postgres</strong>  : A PostgreSQL database server.
+                  Accessible on host port 5432.</li>
+<li><strong>pulsar</strong>    : An Apache Pulsar server. Pulsar is the native messaging platform for Mole.
+                  Accessible on host ports 6650.<br>
+                  The Admin API is available at <a href="http://localhost:8090">http://localhost:8090</a><br></li>
+<li><strong>django</strong>    : A Django-based REST API server.  It also serves static frontend content.
+                  Accessible on host port 8000 (e.g., <a href="http://localhost:8000">http://localhost:8000</a>) or domain root (e.g., <a href="http://localhost">http://localhost</a>)<br>
+                    - <strong>Note:</strong> A browseable API is also available at /api/. (e.g., <a href="http://localhost/api/">http://localhost/api/</a>)</li>
+<li><strong>angular</strong>    : An Angular development server. As changes are made in the code, the server live-updates the UI.
+                  Accessible on host port 4200 (e.g., <a href="http://localhost:4200">http://localhost:4200</a>) or at the path <a href="http://localhost/angular/">http://localhost/angular/</a><br>
+                    - <strong>Note:</strong> Only accessible after running <code>./ml ang</code> or <code>-a</code> flag on <code>run</code> script</li>
+<li><strong>redis</strong>     : A Redis server.<br>
+                    - <strong>Note:</strong> By default the redis service is not exposed outside of the Docker network. To expose Redis externally, use the <code>--unlock-redis</code> command line option to <code>./ml init</code> or <code>./ml run</code> or set the <code>UNLOCK_REDIS</code> environment variable on the host machine. When exposed, Redis will be accessible on host port 6379.</li>
+<li><strong>docs</strong>      : A Mkdocs-based documentation server.
+                  Accessible on host port 8001 (e.g., <a href="http://localhost:8001">http://localhost:8001</a>) or at the path <a href="http://localhost/docs/">http://localhost/docs/</a></li>
+<li><strong>maptiles</strong>  : A TileServerGL-based map tile server.
+                  Accessible on host port 8081 (e.g., <a href="http://localhost:8081">http://localhost:8081</a>) or at the path <a href="http://localhost/maps/">http://localhost/maps/</a></li>
+<li><strong>report</strong>    : A Plotly Dash-based data visualization and report server.
+                  Accessible on host port 8400 (e.g., <a href="http://localhost:8400">http://localhost:8400</a>) or at the path <a href="http://localhost/report/">http://localhost/report/</a></li>
+<li><strong>portainer</strong> : A Portainer Docker management and monitoring server.
+                  Accessible on host port 9000 (e.g., <a href="http://localhost:9000">http://localhost:9000</a>) or at the path <a href="http://localhost/portainer/">http://localhost/portainer/</a> with:<br> 
+                    - <strong>user:</strong> <code>admin</code><br>
+                    - <strong>password:</strong> <code>password</code></li>
+</ul>
+<h2 id="https-optional"><strong>Https (optional)</strong><a class="headerlink" href="#https-optional" title="Permanent link">&para;</a></h2>
+<p>All http endpoints can be made available via https. Certificates/keys are automatically generated the first time <code>./ml init</code> is run. See below to generate new keys.</p>
+<h3 id="adding-the-mole-certificate-authority-certificate-to-chrome"><strong>Adding the Mole Certificate Authority certificate to Chrome</strong><a class="headerlink" href="#adding-the-mole-certificate-authority-certificate-to-chrome" title="Permanent link">&para;</a></h3>
+<div class="admonition failure">
+<p class="admonition-title">Warning</p>
+<p>Please ensure you understand the security implications before importing the Mole Certificate Authority into your browser.</p>
+</div>
+<p>In order to "trust" the Mole certificate, perform the following:</p>
+<ul>
+<li>Open Chrome <code>Settings</code></li>
+<li>Select <code>Security</code></li>
+<li>Select <code>Manage Certificates</code></li>
+<li>Select <code>Authorities</code></li>
+<li>Click <code>Import</code></li>
+<li>Browse to the location of the Mole repository under <code>mole/traefik/certificates</code></li>
+<li>Select <code>moleCA.pem</code></li>
+<li>Click <code>Trust this certificate for identifying websites</code></li>
+</ul>
+<p>If you are trying to "trust" the Mole certificate on a machine other than the Mole server, first copy the <code>mole/traefik/certificates/moleCA.pem</code> file from the Mole server to an accssible location, then browse to this location when selecting the certificate to import.</p>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>Once the Mole Certificate Authority certificate has been imported it should be at the top of the list as <code>org-_Mole</code>. If the CA certificate is updated in the server, it must be replaced in the browser as well.</p>
+</div>
+<h3 id="generating-keys"><strong>Generating keys</strong><a class="headerlink" href="#generating-keys" title="Permanent link">&para;</a></h3>
+<p>Although <code>./ml init</code> automatically generates keys/certificates the first time it is run, it may be useful to replace or update them for various reasons. The <code>./ml</code> script includes a helper to generate new keys: <code>./ml keys</code>. </p>
+<p>This helper has options for selectively generating only the certificate authority (<code>./ml keys --ca</code>) or the server (<code>./ml keys --server</code>) keys. This is useful, for example, to re-generate the server keys while keeping the same certificate authority.</p>
+<p>In order for the certificate to be valid for hosts or IPs other than <code>localhost</code> or <code>127.0.0.1</code>, the desired hosts/IPs must be added to <code>traefik/configuration/cert.ext</code> under the <code>alt_names</code> section.</p>
+<p>Once the <code>cert.ext</code> file has been updated with new hosts/IPs, a new server certificate must be generated using <code>./ml key --server</code>. This will generate a new "server" certificate using the existing Certificate Authority. I.e., no new Certificate Authority key/cert is generated when the <code>--server</code> flag is used.</p>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>Once the server certificate has been updated with new hosts/IPs, Chrome should automatically trust the new one for those IPs. I.e., there is no need to re-import the Mole Certificate Authority in Chrome unless it was re-generated as well.</p>
+</div>
+<h2 id="running"><strong>Running</strong><a class="headerlink" href="#running" title="Permanent link">&para;</a></h2>
+<p>The <code>ml</code> script at the root of the Mole repo can be used to build containers, start services, populate dbs, stop services, 
+or build and serve documentation.  It is structured with a number of subcommands.  Additional help on each command 
+can be found by passing the <code>--help</code> flag.  E.g., <code>./ml run --help</code>.</p>
+<p>If this is the first time you are running Mole, use the following command to configure Mole and initialize the database with defaults:</p>
+<pre class="code"><code>$./ml init
+</code></pre>
+
+<div class="admonition failure">
+<p class="admonition-title">Warning</p>
+<p>Mole is currently intended to be run within a trusted network. It has not yet been vetted for open-internet deployment. </p>
+</div>
+<p>Subsequent runs can use:</p>
+<pre class="code"><code>$./ml run
+</code></pre>
+
+<p>See below for additional information on the <code>./ml</code> command and examples of its use.</p>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>If accessing the Mole dashboard produces an HTTP 500 error, the front end (Angular) files may not have been built. These can be built with the following command: <code>$ ./ml ang -b</code></p>
+</div>
+<h2 id="commands"><strong>Commands</strong><a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>init</code>  : Create the Docker containers and initialize a database
+              based on the available configuration scripts. If no
+              CONFIGURE_SCRIPT is specified, "configure_mole" is
+              used. <br>
+            - use <code>-a</code> flag to spin up angular development server<br>
+            - use <code>-s</code> to skip the static front-end build process<br>
+            - use <code>--deep-clean</code> to clear containers and volumes before init process<br></li>
+<li><code>keys</code>  : Generate CA or server keys/certificates for https.</li>
+<li><code>run</code>   : Runs a pre-configured container.<br>
+            - use <code>-q</code> flag to run as a daemon.<br>
+            - use <code>--lite</code> flag to omit running superflous containters (e.g., portainer, docs, etc.)<br>
+            - use <code>-a</code> flag to spin up angular development server<br></li>
+<li><code>stop</code>  : Stops all containers.</li>
+<li><code>test</code>  : Runs the Django unit tests. Note: Mole does not run
+              with this command.  </li>
+<li><code>shell</code> : Brings up all containers and starts interactive shell.
+              Note: Mole does not run in this mode.  </li>
+<li><code>docs</code>  : Build documentation (including OpenAPI schema and graphing database models). Documentation is served at <a href="http://localhost:8001">http://localhost:8001</a> or <a href="http://docs.localhost">http://docs.localhost</a>.</li>
+<li><code>maps</code>  : Serve map tiles at <a href="http://localhost:8081">http://localhost:8081</a> or <a href="http://maps.localhost">http://maps.localhost</a>.  Note: Mole does not 
+              run with this command.  See Docs for more information.</li>
+<li><code>db</code>   : Saves and loads database + media backup archives.<br>
+            - use <code>-b</code> flag to create a backup archive
+            - use <code>-l</code> flag to load a backup archive</li>
+<li><code>management</code> : Load/Save docker images to or from an archive file. 
+                This archive file can be used to export docker images for use
+                on external machines. Also builds containers from images 
+                in the local repo. </li>
+<li><code>django</code> : Provides set of tools to interact with Django container. Currently supports 
+              the <code>makemigrations</code> command with <code>-mm</code> flag.</li>
+<li><code>ang</code>   : Spins up Angular development server.<br>
+            - use <code>-b</code> flag to build the angular files to be served statically from Django</li>
+</ul>
+<h2 id="examples"><strong>Examples</strong><a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>The following command will build containers and populate the database with initial data using the default "configure_mole" script:</p>
+<pre class="code"><code>$./ml init
+</code></pre>
+
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>See below if building the containers hangs.  This may be due to Docker's default DNS server (Google's 8.8.8.8) being blocked on your network.</p>
+</div>
+<p>The following command will build containers and populate the database with initial data using a custom "configure_mole" script (configure_mole_test):</p>
+<pre class="code"><code>$./ml init configure_mole_test
+</code></pre>
+
+<p>The following command will run previously built containers as a daemon:</p>
+<pre class="code"><code>$./ml run -q
+</code></pre>
+
+<p>Mole is available at <a href="http://localhost">http://localhost</a>.  The browseable API is available at <a href="http://localhost/api">http://localhost/api</a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Documentation is also accessible at <a href="http://localhost/docs">http://localhost/docs</a> when Mole is running.</p>
+</div>
+<p>The following command will run previously built containers, but not run the map tile server:</p>
+<pre class="code"><code>$./ml run --nomaps
+</code></pre>
+
+<p>The following command will stop running containers:</p>
+<pre class="code"><code>$./ml stop
+</code></pre>
+
+<p>The following command will spin up the Angular development server:</p>
+<pre class="code"><code>$./ml ang
+</code></pre>
+
+<p>The following command will build the Angular files to be served statically from Django:</p>
+<pre class="code"><code>$./ml ang -b
+</code></pre>
+
+<p>The following command will build and serve the Mole documentation:</p>
+<pre class="code"><code>$./ml docs
+</code></pre>
+
+<p>The following command will run the Mole map tile server alone:</p>
+<pre class="code"><code>$./ml maps
+</code></pre>
+
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>See <a href="maps.html">maps</a> section of documentation for information on creating tiles and configuring the map server.</p>
+</div>
+<p>The following command will run the automated tests:</p>
+<pre class="code"><code>$./ml test
+</code></pre>
+
+<p>The following command will build Django migration files if schema changes have been made:</p>
+<pre class="code"><code>$./ml django -mm
+</code></pre>
+
+<h2 id="database-backups"><strong>Database Backups</strong><a class="headerlink" href="#database-backups" title="Permanent link">&para;</a></h2>
+<p>By default, Mole produces database backups before an init and before a database is 
+loaded, however it has the capability to perform the automatic backups listed below 
+if the <code>-db</code> flag is used on the <code>init</code> or <code>run</code> commands.</p>
+<ul>
+<li>On startup (<code>./ml run -db</code>)</li>
+<li>On shutdown (<code>^c</code> or <code>./ml stop</code>)</li>
+<li>Periodically (at the top of every hour)</li>
+</ul>
+<p>Regardless of the <code>-db</code> flag being used, backups can be created at anytime using the 
+command below.</p>
+<ul>
+<li>On demand (<code>./ml db -b</code>)</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you would like to not perform a database backup prior to an init, you can use the 
+<code>-nb</code> flag on the init command: <code>./ml init -nb</code></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>On-demand backups (<code>./ml db -b</code>) can be created with Mole running or stopped; services will be returned to their pre-backup state. </p>
+</div>
+<p>In all cases, backups are ultimately launched via a web service. A <code>GET</code> request to <a href="http://localhost:8003/backup_db/">http://localhost:8003/backup_db/</a> or <a href="http://backup.localhost/backup_db/">http://backup.localhost/backup_db/</a> will launch a database backup job. This service is throttled to approximately one request per minute.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The database backup web service includes an interactive API documentation served at <a href="http://localhost:8003/docs/">http://localhost:8003/docs/</a> or <a href="http://localhost/db_backup/docs/">http://localhost/db_backup/docs/</a></p>
+</div>
+<p>There are two optional querystring parameters for the backup service:</p>
+<ul>
+<li><code>context</code> represents a string that will be appended to the end of the backup filename to indicate the context for the creation of the backup. (e.g., "startup", "shutdown", "on-demand", etc.). For example a <code>GET</code> request to <a href="http://localhost/db_backup/backup_db/?context=docs">http://localhost/db_backup/backup_db/?context=docs</a> (via browser, curl, or otherwise) would initiate a database backup with <code>_docs</code> appended to the end of the filename.</li>
+<li><code>sync</code> indicates that the request shouldn't return a response until the backup has been completed. This is useful if a subsequent action (e.g., clearing the database) needs to ensure the backup has been completed prior to preceeding. Normally the backup call returns immediately and launches the database backup job in the background. Example: <a href="http://localhost/db_backup/backup_db/?sync=true">http://localhost/db_backup/backup_db/?sync=true</a>.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>To include both <code>context</code> and <code>sync</code> querystrings, separate them with an ampersand (<code>&amp;</code>) symbol, e.g., <a href="http://localhost/db_backup/backup_db/?context=docs&amp;sync=true">http://localhost/db_backup/backup_db/?context=docs&amp;sync=true</a>. If this is done from a terminal <code>curl</code> command, ensure to wrap the url in quotation marks so the <code>&amp;</code> isn't interpreted as a request to background the job. Example: <code>curl "http://localhost/db_backup/backup_db/?context=docs&amp;sync=true"</code></p>
+</div>
+<h3 id="database-backup-location">Database Backup Location<a class="headerlink" href="#database-backup-location" title="Permanent link">&para;</a></h3>
+<p>Saved database archives are stored in the <code>db_backup/backups/</code> directory.  The naming convention is <code>mole_backup_&lt;year&gt;-&lt;month&gt;-&lt;day&gt;_&lt;hour&gt;_&lt;minute&gt;-&lt;second&gt;_&lt;stage&gt;.sql</code> where <code>&lt;stage&gt;</code> is a string that indicates the reason the database file was created (e.g., "start_up", "shutdown", "pre-init", "pre-load", "on_demand", "periodic")</p>
+<h3 id="restoring-from-a-database-backup-archive">Restoring from a Database Backup Archive<a class="headerlink" href="#restoring-from-a-database-backup-archive" title="Permanent link">&para;</a></h3>
+<p>Database files can be restored using the following command: <code>./ml db -l &lt;archive-name&gt;</code> where the location of <code>&lt;archive-name&gt;</code> is assumed to be in <code>db_backup/backups/</code>. Mole supports loading standalone sql backups, as well as the default 
+archive format. Mole is also able to import backups from outside of the <code>db_backups/backups</code> 
+directory if the absolute filepath is provided.</p>
+<h2 id="exporting-docker-images-to-an-external-host"><strong>Exporting Docker Images to an External Host</strong><a class="headerlink" href="#exporting-docker-images-to-an-external-host" title="Permanent link">&para;</a></h2>
+<p>To run the Docker containers you must have Docker images in a local repo. Normally, these containers are built
+and configured when we execute the <code>init</code> command. However, when a host is unable to access outside networks, it will
+be unable to build images on initialization. You can load archived images with the <code>ml manage</code> command, and run
+preconfigured images. </p>
+<div class="admonition tip">
+<p class="admonition-title">Note</p>
+<p>This feature is currently unable to export on machines with differing architectures. </p>
+</div>
+<p>Process:
+1) Save project images that have already been populated and constructed. To save all project Docker images into a single 
+    archive use the following command</p>
+<pre class="code"><code>./ml manage -s
+</code></pre>
+
+<p>this will save the project Docker images to archive <code>mole_project.tar.gz</code></p>
+<p>2) You may now export the archive to another host. Simply save to external media or transfer if you have that option.</p>
+<p>3) Load the images on the new machine:</p>
+<pre class="code"><code>./ml manage -l mole_project.tar.gz
+</code></pre>
+
+<p>4) Build the containers:</p>
+<pre class="code"><code>./ml manage -b
+</code></pre>
+
+<p>or</p>
+<pre class="code"><code>./ml run
+</code></pre>
+
+<h2 id="configuring-docker-to-use-a-different-dns-server"><strong>Configuring Docker to Use a Different DNS Server</strong><a class="headerlink" href="#configuring-docker-to-use-a-different-dns-server" title="Permanent link">&para;</a></h2>
+<p>To configure Docker on Ubuntu to use the DNS server listed, edit <code>/lib/systemd/system/docker.service</code> and replace the line </p>
+<pre class="code"><code>ExecStart=/usr/bin/dockerd -H fd://
+</code></pre>
+
+<p>with </p>
+<pre class="code"><code>ExecStart=/usr/bin/dockerd --dns &lt;desired_DNS&gt; -H fd://
+</code></pre>
+
+<p>You can find out what your current DNS server is with the following command:</p>
+<pre class="code"><code>nmcli dev show | grep 'IP4.DNS'
+</code></pre>
+
+<div class="admonition info">
+<p class="admonition-title">Note</p>
+<p>This is only necessary if building the container images hangs due to the default DNS server being blocked on your network. </p>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="js/prism.js"></script>
+      
+    
+  </body>
+</html>

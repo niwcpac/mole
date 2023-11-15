@@ -1,0 +1,1679 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mole Documentation">
+      
+      
+      
+      
+        <link rel="prev" href="getting_started.html">
+      
+      
+        <link rel="next" href="entity_states.html">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Basic Configuration - Mole Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/prism.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="Black" data-md-color-accent="Light-Blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Mole Documentation" class="md-header__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mole Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Basic Configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Mole Documentation" class="md-nav__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mole Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting_started.html" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="true">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Basic Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="basic_config.html" class="md-nav__link md-nav__link--active">
+        Basic Configuration
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-steps" class="md-nav__link">
+    First Steps
+  </a>
+  
+    <nav class="md-nav" aria-label="First Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#locations" class="md-nav__link">
+    Locations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#campaigns" class="md-nav__link">
+    Campaigns
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenarios" class="md-nav__link">
+    Scenarios
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trials" class="md-nav__link">
+    Trials
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-types" class="md-nav__link">
+    Event Types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entities" class="md-nav__link">
+    Entities
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entitygroups" class="md-nav__link">
+    EntityGroups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regions" class="md-nav__link">
+    Regions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#posesources" class="md-nav__link">
+    PoseSources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servers" class="md-nav__link">
+    Servers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-configuration" class="md-nav__link">
+    Further Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Further Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#game-clock" class="md-nav__link">
+    Game Clock
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scripted-events" class="md-nav__link">
+    Scripted Events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point-styles" class="md-nav__link">
+    Point Styles
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entity-states" class="md-nav__link">
+    Entity States
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-keysvalues" class="md-nav__link">
+    Metadata Keys/Values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-logs" class="md-nav__link">
+    Access Logs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="entity_states.html" class="md-nav__link">
+        Entity States
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pulsar.html" class="md-nav__link">
+        Pulsar Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="game_clock.html" class="md-nav__link">
+        Game Clock
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scenario_scripts.html" class="md-nav__link">
+        Scenario Scripts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="point_styles.html" class="md-nav__link">
+        Point Styles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="metadata_keyvalue.html" class="md-nav__link">
+        Metadata Keys/Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trigger_setup.html" class="md-nav__link">
+        Trigger Setup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        API Usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="report_generator.html" class="md-nav__link">
+        Report Generator
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="maps.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="false">
+          Utilities
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Utilities
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilities_event_mocker.html" class="md-nav__link">
+        Event Mocker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" tabindex="0" aria-expanded="false">
+          Developer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Developer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_debugger.html" class="md-nav__link">
+        Debugger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular.html" class="md-nav__link">
+        User Interface
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular_testing.html" class="md-nav__link">
+        Angular Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_migrations.html" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-steps" class="md-nav__link">
+    First Steps
+  </a>
+  
+    <nav class="md-nav" aria-label="First Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#locations" class="md-nav__link">
+    Locations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#campaigns" class="md-nav__link">
+    Campaigns
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenarios" class="md-nav__link">
+    Scenarios
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trials" class="md-nav__link">
+    Trials
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-types" class="md-nav__link">
+    Event Types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entities" class="md-nav__link">
+    Entities
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entitygroups" class="md-nav__link">
+    EntityGroups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regions" class="md-nav__link">
+    Regions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#posesources" class="md-nav__link">
+    PoseSources
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#servers" class="md-nav__link">
+    Servers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-configuration" class="md-nav__link">
+    Further Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Further Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#game-clock" class="md-nav__link">
+    Game Clock
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scripted-events" class="md-nav__link">
+    Scripted Events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point-styles" class="md-nav__link">
+    Point Styles
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entity-states" class="md-nav__link">
+    Entity States
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-keysvalues" class="md-nav__link">
+    Metadata Keys/Values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-logs" class="md-nav__link">
+    Access Logs
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="configuration"><strong>Configuration</strong><a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
+<h2 id="first-steps"><strong>First Steps</strong><a class="headerlink" href="#first-steps" title="Permanent link">&para;</a></h2>
+<p>If we're starting with a blank slate, we have a couple initial steps to go through to configure Django. We need to create a series of Django model instances to tailor the Mole instrumentation to a specific domain. There are two ways to create instances: using the Django ORM or using third-party library <code>factory_boy</code>. The main difference between the two is how much data must be specified. The ORM requires all the fields to be filled out but <code>factory_boy</code> is configured to fill in fields that are left blank. Regardless of which is chosen, this should be implemented in a custom Django command. An example of one can be found at <code>mole/data_collection/management/commands/configure_mole.py</code>.</p>
+<h3 id="locations"><strong>Locations</strong><a class="headerlink" href="#locations" title="Permanent link">&para;</a></h3>
+<p>The first thing we need to create is a location. </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Django ORM</label><label for="__tabbed_1_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">location_1</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Location</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Location 1&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;description of location 1&quot;</span><span class="p">,</span> 
+    <span class="n">point</span><span class="o">=</span><span class="s2">&quot;POINT(-117.248 32.709)&quot;</span><span class="p">,</span>
+    <span class="n">timezone</span><span class="o">=</span><span class="s2">&quot;America/Los_Angeles&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">location_1</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">LocationFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Location 1&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;description of location 1&quot;</span><span class="p">,</span> 
+    <span class="n">point</span><span class="o">=</span><span class="s2">&quot;POINT(-117.248 32.709)&quot;</span><span class="p">,</span>
+    <span class="n">timezone</span><span class="o">=</span><span class="s2">&quot;America/Los_Angeles&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The name and description fields are self-explanatory. The point field is a well-known text representation (WKT) of a point geometry. The timezone field is a string indicating the TZ database name.</p>
+<h3 id="campaigns"><strong>Campaigns</strong><a class="headerlink" href="#campaigns" title="Permanent link">&para;</a></h3>
+<p>Next we need to create a campaign. A campaign can represent a high level field experiment or test event. </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Django ORM</label><label for="__tabbed_2_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">campaign_1</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Campaign</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Test Event 1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;info about test event 1&quot;</span><span class="p">,</span>
+    <span class="n">start_datetime</span><span class="o">=</span><span class="s2">&quot;2018-10-21T05:00:00-0800&quot;</span><span class="p">,</span>
+    <span class="n">end_datetime</span><span class="o">=</span><span class="s2">&quot;2018-10-25T19:00:00-0800&quot;</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="n">location_1</span><span class="p">,</span>
+    <span class="n">trial_id_major_name</span><span class="o">=</span><span class="s2">&quot;Day&quot;</span><span class="p">,</span>
+    <span class="n">trial_id_minor_name</span><span class="o">=</span><span class="s2">&quot;Shift&quot;</span><span class="p">,</span>
+    <span class="n">trial_id_micro_name</span><span class="o">=</span><span class="s2">&quot;Attempt&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">campaign_1</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">CampaignFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Test Event 1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;info about test event 1&quot;</span><span class="p">,</span>
+    <span class="n">start_datetime</span><span class="o">=</span><span class="s2">&quot;2018-10-21T05:00:00-0800&quot;</span><span class="p">,</span>
+    <span class="n">end_datetime</span><span class="o">=</span><span class="s2">&quot;2018-10-25T19:00:00-0800&quot;</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="n">location_1</span><span class="p">,</span>
+    <span class="n">trial_id_major_name</span><span class="o">=</span><span class="s2">&quot;Day&quot;</span><span class="p">,</span>
+    <span class="n">trial_id_minor_name</span><span class="o">=</span><span class="s2">&quot;Shift&quot;</span><span class="p">,</span>
+    <span class="n">trial_id_micro_name</span><span class="o">=</span><span class="s2">&quot;Attempt&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>start_datetime</code> and <code>end_datetime</code> indicate the start and end time respectively. </p>
+<p><code>location</code> should be a reference to the Location object created earlier. </p>
+<p><code>trial_id_major_name</code>, <code>trial_id_minor_name</code>,  and <code>trial_id_micro_name</code> are strings that describe the numbering scheme for trials. Each trial has a major, minor, and micro id, visualized as <code>x.y.z</code>. For example, the following code block marks the <code>x</code> id as the day. These strings are optional and will default to the empty string if not specified. </p>
+<h3 id="scenarios"><strong>Scenarios</strong><a class="headerlink" href="#scenarios" title="Permanent link">&para;</a></h3>
+<p>Next we'll create a Scenario. But first we need to create a Test Method. A Test Method represents a defined procedure to test a capability. It could be focused on a low level capability such as obstacle detection or path planning, or a system-level test that is intended to exercise the fully-integrated system. A Scenario is a specific instantiation of a Test Method that defines parameters that may be variable in the Test Method (e.g., location, number of agents, test duration, dynamic elements, etc.). So the Test Method might be "Persistent Swarm Surveillance", and the Scenario might be "<Location 1> 3-agent surveillance". This is intended to allow association of similar Test Methods while allowing some variation in location or parameters.  </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Django ORM</label><label for="__tabbed_3_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">test_method</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">TestMethod</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Interactive Swarm Exercise&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Testing swarm capabilities&quot;</span><span class="p">,</span>
+    <span class="n">version_major</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">version_minor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">version_micro</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;autonomy&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">test_method</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">TestMethodFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Interactive Swarm Exercise&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Testing swarm capabilities&quot;</span><span class="p">,</span>
+    <span class="n">version_major</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">version_minor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">version_micro</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">variant</span><span class="o">=</span><span class="s2">&quot;autonomy&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The version numbers and variant can be used to track changes to test procedures. </p>
+<p>Now we can create the scenario.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Django ORM</label><label for="__tabbed_4_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">scenario_1</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Scenario</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Scenario 1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;description of scenario 1&quot;</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="n">location_1</span><span class="p">,</span>
+    <span class="n">test_method</span><span class="o">=</span><span class="n">test_method</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">scenario_1</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">ScenarioFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Scenario 1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;description of scenario 1&quot;</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="n">location_1</span><span class="p">,</span>
+    <span class="n">test_method</span><span class="o">=</span><span class="n">test_method</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The scenario's location could be the same or different than the campaign's location. If different, follow the steps for creating a location to create another one.</p>
+<h3 id="trials"><strong>Trials</strong><a class="headerlink" href="#trials" title="Permanent link">&para;</a></h3>
+<p>Now we move on to our trials. A Trial can represent a single run or attempt. Events of interest or data about the run can be saved in these trials, giving us an easy container to compare and contrast test results. Since trials contain a lot of data about a run, we'll need to create a couple of pre-requisite instances. The first is a Tester which needs both a user and a role.</p>
+<p>We use the Django authentication <a href="https://docs.djangoproject.com/en/4.0/ref/contrib/auth/#django.contrib.auth.models.User">user</a> so unlike the other models, we have to use the <code>factory_boy</code> implementation to ensure that the password is saved correctly.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">main_user</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">UserFactory</span><span class="p">(</span>
+    <span class="n">username</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span> 
+    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You'll want to adjust this to have more secure credentials.</p>
+</div>
+<p>Next we'll create the role.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Django ORM</label><label for="__tabbed_6_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">my_role</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Role</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_administrator&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;description of test administrator&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">my_role</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">RoleFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test_administrator&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;description of test administrator&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have both a user and a role, we can create a tester.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Django ORM</label><label for="__tabbed_7_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">my_tester</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Tester</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">user</span><span class="o">=</span><span class="n">main_user</span><span class="p">,</span> 
+    <span class="n">role</span><span class="o">=</span><span class="n">my_role</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">my_tester</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">TesterFactory</span><span class="p">(</span>
+    <span class="n">user</span><span class="o">=</span><span class="n">main_user</span><span class="p">,</span> 
+    <span class="n">role</span><span class="o">=</span><span class="n">my_role</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Next we need a system configuration. A system configuration can  consist of one or more capability under test, each of which has a performer. We'll start at the bottom with the performer.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Django ORM</label><label for="__tabbed_8_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">performer_1</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Performer</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Integrator Team 1&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;info about team 1&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">performer_1</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">PerformerFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Integrator Team 1&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;info about team 1&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Next up is capability under test.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">Django ORM</label><label for="__tabbed_9_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">capability_under_test</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">CapabilityUnderTest</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Swarm Capability&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Swarm Capability&quot;</span><span class="p">,</span>
+    <span class="n">performer</span><span class="o">=</span><span class="n">performer_1</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">capability_under_test</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">CapabilityUnderTestFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Swarm Capability&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Swarm Capability&quot;</span><span class="p">,</span>
+    <span class="n">performer</span><span class="o">=</span><span class="n">performer_1</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Then we round it out with a system configuration.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">Django ORM</label><label for="__tabbed_10_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">sys_conf</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">SystemConfiguration</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;System Configuration 1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;total set of performers&quot;</span><span class="p">,</span>
+    <span class="n">capabilities_under_test</span><span class="o">=</span><span class="p">(</span><span class="n">capability_under_test</span><span class="p">,),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">sys_conf</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">SystemConfigurationFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;System Configuration 1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;total set of performers&quot;</span><span class="p">,</span>
+    <span class="n">capabilities_under_test</span><span class="o">=</span><span class="p">(</span><span class="n">capability_under_test</span><span class="p">,),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Next we have to create a test condition, as well as a weather instance. First we'll start with the weather.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">Django ORM</label><label for="__tabbed_11_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">current_weather</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Weather</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Sunny&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;no clouds in the sky&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">current_weather</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">WeatherFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Sunny&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;no clouds in the sky&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Then onto the test condition.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="__tabbed_12_1">Django ORM</label><label for="__tabbed_12_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">my_test_condition</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">TestCondition</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">weather</span><span class="o">=</span><span class="n">current_weather</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">my_test_condition</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">TestConditionFactory</span><span class="p">(</span>
+    <span class="n">weather</span><span class="o">=</span><span class="n">current_weather</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Now we can finally create an initial trial.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><div class="tabbed-labels"><label for="__tabbed_13_1">Django ORM</label><label for="__tabbed_13_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">dcm</span><span class="o">.</span><span class="n">Trial</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">id_major</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">id_minor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">id_micro</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">campaign</span><span class="o">=</span><span class="n">campaign_1</span><span class="p">,</span>
+    <span class="n">scenario</span><span class="o">=</span><span class="n">scenario_1</span><span class="p">,</span>
+    <span class="n">testers</span><span class="o">=</span><span class="p">(</span><span class="n">my_tester</span><span class="p">,),</span>
+    <span class="n">test_condition</span><span class="o">=</span><span class="n">my_test_condition</span><span class="p">,</span>
+    <span class="n">system_configuration</span><span class="o">=</span><span class="n">sys_conf</span><span class="p">,</span>
+    <span class="n">start_datetime</span><span class="o">=</span><span class="s2">&quot;2018-10-22T07:00:00-0800&quot;</span><span class="p">,</span>
+    <span class="n">reported</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">factories</span><span class="o">.</span><span class="n">TrialFactory</span><span class="p">(</span>
+    <span class="n">id_major</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">id_minor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">id_micro</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">campaign</span><span class="o">=</span><span class="n">campaign_1</span><span class="p">,</span>
+    <span class="n">scenario</span><span class="o">=</span><span class="n">scenario_1</span><span class="p">,</span>
+    <span class="n">testers</span><span class="o">=</span><span class="p">(</span><span class="n">my_tester</span><span class="p">,),</span>
+    <span class="n">test_condition</span><span class="o">=</span><span class="n">my_test_condition</span><span class="p">,</span>
+    <span class="n">system_configuration</span><span class="o">=</span><span class="n">sys_conf</span><span class="p">,</span>
+    <span class="n">start_datetime</span><span class="o">=</span><span class="s2">&quot;2018-10-22T07:00:00-0800&quot;</span><span class="p">,</span>
+    <span class="n">reported</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The ternary id (<code>id_major</code>, <code>id_minor</code>, <code>id_micro</code> taken together) have to be unique within each campaign, but there is no restriction otherwise on their integer values.</p>
+<p><code>reported</code> is a boolean flag that will tell the report generator whether or not to create graphs and charts for this trial.</p>
+<h3 id="event-types"><strong>Event Types</strong><a class="headerlink" href="#event-types" title="Permanent link">&para;</a></h3>
+<p>With a trial in place, we can start creating event types to track the things we are interested in. These event types can represent 'bookmarks' during the test run or a change in state. It can be used to show an interaction of interest or a noteworthy exchange.</p>
+<p>We'll first create an event level.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="14:2"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><input id="__tabbed_14_2" name="__tabbed_14" type="radio" /><div class="tabbed-labels"><label for="__tabbed_14_1">Django ORM</label><label for="__tabbed_14_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">event_level</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">EventLevel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Info&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Informational events&quot;</span><span class="p">,</span> 
+    <span class="n">key</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> 
+    <span class="n">visibility</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">event_level</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">EventLevelFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Info&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Informational events&quot;</span><span class="p">,</span> 
+    <span class="n">key</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> 
+    <span class="n">visibility</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>The name and key fields are both unique strings and the visibility is set to some integer value, used to dictate a hierarchy of event types.</p>
+<p>Now we move on to the event type itself.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="15:2"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><input id="__tabbed_15_2" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="__tabbed_15_1">Django ORM</label><label for="__tabbed_15_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">dcm</span><span class="o">.</span><span class="n">EventType</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Interaction&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;interaction of note&quot;</span><span class="p">,</span>
+    <span class="n">event_level</span><span class="o">=</span><span class="n">event_level</span><span class="p">,</span>
+    <span class="n">is_manual</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">has_duration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">factories</span><span class="o">.</span><span class="n">EventTypeFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Interaction&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;interaction of note&quot;</span><span class="p">,</span>
+    <span class="n">event_level</span><span class="o">=</span><span class="n">event_level</span><span class="p">,</span>
+    <span class="n">is_manual</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">has_duration</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="entities"><strong>Entities</strong><a class="headerlink" href="#entities" title="Permanent link">&para;</a></h2>
+<p>This model provides an abstraction for any unit or system we wish to track. This could be a system that's undergoing testing or an orchestration element that we're configuring. </p>
+<p>Each entity will need an entity type. We can also assign a list of capabilities to an entity type, signifying that every entity of this type has these properties. We can further distinguish individual entities by assigning mods to them, where mods can have multiple capabilities.</p>
+<p>We'll start with defining a couple of capabilities.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:2"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><input id="__tabbed_16_2" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="__tabbed_16_1">Django ORM</label><label for="__tabbed_16_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">radar_cap</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Capability</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;radar&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;24 GHz Radar&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Radar&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ble_cap</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Capability</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ble&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Capability using Bluetooth Low Energy&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Bluetooth Low Energy&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">radar_cap</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">CapabilityFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;radar&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Radar Capability&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Radar&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ble_cap</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">CapabilityFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ble&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Capability using Bluetooth Low Energy&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Bluetooth Low Energy&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>display_name</code> is a more human-friendly string that can be used for a UI for example.</p>
+<p>Next we'll make a mod combining the two capabilities.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="17:2"><input checked="checked" id="__tabbed_17_1" name="__tabbed_17" type="radio" /><input id="__tabbed_17_2" name="__tabbed_17" type="radio" /><div class="tabbed-labels"><label for="__tabbed_17_1">Django ORM</label><label for="__tabbed_17_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">comms_mod</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Mod</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;comms_mod&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A combination mod that contains both radar and bluetooth low energy&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Combined communication mod&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">comms_mod</span><span class="o">.</span><span class="n">capabilities</span><span class="o">.</span><span class="n">set</span><span class="p">([</span><span class="n">radar_cap</span><span class="p">,</span> <span class="n">ble_cap</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">comms_mod</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">ModFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;comms_mod&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A combination mod that contains both radar and bluetooth low energy&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Combined communication mod&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">radar_cap</span><span class="p">,</span> <span class="n">ble_cap</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Note that when using the Django ORM, the process to add a capability to a mod is slightly more complicated than the creation of the mod. It must be set outside of the creation of the mod due to technical limitations. This occurs in various other models throughout Mole as well. This limitation does not occur in the <code>factory_boy</code> factories.</p>
+<p>We'll make an entity type next, a ugv entity type with an inherent radar capability.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="18:2"><input checked="checked" id="__tabbed_18_1" name="__tabbed_18" type="radio" /><input id="__tabbed_18_2" name="__tabbed_18" type="radio" /><div class="tabbed-labels"><label for="__tabbed_18_1">Django ORM</label><label for="__tabbed_18_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">ugv_type</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">EntityType</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ugv&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Unmanned ground vehicle t ype&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;UGV&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ugv_type</span><span class="o">.</span><span class="n">capabilities</span><span class="o">.</span><span class="n">set</span><span class="p">([</span><span class="n">radar_cap</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">ugv_type</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">EntityTypeFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ugv&quot;</span><span class="p">,</span> 
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Unmanned ground vehicle type&quot;</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;UGV&quot;</span><span class="p">,</span>
+    <span class="n">capabilities</span><span class="o">=</span><span class="p">[</span><span class="n">radar_cap</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Then we can make an individual entity that contains the <code>comms_mod</code> mod.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="19:2"><input checked="checked" id="__tabbed_19_1" name="__tabbed_19" type="radio" /><input id="__tabbed_19_2" name="__tabbed_19" type="radio" /><div class="tabbed-labels"><label for="__tabbed_19_1">Django ORM</label><label for="__tabbed_19_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">alpha_1</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Entity</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;alpha_1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A motorized ground rover with multi-comms&quot;</span><span class="p">,</span>
+    <span class="n">entity_type</span><span class="o">=</span><span class="n">ugv_type</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Alpha 1&quot;</span><span class="p">,</span>
+    <span class="n">physical_id</span><span class="o">=</span><span class="s2">&quot;raspberry pi 3b+&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">alpha_1</span><span class="o">.</span><span class="n">mods</span><span class="o">.</span><span class="n">set</span><span class="p">([</span><span class="n">comms_mod</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">alpha_1</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">EntityFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;alpha_1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A motorized ground rover with multi-comms&quot;</span><span class="p">,</span>
+    <span class="n">entity_type</span><span class="o">=</span><span class="n">ugv_type</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s2">&quot;Alpha 1&quot;</span><span class="p">,</span>
+    <span class="n">physical_id</span><span class="o">=</span><span class="s2">&quot;raspberry pi 3b+&quot;</span><span class="p">,</span>
+    <span class="n">mods</span><span class="o">=</span><span class="p">[</span><span class="n">comms_mod</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="entitygroups"><strong>EntityGroups</strong><a class="headerlink" href="#entitygroups" title="Permanent link">&para;</a></h2>
+<p>We can also cluster entities together if there is some other commonality between them. They could be part of a specific scenario, which we could then relate directly on the scenario. They might share a physical property that is not otherwise recorded in Mole or used to denote valid entities for a entity state. Alternatively, EntityGroups can be used to 'tag' entities with an attribute. </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="20:2"><input checked="checked" id="__tabbed_20_1" name="__tabbed_20" type="radio" /><input id="__tabbed_20_2" name="__tabbed_20" type="radio" /><div class="tabbed-labels"><label for="__tabbed_20_1">Django ORM</label><label for="__tabbed_20_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">rpi_group</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">EntityGroup</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;rpi&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Entities based on a Raspberry Pi platform&quot;</span><span class="p">,</span>
+    <span class="n">basemap_element</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">alpha_1</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">set</span><span class="p">([</span><span class="n">rpi_group</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">rpi_group</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">EntityGroupFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;rpi&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Entities based on a Raspberry Pi platform&quot;</span><span class="p">,</span>
+    <span class="n">basemap_element</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">alpha_1</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">set</span><span class="p">([</span><span class="n">rpi_group</span><span class="p">])</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>basemap_element</code> indicates whether or not the entities in the given group should be drawn on the front end map or not. </p>
+<h2 id="regions"><strong>Regions</strong><a class="headerlink" href="#regions" title="Permanent link">&para;</a></h2>
+<p>Regions represent geographical areas of interest. They can represent a keep-out zone, an activation area, an entity's area of control, etc. Regions are named and are defined by their region type, the geometry of the area it represents, a z-value layer, and an optional geographical point. Scenarios can also optionally be related with specific regions. This could happen if different scenarios affect different test areas or if an activation area changes between rounds. However this relation would need to be specified on the <code>scenario</code> creation rather than the <code>region</code> creation. </p>
+<p>We'll create a region type first.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="21:2"><input checked="checked" id="__tabbed_21_1" name="__tabbed_21" type="radio" /><input id="__tabbed_21_2" name="__tabbed_21" type="radio" /><div class="tabbed-labels"><label for="__tabbed_21_1">Django ORM</label><label for="__tabbed_21_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">koz_type</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">RegionType</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;keep_out_zone&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A keep-out zone&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">koz_type</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">RegionTypeFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;keep_out_zone&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A keep-out zone&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Now we'll create the region.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="22:2"><input checked="checked" id="__tabbed_22_1" name="__tabbed_22" type="radio" /><input id="__tabbed_22_2" name="__tabbed_22" type="radio" /><div class="tabbed-labels"><label for="__tabbed_22_1">Django ORM</label><label for="__tabbed_22_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;coordinates&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">[</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">117.2443986</span><span class="p">,</span><span class="mf">32.6648668</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">117.2354937</span><span class="p">,</span><span class="mf">32.6667635</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">117.2352576</span><span class="p">,</span><span class="mf">32.6721824</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">117.2471023</span><span class="p">,</span><span class="mf">32.6707012</span><span class="p">],</span>
+            <span class="p">[</span><span class="o">-</span><span class="mf">117.2443986</span><span class="p">,</span><span class="mf">32.6648668</span><span class="p">]</span>
+        <span class="p">]</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygon&quot;</span>
+<span class="p">}</span>
+<span class="n">dcm</span><span class="o">.</span><span class="n">Region</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;keep_out_zone_command_center&quot;</span><span class="p">,</span>
+    <span class="n">region_type</span><span class="o">=</span><span class="n">koz_type</span><span class="p">,</span>
+    <span class="n">geom</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">geometry</span><span class="p">),</span>
+    <span class="n">z_layer</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">factories</span><span class="o">.</span><span class="n">RegionFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;keep_out_zone_command_center&quot;</span><span class="p">,</span>
+    <span class="n">region_type</span><span class="o">=</span><span class="n">koz_type</span><span class="p">,</span>
+    <span class="n">geom</span><span class="o">=</span><span class="s2">&quot;POLYGON ((-117.2443986 32.6648668, -117.2354937 32.6667635, -117.2354722 32.6697800, -117.2465873 32.6684434, -117.2443986 32.6648668))&quot;</span><span class="p">,</span>
+    <span class="n">z_layer</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">key_point</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>geom</code> can take either a GeoJSON string (as seen in the Django ORM example) or WKT (as seen in the <code>factory_boy</code> example).</p>
+<p><code>z_layer</code> can be an arbitrary float value that makes sense in the given context.</p>
+<div class="admonition info">
+<p class="admonition-title">Note using <code>factory_boy</code> for Region</p>
+<p>If <code>key_point</code> is not explicitly set to <code>None</code>, the factory will create an arbitrary point for it.</p>
+</div>
+<h2 id="posesources"><strong>PoseSources</strong><a class="headerlink" href="#posesources" title="Permanent link">&para;</a></h2>
+<p>Mole also has the ability to track entities as they move. We do this through the <code>Pose</code> model. Poses have a <code>PoseSource</code>, which distinguishes poses of different origins. </p>
+<p>For creating poses later, we'll need to have at least one <code>PoseSource</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="23:2"><input checked="checked" id="__tabbed_23_1" name="__tabbed_23" type="radio" /><input id="__tabbed_23_2" name="__tabbed_23" type="radio" /><div class="tabbed-labels"><label for="__tabbed_23_1">Django ORM</label><label for="__tabbed_23_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">gps_pose_source</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">PoseSource</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;GPS&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GPS provided pose source&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">gps_pose_source</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">PoseSourceFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;GPS&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;GPS provided pose source&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="servers"><strong>Servers</strong><a class="headerlink" href="#servers" title="Permanent link">&para;</a></h2>
+<p>In order to display maps, we'll need to set up a <code>Server</code>. This is a model that captures parameters used for the map display. </p>
+<p>We'll start with a <code>ServerType</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="24:2"><input checked="checked" id="__tabbed_24_1" name="__tabbed_24" type="radio" /><input id="__tabbed_24_2" name="__tabbed_24" type="radio" /><div class="tabbed-labels"><label for="__tabbed_24_1">Django ORM</label><label for="__tabbed_24_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">server_type</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">ServerType</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Tiled Aerial Imagery Server&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Server that provides tiled aerial imagery&quot;</span><span class="p">,</span>
+    <span class="n">key</span><span class="o">=</span><span class="s2">&quot;tiled_imagery&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">server_type</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">ServerTypeFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Tiled Aerial Imagery Server&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Server that provides tiled aerial imagery&quot;</span><span class="p">,</span>
+    <span class="n">key</span><span class="o">=</span><span class="s2">&quot;tiled_imagery&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Then we'll create some <code>ServerParams</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="25:2"><input checked="checked" id="__tabbed_25_1" name="__tabbed_25" type="radio" /><input id="__tabbed_25_2" name="__tabbed_25" type="radio" /><div class="tabbed-labels"><label for="__tabbed_25_1">Django ORM</label><label for="__tabbed_25_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;lat&quot;</span><span class="p">:</span><span class="s2">&quot;32.709&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lng&quot;</span><span class="p">:</span><span class="s2">&quot;-117.248&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">map_center_param</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">ServerParam</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Map Center&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;provides parameters for a map&#39;s center point&quot;</span><span class="p">,</span>
+    <span class="n">param</span><span class="o">=</span><span class="s2">&quot;mapOptions&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">zoom_param</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">ServerParam</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Zoom levels&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;provides parameters for a map&#39;s zoom levels&quot;</span><span class="p">,</span>
+    <span class="n">param</span><span class="o">=</span><span class="s2">&quot;mapOptions&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="s1">&#39;{&quot;minZoom&quot;:1, &quot;maxZoom&quot;:20}&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;lat&quot;</span><span class="p">:</span><span class="s2">&quot;32.709&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lng&quot;</span><span class="p">:</span><span class="s2">&quot;-117.248&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">map_center_param</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">ServerParamFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Map Center&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;provides parameters for a map&#39;s center point&quot;</span><span class="p">,</span>
+    <span class="n">param</span><span class="o">=</span><span class="s2">&quot;mapOptions&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">zoom_param</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">ServerParamFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Zoom levels&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;provides parameters for a map&#39;s zoom levels&quot;</span><span class="p">,</span>
+    <span class="n">param</span><span class="o">=</span><span class="s2">&quot;mapOptions&quot;</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="s1">&#39;{&quot;minZoom&quot;:1, &quot;maxZoom&quot;:20}&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Now we can put it together into a <code>Server</code>. For using OpenStreetMap tiles, you can set the <code>base_url</code> to <code>https://a.tile.openstreetmap.org/{z}/{x}/{y}.png</code>. If using the OpenStreetMap tiles, keep the <a href="https://operations.osmfoundation.org/policies/tiles/">Tile Usage Policy</a> in mind.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="26:2"><input checked="checked" id="__tabbed_26_1" name="__tabbed_26" type="radio" /><input id="__tabbed_26_2" name="__tabbed_26" type="radio" /><div class="tabbed-labels"><label for="__tabbed_26_1">Django ORM</label><label for="__tabbed_26_2">Factory Boy</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">data_collection.models</span> <span class="k">as</span> <span class="nn">dcm</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">dcm</span><span class="o">.</span><span class="n">Server</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Local World Tiles&quot;</span><span class="p">,</span>
+    <span class="n">server_type</span><span class="o">=</span><span class="n">server_type</span><span class="s2">&quot;,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://</span><span class="si">{window.location.hostname}</span><span class="s2">/maps/styles/ne_simple_style/</span><span class="si">{z}</span><span class="s2">/</span><span class="si">{x}</span><span class="s2">/</span><span class="si">{y}</span><span class="s2">.png&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">server</span><span class="o">.</span><span class="n">server_params</span><span class="o">.</span><span class="n">set</span><span class="p">([</span><span class="n">map_center_param</span><span class="p">,</span> <span class="n">zoom_param</span><span class="p">])</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">data_collection.factories</span> <span class="kn">import</span> <span class="n">factories</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">factories</span><span class="o">.</span><span class="n">ServerFactory</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Local World Tiles&quot;</span><span class="p">,</span>
+    <span class="n">server_type</span><span class="o">=</span><span class="n">server_type</span><span class="s2">&quot;,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://</span><span class="si">{window.location.hostname}</span><span class="s2">/maps/styles/ne_simple_style/</span><span class="si">{z}</span><span class="s2">/</span><span class="si">{x}</span><span class="s2">/</span><span class="si">{y}</span><span class="s2">.png&quot;</span><span class="p">,</span>
+    <span class="n">server_params</span><span class="o">=</span><span class="p">[</span><span class="n">map_center_param</span><span class="p">,</span> <span class="n">zoom_param</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><code>base_url</code> contains the url for the map tiles, whether that's locally served (as in our example) or remotely hosted.</p>
+<h2 id="further-configuration"><strong>Further Configuration</strong><a class="headerlink" href="#further-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="game-clock"><strong>Game Clock</strong><a class="headerlink" href="#game-clock" title="Permanent link">&para;</a></h3>
+<p>See <a href="game_clock.html">Game Clock</a>.</p>
+<h3 id="scripted-events"><strong>Scripted Events</strong><a class="headerlink" href="#scripted-events" title="Permanent link">&para;</a></h3>
+<p>See <a href="scenario_scripts.html">Scenario Scripts</a>.</p>
+<h3 id="point-styles"><strong>Point Styles</strong><a class="headerlink" href="#point-styles" title="Permanent link">&para;</a></h3>
+<p>See <a href="point_styles.html">Map/Timeline Marker Styles</a></p>
+<h3 id="entity-states"><strong>Entity States</strong><a class="headerlink" href="#entity-states" title="Permanent link">&para;</a></h3>
+<p>See <a href="entity_states.html">Entity States</a></p>
+<h3 id="metadata-keysvalues"><strong>Metadata Keys/Values</strong><a class="headerlink" href="#metadata-keysvalues" title="Permanent link">&para;</a></h3>
+<p>See <a href="metadata_keyvalue.html">Metadata Keys/Values</a></p>
+<h2 id="access-logs"><strong>Access Logs</strong><a class="headerlink" href="#access-logs" title="Permanent link">&para;</a></h2>
+<p>An access log for django can be found at <code>mole/_logs/access.log</code>. This will contain the remote address, username, date of request, where the request is for, HTTP status, response length, and referer.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="js/prism.js"></script>
+      
+    
+  </body>
+</html>

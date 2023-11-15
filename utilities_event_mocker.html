@@ -1,0 +1,878 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mole Documentation">
+      
+      
+      
+      
+        <link rel="prev" href="maps.html">
+      
+      
+        <link rel="next" href="developer_debugger.html">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.6">
+    
+    
+      
+        <title>Event Mocker - Mole Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.558e4712.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="css/prism.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="Black" data-md-color-accent="Light-Blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#event-mocker" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Mole Documentation" class="md-header__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mole Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Event Mocker
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Mole Documentation" class="md-nav__button md-logo" aria-label="Mole Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mole Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="getting_started.html" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" tabindex="0" aria-expanded="false">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="basic_config.html" class="md-nav__link">
+        Basic Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="entity_states.html" class="md-nav__link">
+        Entity States
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pulsar.html" class="md-nav__link">
+        Pulsar Functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="game_clock.html" class="md-nav__link">
+        Game Clock
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="scenario_scripts.html" class="md-nav__link">
+        Scenario Scripts
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="point_styles.html" class="md-nav__link">
+        Point Styles
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="metadata_keyvalue.html" class="md-nav__link">
+        Metadata Keys/Values
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trigger_setup.html" class="md-nav__link">
+        Trigger Setup
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage.html" class="md-nav__link">
+        API Usage
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="report_generator.html" class="md-nav__link">
+        Report Generator
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="maps.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="true">
+          Utilities
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Utilities" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Utilities
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Event Mocker
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="utilities_event_mocker.html" class="md-nav__link md-nav__link--active">
+        Event Mocker
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    Run
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" tabindex="0" aria-expanded="false">
+          Developer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Developer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_debugger.html" class="md-nav__link">
+        Debugger
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular.html" class="md-nav__link">
+        User Interface
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_angular_testing.html" class="md-nav__link">
+        Angular Testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_migrations.html" class="md-nav__link">
+        Migrations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    Run
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="event-mocker"><strong>Event Mocker</strong><a class="headerlink" href="#event-mocker" title="Permanent link">&para;</a></h1>
+<p>The Event Mocker is a tool used to create and post random and/or sequenced events to 
+Mole. There are two different ways of using the event mocker: <em>Random Event Mocking</em> and
+<em>Event Sequence Mocking</em>. </p>
+<p>Random Event Mocking is useful for:</p>
+<ul>
+<li>load testing</li>
+<li>quickly getting events in the database</li>
+</ul>
+<p>Event Sequence Mocking is useful for:</p>
+<ul>
+<li>testing behavior when certain events happen in sequence</li>
+<li>simulating a realistic trial</li>
+</ul>
+<h3 id="configuration"><strong>Configuration</strong><a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<p>The first step is to ensure the python requests library is installed on your machine.</p>
+<pre class="code"><code>pip install requests
+</code></pre>
+
+<p>The script requires at least one configuration file passed as an argument. Below is an
+example of a configuration file that meets the requirements for both Random Event 
+Mocking and Event Sequence Mocking.</p>
+<pre class="code"><code>{
+    &quot;username&quot;: &quot;admin&quot;,
+    &quot;password&quot;: &quot;admin&quot;,
+    &quot;trial_duration&quot;: {
+        &quot;hours&quot;: 1,
+        &quot;minutes&quot;: 0
+    },
+    &quot;bounding_box&quot;: {
+        &quot;min_point&quot;: {
+            &quot;lat&quot;: 32.657360,
+            &quot;lon&quot;: -117.283920
+        },
+        &quot;max_point&quot;: {
+            &quot;lat&quot;: 32.740647,
+            &quot;lon&quot;: -117.157868
+        }
+    },
+    &quot;event_metadata&quot;: {
+        &quot;detail&quot;: [&quot;Event created by Mole Utilities Event Generator.&quot;],
+        &quot;key_1&quot;: [&quot;choice_1&quot;, &quot;choice_2&quot;, &quot;choice_3&quot;],
+        &quot;key_2&quot;: [
+            &quot;single_choice&quot;,
+            [1, 2, 3],
+            [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+        ],
+        &quot;key_n&quot;: [
+            {&quot;nested_1&quot;: &quot;1a&quot;},
+            {&quot;nested_2&quot;: &quot;2b&quot;},
+            {&quot;nested_3&quot;: &quot;3c&quot;}
+        ]
+    },
+    &quot;event_type_metadata&quot;: {
+        &quot;Node Online&quot;: {
+            &quot;node&quot;: [&quot;node-1&quot;, &quot;node-2&quot;, &quot;node-3&quot;]
+        }
+    },
+    &quot;event_count&quot;: 100,
+    &quot;sequence_order&quot;: [
+        [&quot;Start&quot;, 1],
+        [&quot;RANDOM&quot;, 50],
+        [&quot;End&quot;, 1]
+    ],
+    &quot;sequences&quot;: {
+        &quot;Start&quot;: [
+            [&quot;Node Online&quot;, 50],
+            [&quot;Trial Start&quot;, 1]
+        ],
+        &quot;End&quot;: [
+            [&quot;Trial End&quot;, 1],
+            [&quot;Safety Stop&quot;, 1]
+        ]
+    },
+    &quot;excluded_types&quot;: [
+        &quot;Unassigned&quot;,
+        &quot;Ignore&quot;
+    ],
+}
+</code></pre>
+
+<p><strong>Required Keys:</strong></p>
+<ul>
+<li>
+<p><code>username</code>: <em>string</em>. Admin username. </p>
+</li>
+<li>
+<p><code>password</code>: <em>string</em>. Admin password.</p>
+</li>
+<li>
+<p><code>trial_duration</code>: <em>dict</em>. Window of time for events to occur in.</p>
+<ul>
+<li><code>hours</code>: <em>int</em>. Number of hours for the current trial.</li>
+<li><code>minutes</code>: <em>int</em>. Number of minutes for the current trial.</li>
+</ul>
+</li>
+<li>
+<p><code>bounding_box</code>: <em>dict</em>. Geographical area for events to be plotted in.</p>
+<ul>
+<li><code>min_point</code>: <em>dict</em>. Bottom left corner of area.<ul>
+<li><code>lat</code>: <em>float</em>. Latitude value for bottom left point.</li>
+<li><code>lon</code>: <em>float</em>. Longitude value for bottom left point.</li>
+</ul>
+</li>
+<li><code>max_point</code>: <em>dict</em>. Top right corner of area.<ul>
+<li><code>lat</code>: <em>float</em>. Latitude value for top right point.</li>
+<li><code>lon</code>: <em>float</em>. Longitude value for top right point.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>event_metadata</code>: <em>dict, may be empty</em>. Metadata for every event. Takes a dictionary, 
+        value for each key must be an array. The generator will randomly select one 
+        value from the provided array for each provided key.</p>
+</li>
+<li>
+<p><code>event_type_metadata</code>: <em>dict, may be empty</em>. Metadata for specifc event types. Takes 
+        a dictionary, each key is the name of the event type. The value for each key is 
+        the metadata dictionary. Value for each metadata key must be an array. The 
+        generator will randomly select one value from the provided array for each 
+        provided key.</p>
+</li>
+</ul>
+<p><strong>Keys Relevant for Random Event Mocking:</strong></p>
+<ul>
+<li>
+<p><code>event_count</code>: <em>int</em>. The number of events you would like to generate. </p>
+<div class="admonition warning">
+<p class="admonition-title">Note</p>
+<p><code>event_count</code> will be overriden if the <code>-c</code> tag is used in the command line 
+argument.</p>
+</div>
+</li>
+</ul>
+<p><strong>Keys Relevant for Event Sequence Mocking:</strong></p>
+<ul>
+<li>
+<p><code>sequence_order</code>: <em>array</em>. a list of tuples. The first element of the tuple is the 
+        name of the user-defined sequence. The second element is how many times you 
+        would like to generate that sequence. If you would like to generate random 
+        events within the sequence, use the pre-defined sequence name <code>RANDOM</code> with the 
+        number of random events to generate. Sequences will be generated in order of 
+        array.</p>
+</li>
+<li>
+<p><code>sequences</code>: <em>dict</em>. A dictionary of user-defined sequences. The key is the name of 
+        your sequence. The value is an array of tuples. The value of the first tuple 
+        element is the event type name. The value of the second element is the number of
+        times that event type should occur. Events will be generated in order of array.</p>
+</li>
+</ul>
+<p><strong>Optional:</strong></p>
+<ul>
+<li><code>excluded_types</code>: <em>array, optional</em>. An array of event types to exclude when mocking
+        random events.</li>
+</ul>
+<h3 id="run"><strong>Run</strong><a class="headerlink" href="#run" title="Permanent link">&para;</a></h3>
+<p>The script requires one configuration file that provides the required keys, or multiple 
+configuration files that, when composed, provide the required keys. If you include 
+multiple configuration files, key conflicts will be handled by choosing the value from 
+the latest file.</p>
+<p><strong>Random Event Mocking</strong></p>
+<p>From the <code>/utilities</code> directiory, run:</p>
+<pre class="code"><code>python mock_events.py path/to/your/config.json path/to/another/config.json
+</code></pre>
+
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To override the number of random events to mock, add tag <code>-c</code> followed by the number 
+    of events. Example:</p>
+<pre class="code"><code>python mock_events.py -c 100 path/to/your/config.json
+</code></pre>
+
+</div>
+<p><strong>Event Sequence Mocking</strong></p>
+<p>From the <code>/utilities</code> directiory, run:</p>
+<pre class="code"><code>python mock_events.py -seq path/to/your/config.json path/to/another/config.json
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.51d95adb.min.js"></script>
+      
+        <script src="js/prism.js"></script>
+      
+    
+  </body>
+</html>
